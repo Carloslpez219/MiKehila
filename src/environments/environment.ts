@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  loginUrl: 'https://login.asms.gt/LOGIN/API/API_ios.php?request=',
+  asmsURL: 'http://asms.pruebasgt.net/SISTEM/API/'
 };
 
 /*

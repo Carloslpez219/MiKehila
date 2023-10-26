@@ -3,19 +3,71 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <ion-segment [value]="segmento" style="height: 40px;" (ionChange)="segment($event)">
+    <ion-segment-button value="notificaciones">
+      <ion-icon name="notifications-sharp"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="multimedia">
+      <ion-icon name="images"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="pinboard">
+      <ion-icon name="pin"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="circulares">
+      <ion-icon name="document-text"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'notificaciones'">Notificaciones</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'multimedia'">Multimedia</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'pinboard'">PinBoard</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'circulares'">Circulares</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<!-- Notificaciones -->
+
+   <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
+    <ion-item [button]="true">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <!-- Multimedia -->
+
+  <ion-card>
+    <img src="../../assets/img/photo.png" class="gradient-card"/>
+    <ion-card-header>
+      <ion-card-title>Card Title</ion-card-title>
+      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>Card Content</ion-card-content>
+  </ion-card>
+  
+  
+  <ion-card>
+    <img src="../../assets/img/multimedia.png" />
+    <ion-card-header>
+      <ion-card-title>Card Title</ion-card-title>
+      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content> Card Content </ion-card-content>
+  </ion-card>
+
+
+
 </ion-content>

@@ -7,11 +7,22 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  public folder!: string;
-  private activatedRoute = inject(ActivatedRoute);
+  segmento = 'notificaciones';
+
   constructor() {}
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
+  }
+
+  segment(ev: any){
+    if(ev.detail.value === 'multimedia'){
+      this.segmento = 'multimedia';
+    }else if(ev.detail.value === 'pinboard'){
+      this.segmento = 'pinboard';
+    }else if(ev.detail.value === 'circulares'){
+      this.segmento = 'circulares';
+    }else if(ev.detail.value === 'notificaciones'){
+      this.segmento = 'notificaciones';
+    }
   }
 }
