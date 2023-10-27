@@ -49,15 +49,18 @@
 
   <!-- Multimedia -->
 
-  <ion-card *ngIf="segmento == 'multimedia'" style="width:50%; margin-left:auto; margin-right:auto;">
-    <img src="../../assets/img/photo.png" class="gradient-card"/>
-</ion-card>
-
-  
-  <ion-card *ngIf="segmento == 'multimedia'" style="width:50%; margin-left:auto; margin-right:auto;">
-    <img src="../../assets/img/multimedia.png" />
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/photo.png') no-repeat center/contain; height: 35%;">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.6);"></div>
+    <ion-card-header>
+      <ion-card-title style="color: white; font-size: 20px;">Photo Album</ion-card-title>
+    </ion-card-header>
   </ion-card>
 
-
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/multimedia.png') no-repeat center/contain; height: 35%;">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.6);"></div>
+    <ion-card-header>
+      <ion-card-title>Multimedia</ion-card-title>
+    </ion-card-header>
+  </ion-card>
 
 </ion-content>
