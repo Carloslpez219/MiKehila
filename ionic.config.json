@@ -1,5 +1,7 @@
 {
-  "name": "ComunidadJudia",
-  "integrations": {},
+  "name": "Mi Kehila",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

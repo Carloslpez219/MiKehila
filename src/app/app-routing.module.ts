@@ -20,8 +20,24 @@ const routes: Routes = [
     loadChildren: () => import('./pages/actividades/actividades.module').then( m => m.ActividadesPageModule)
   },
   {
+    path: 'actividad',
+    loadChildren: () => import('./pages/actividad/actividad.module').then( m => m.ActividadPageModule)
+  },
+  {
     path: 'encuestas',
     loadChildren: () => import('./pages/encuestas/encuestas.module').then( m => m.EncuestasPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'multimedia',
+    loadChildren: () => import('./pages/multimedia/multimedia.module').then( m => m.MultimediaPageModule)
+  },
+  {
+    path: 'detalle-multimedia',
+    loadChildren: () => import('./pages/detalle-multimedia/detalle-multimedia.module').then( m => m.DetalleMultimediaPageModule)
   }
 ];
 

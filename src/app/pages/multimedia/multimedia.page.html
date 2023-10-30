@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Multimedia</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list [inset]="true">
+    <ion-item [button]="true" color="light" *ngFor="let item of multimedia" (click)="mostrarModal(item.codigo)" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-label class="ion-text-wrap">
+        <strong>{{item.titulo}}</strong>
+        <p> {{item.categoria}}</p>
+        <ion-note style="font-size: 11px;">{{item.tipo}}</ion-note>
+      </ion-label>
+      <ion-note slot="end"></ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

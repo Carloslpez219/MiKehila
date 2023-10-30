@@ -1,13 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>actividades</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">actividades</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Actividades</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  <ion-list [inset]="true">
+    <ion-item [button]="true" color="light" *ngFor="let actividad of actividades; index as i" class="ion-activatable animate__animated animate__fadeIn" (click)="mostrarModal(actividad.codigo)">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="{{actividad.url_logo}}" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <strong>{{actividad.titulo}}</strong>
+        <p>{{actividad.descripcion}}</p>
+        <ion-note color="medium" class="ion-text-wrap">
+          {{actividad.fecha_inicio}} {{actividad.hora_inicio}} - {{actividad.fecha_final}} {{actividad.hora_final}}
+         </ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

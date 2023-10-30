@@ -3,13 +3,11 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-header>
-          <ion-avatar style="zoom: 3;">
-            <img alt="Silhouette of a person's head" src="../../../assets/img/user.jpg" width="60%" class="img"/>
-          </ion-avatar>
+            <img alt="Silhouette of a person's head" src="../../../assets/img/baner.jpg" width="80%" class="img"/>
         </ion-header>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-list-header>Mi Kehila</ion-list-header>
+          <ion-note>Guatemala</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -18,7 +16,23 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
       </ion-content>
+      <ion-footer>
+        <ion-menu-toggle>
+          <ion-toolbar>
+            <ion-buttons slot="end" mode="ios" class="item-padding-salir">
+              <ion-button color="dark" (click)="logOut()">
+                <ion-icon slot="start" name="power-outline" class="icon-menu"></ion-icon>
+                <ion-note>Salir</ion-note>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-menu-toggle>
+      </ion-footer>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>

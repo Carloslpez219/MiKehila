@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card ion-fixed class="ion-activatable animate__animated animate__fadeIn">
+    <img alt="" src={{imagen}} style="width: 100%"/>
+    <ion-card-header>
+      <ion-card-title>{{actividad.titulo}}</ion-card-title>
+      <ion-card-subtitle>{{actividad.fecha_inicio}} {{actividad.hora_inicio}} - {{actividad.fecha_final}} {{actividad.hora_final}}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      {{actividad.descripcion}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -119,6 +119,50 @@ ion-item.selected {
 }
 
 .img {
-  margin-top: 6px;
-  margin-left: 6px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: -5px;
+}
+
+
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+  opacity: 0.8;  
+}
+
+.screen__background__shape1 {
+	height: 30px;
+	width: 340px;
+	background: #259bbe;	
+	top: 600px;
+	right: -100px;	
+	border-radius: 60px;
+}
+
+.screen__background__shape2 {
+	height: 30px;
+	width: 325px;
+	background: #062e47;	
+	top: 588px;
+	right: -146px;	
+	border-radius: 32px;
+}
+
+.screen__background__shape3 {
+	height: 30px;
+	width: 310px;
+	background: #f6851f;	
+	top: 535px;
+	right: -150px;	
+	border-radius: 60px;
+}
+
+.screen__background__shape4 {
+	height: 30px;
+	width: 350px;
+	background: #fcb712;	
+	top: 507px;
+	right: -210px;	
+	border-radius: 60px;
 }

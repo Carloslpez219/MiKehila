@@ -35,7 +35,87 @@
 <!-- Notificaciones -->
 
    <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
-    <ion-item [button]="true">
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h3>Text Item</h3>
+        <p>Detail set to true - detail arrow displays on both modes</p>
+      </ion-label>
+      <ion-note slot="end">6</ion-note>
+    </ion-item>
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
@@ -49,18 +129,58 @@
 
   <!-- Multimedia -->
 
-  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/photo.png') no-repeat center/contain; height: 35%;">
-    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.6);"></div>
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/photo.png') no-repeat center/contain; height: 35%;" class="ion-activatable animate__animated animate__fadeIn">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.2);"></div>
     <ion-card-header>
-      <ion-card-title style="color: white; font-size: 20px;">Photo Album</ion-card-title>
+      <ion-card-title>Photo Album</ion-card-title>
     </ion-card-header>
   </ion-card>
 
-  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/multimedia.png') no-repeat center/contain; height: 35%;">
-    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.6);"></div>
+  <ion-card *ngIf="segmento == 'multimedia'" style="width:80%; margin-left:auto; margin-right:auto; background: url('../../assets/img/multimedia.png') no-repeat center/contain; height: 35%;" (click)="toMultimedia()" class="ion-activatable animate__animated animate__fadeIn">
+    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.2);"></div>
     <ion-card-header>
       <ion-card-title>Multimedia</ion-card-title>
     </ion-card-header>
   </ion-card>
 
+  <!-- POSTITS -->
+
+  <div *ngIf="segmento == 'pinboard'">
+    <br>
+    <div *ngFor="let item of postIts">
+      <ion-item-divider color="light" class="cssItem">
+        <ion-label>{{ item.date_postit[0].date_grupo }}</ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="6" *ngFor="let postit of item.date_postit" class="ion-activatable animate__animated animate__fadeIn">
+          <div class="color1">
+            <label class="textfechalit">{{postit.fecha}}</label>
+            <br>
+            <label class="textTitulo biography2">Titulo: {{postit.titulo}}</label>
+            <div class="biography">Descripcion: {{postit.descripcion}}</div>
+            <label class="textPara">Para: {{postit.target}}</label>
+            <br>
+            <label class="textCodigo">Codigo: {{postit.codigo}}</label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+
+  <!-- Circulares -->
+  
+  <div *ngIf="segmento == 'circulares'">
+    <ion-card *ngFor="let item of circulares"
+          [ngStyle]="{'background-image': 'url(' + item.url_logo + ')'}" 
+          color="light"
+          (click)="openLink(item.link)" class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
+      <ion-card-header>
+        <ion-card-title style="font-size: 22px;">{{item.titulo}}</ion-card-title>
+        <ion-card-subtitle style="font-size: 10px;">{{item.fecha_publicacion}} - {{item.hora_publicacion}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content> {{item.descripcion}} </ion-card-content>
+    </ion-card>
+</div>
+
+  
 </ion-content>

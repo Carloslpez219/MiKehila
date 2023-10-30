@@ -1,13 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>encuestas</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">encuestas</ion-title>
+      <ion-title size="large">Encuestas</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list [inset]="true">
+    <ion-item [button]="true" color="light" *ngFor="let item of encuestas" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-label class="ion-text-wrap">
+        <strong>{{item.titulo}}</strong>
+        <p>{{item.descripcion}}</p>
+      </ion-label>
+      <ion-note slot="end"></ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>
+

@@ -42,9 +42,18 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_informacion.php?request=multimedia`);
   }
 
+  async getDetalleMUltimedia<T>(codigo: any){
+    return this.http.get<T>(`${asmsURL}API_informacion.php?request=detalle_multimedia&codigo=${codigo}`);
+  }
+
   async getPostIts<T>(){
     this.datosUsuario = await this.storage.get('datos');
-    //return this.http.get<T>(`${asmsURL}API_gestor_pinboard.php?request=postits_usuario&usuario=1969`);
+    //return this.http.get<T>(`${asmsURL}API_gestor_pinboard.php?request=postits_usuario&usuario=${this.datosUsuario.codigo}`);
     return this.http.get<T>(`${asmsURL}API_gestor_pinboard.php?request=postits_usuario&usuario=1969`);
   }
+
+  async getEncuestas<T>(){
+    return this.http.get<T>(`${asmsURL}API_encuestas.php?request=encuestas`);
+  }
+  
 }
