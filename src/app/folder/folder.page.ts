@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController } from '@ionic/angular';
+import { DetallePinboardPage } from '../pages/detalle-pinboard/detalle-pinboard.page';
 import { AsmsServiceService } from '../services/asms-service.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class FolderPage implements OnInit {
   postIts: any;
   circulares: any;
 
-  constructor(private asmsService: AsmsServiceService, private navCtrl:NavController) {}
+  constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController) {}
 
   async ngOnInit() {
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
@@ -46,7 +47,32 @@ export class FolderPage implements OnInit {
     this.navCtrl.navigateForward('/multimedia');
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...'
+    });
+    await loading.present();
+  }
+
   toPhoto(){
     this.navCtrl.navigateForward('/photoalbum');
   }
+
+  async mostrarModal( codigo: any ) {
+    await this.presentLoading();
+    (await this.asmsService.getDetallePostIt(codigo)).subscribe(async (resp: any) =>{
+        const multimedia = resp;
+        const modal = await this.modalController.create({
+          component: DetallePinboardPage,
+          backdropDismiss: false,
+          componentProps: { multimedia}       
+        });
+        await modal.present();      
+      
+    },
+    (error: any) => {
+      console.error('Error al obtener actividad:', error);
+    }
+    ); 
+  } 
 }

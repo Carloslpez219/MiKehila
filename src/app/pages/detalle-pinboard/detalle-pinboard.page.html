@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="cont">
+    <div class="color1">
+      <label class="textfechalit">{{multimedia[0].fecha}}</label>
+      <br>
+      <label class="textTitulo biography2">Titulo: {{multimedia[0].titulo}}</label>
+      <div class="biography">Descripcion: {{multimedia[0].descripcion}}</div>
+      <label class="textPara">Para: {{multimedia[0].target}}</label>
+      <br>
+      <label class="textCodigo">Codigo: {{multimedia[0].codigo}}</label>
+    </div>
+  </div>
+</ion-content>

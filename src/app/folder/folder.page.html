@@ -153,7 +153,7 @@
       </ion-item-divider>
       <ion-row>
         <ion-col size="6" *ngFor="let postit of item.date_postit" class="ion-activatable animate__animated animate__fadeIn">
-          <div class="color1">
+          <div class="color1" (click)="mostrarModal(postit.codigo)">
             <label class="textfechalit">{{postit.fecha}}</label>
             <br>
             <label class="textTitulo biography2">Titulo: {{postit.titulo}}</label>

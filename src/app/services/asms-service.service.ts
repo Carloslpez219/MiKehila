@@ -64,5 +64,9 @@ export class AsmsServiceService {
   async getDetalleAlbum<T>(codigo: any){
     return this.http.get<T>(`${asmsURL}API_photos.php?request=detalle&codigo=${codigo}`);
   }
+
+  async getDetallePostIt<T>(codigo: any){
+    return this.http.get<T>(`${asmsURL}API_gestor_pinboard.php?request=postit&codigo=${codigo}`);
+  }
   
 }

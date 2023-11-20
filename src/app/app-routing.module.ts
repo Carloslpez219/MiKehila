@@ -54,6 +54,10 @@ const routes: Routes = [
   {
     path: 'detalle-photoalbum',
     loadChildren: () => import('./pages/detalle-photoalbum/detalle-photoalbum.module').then( m => m.DetallePhotoalbumPageModule)
+  },
+  {
+    path: 'detalle-pinboard',
+    loadChildren: () => import('./pages/detalle-pinboard/detalle-pinboard.module').then( m => m.DetallePinboardPageModule)
   }
 ];
 
