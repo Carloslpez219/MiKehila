@@ -21,6 +21,7 @@ export class UserService {
   login<T>( usu: any, password: any){
     return new Promise (resolve => {
       this.http.get(`${loginUrl}login&usu=${usu}&pass=${password}`).subscribe(async (resp: any) => {
+        console.log(`${loginUrl}login&usu=${usu}&pass=${password}`)
         if ( resp.status ){
           await this.datosLocalStorage( resp.data );
           resolve(true);

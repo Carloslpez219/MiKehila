@@ -55,5 +55,9 @@ export class AsmsServiceService {
   async getEncuestas<T>(){
     return this.http.get<T>(`${asmsURL}API_encuestas.php?request=encuestas`);
   }
+
+  async getPhotoAlbum<T>(){
+    return this.http.get<T>(`${asmsURL}API_photos.php?request=albumes`);
+  }
   
 }
