@@ -45,4 +45,8 @@ export class FolderPage implements OnInit {
   toMultimedia(){
     this.navCtrl.navigateForward('/multimedia');
   }
+
+  toPhoto(){
+    this.navCtrl.navigateForward('/photoalbum');
+  }
 }

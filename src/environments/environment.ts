@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  loginUrl: 'https://login.asms.gt/LOGIN/API/API_ios.php?request=',
+  loginUrl: 'https://asms.pruebasgt.net/SISTEM/API/API_login.php?request=',
   asmsURL: 'http://asms.pruebasgt.net/SISTEM/API/'
 };
 

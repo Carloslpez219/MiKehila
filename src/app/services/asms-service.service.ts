@@ -57,7 +57,12 @@ export class AsmsServiceService {
   }
 
   async getPhotoAlbum<T>(){
-    return this.http.get<T>(`${asmsURL}API_photos.php?request=albumes`);
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_photos.php?request=albumes&tipo=${this.datosUsuario.tipo_usuario}&codigo=${this.datosUsuario.codigo}`);
+  }
+
+  async getDetalleAlbum<T>(codigo: any){
+    return this.http.get<T>(`${asmsURL}API_photos.php?request=detalle&codigo=${codigo}`);
   }
   
 }

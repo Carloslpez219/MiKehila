@@ -36,12 +36,12 @@ export class PhotoalbumPage implements OnInit {
 
   async mostrarModal( codigo: any ) {
     await this.presentLoading();
-    (await this.asmsService.getDetalleMUltimedia(codigo)).subscribe(async (resp: any) =>{
+    (await this.asmsService.getDetalleAlbum(codigo)).subscribe(async (resp: any) =>{
         const multimedia = resp[0];
         const modal = await this.modalController.create({
           component: DetallePhotoalbumPage,
           backdropDismiss: false,
-          componentProps: { multimedia}
+          componentProps: { multimedia}       
         });
         await modal.present();      
       

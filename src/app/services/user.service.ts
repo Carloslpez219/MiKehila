@@ -42,6 +42,6 @@ export class UserService {
 
   async getPerfil<T>(){
     this.datosUsuario = await this.storage.get('datos');
-    return this.http.get<T>(`http://asms.pruebasgt.net/SISTEM/API/API_perfil_padre.php?request=get_usuario&codigo=${this.datosUsuario.codigo}`);
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_perfil_padre.php?request=get_padre&tipo=${this.datosUsuario.tipo_usuario}&codigo=${this.datosUsuario.codigo}`);
   }
 }

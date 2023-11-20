@@ -79,7 +79,7 @@ export class PerfilPage implements OnInit {
 
   async getData() {
       (await this.userService.getPerfil()).subscribe((resp: any) => {
-        this.perfilData = resp;
+        this.perfilData = resp[0];
         this.defaultValue( this.perfilData );
         this.mostrarData = true;
       });

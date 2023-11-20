@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>detalle-photoalbum</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detalle-photoalbum</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card>
+    <img src="{{multimedia.foto}}"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{multimedia.texto}}
+      </ion-card-title>
+      <p>
+        {{multimedia.fecha}}
+      </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
