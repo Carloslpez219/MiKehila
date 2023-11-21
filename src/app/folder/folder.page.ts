@@ -13,10 +13,15 @@ export class FolderPage implements OnInit {
   segmento = 'notificaciones';
   postIts: any;
   circulares: any;
+  notificaciones: any;
 
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController) {}
 
   async ngOnInit() {
+    (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
+      this.notificaciones = resp;
+      console.log(this.notificaciones)
+    });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
       this.postIts = resp;
       console.log(this.postIts)

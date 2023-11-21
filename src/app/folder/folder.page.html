@@ -35,95 +35,14 @@
 <!-- Notificaciones -->
 
    <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones">
       <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        <img alt="" src="{{notificacion.url_logo}}" />
       </ion-avatar>
       <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
+        <h3>{{notificacion.categoria}}</h3>
+        <p>{{notificacion.message}}</p>
       </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
-    </ion-item>
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn">
-      <ion-avatar aria-hidden="true" slot="start">
-        <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="ion-text-wrap">
-        <h3>Text Item</h3>
-        <p>Detail set to true - detail arrow displays on both modes</p>
-      </ion-label>
-      <ion-note slot="end">6</ion-note>
     </ion-item>
   </ion-list>
 
