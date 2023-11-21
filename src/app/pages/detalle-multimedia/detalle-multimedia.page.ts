@@ -34,7 +34,7 @@ export class DetalleMultimediaPage implements OnInit {
   }
 
   openLink(url: string) {
-    window.open(url, '_system');
+    window.open('https://www.youtube.com/watch?v=' + url, '_system');
   }
 
 }

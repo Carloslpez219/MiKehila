@@ -10,6 +10,7 @@ export class DetallePhotoalbumPage implements OnInit {
 
   @Input() multimedia: any;
   viewEntered: any;
+  currentSlide = 0;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform) { }
 
@@ -31,6 +32,22 @@ export class DetallePhotoalbumPage implements OnInit {
       this.modalController.dismiss();
     });
     this.modalController.dismiss();
+  }
+
+  next() {
+    if (this.currentSlide < this.multimedia.imagenes.length - 1) {
+      this.currentSlide++;
+    } else {
+      this.currentSlide = 0;
+    }
+  }
+
+  previous() {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+    } else {
+      this.currentSlide = this.multimedia.imagenes.length - 1;
+    }
   }
 
 }

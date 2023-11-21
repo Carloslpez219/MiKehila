@@ -10,7 +10,27 @@
 
 <ion-content>
   <ion-card>
-    <img src="{{multimedia.foto}}"/>
+    <div class="carousel">
+      <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+        <div class="item" *ngFor="let img of multimedia.imagenes">
+          <img src="{{img.foto}}"/>
+        </div>
+      </div>
+    </div>
+    <ion-row style="margin-top: -20px;">
+      <ion-col size="3"></ion-col>
+      <ion-col size="3">
+        <ion-button (click)="next()" expand="block" fill="clear" shape="round">
+          <ion-icon slot="icon-only" name="arrow-back-circle" (click)="previous()"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button (click)="next()" expand="block" fill="clear" shape="round">
+          <ion-icon slot="icon-only" name="arrow-forward-circle" (click)="next()"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
     <ion-card-content>
       <ion-card-title>
         {{multimedia.texto}}
@@ -19,5 +39,5 @@
         {{multimedia.fecha}}
       </p>
     </ion-card-content>
-  </ion-card>
+  </ion-card>  
 </ion-content>
