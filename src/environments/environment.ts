@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  loginUrl: 'https://asms.pruebasgt.net/SISTEM/API/API_login.php?request=',
-  asmsURL: 'http://asms.pruebasgt.net/SISTEM/API/'
+  loginUrl: 'https://cjg.asms.gt/SISTEM/API/API_login.php?request=',
+  asmsURL: 'https://cjg.asms.gt/SISTEM/API/'
 };
 
 /*
