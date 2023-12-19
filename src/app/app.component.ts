@@ -12,6 +12,7 @@ export class AppComponent {
     { title: 'Perfil', url: '/perfil', icon: 'people' },
     //{ title: 'Encuestas', url: '/encuestas', icon: 'checkbox' },
     { title: 'Actividades', url: '/actividades', icon: 'calendar' },
+    { title: 'Familiares', url: '/familaires', icon: 'people' },
     { title: 'Soporte Tecnico', url: '/folder/trash', icon: 'construct' },
   ];
   constructor(private router: Router, private storage: Storage) {}

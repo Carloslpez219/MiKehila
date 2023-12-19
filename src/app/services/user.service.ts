@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage-angular';
 
 const loginUrl = environment.loginUrl;
 const ajustesUrl = environment.loginUrl;
+const asmsURL = environment.asmsURL;
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,15 @@ export class UserService {
 
   async getPerfil<T>(){
     this.datosUsuario = await this.storage.get('datos');
-    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_perfil_padre.php?request=get_padre&tipo=${this.datosUsuario.tipo_usuario}&codigo=${this.datosUsuario.codigo}`);
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=get_padre&tipo=${this.datosUsuario.tipo_usuario}&codigo=${this.datosUsuario.codigo}`);
+  }
+
+  async registro<T>(dpi: any, email: any, nombre: any, apellido: any){
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=registro&dpi=${dpi}&email=${email}&nombre=${nombre}&apellido=${apellido}`);
+  }
+
+  async update<T>(dpi: any, campo: any, valor: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=update_padre&usuario=${this.datosUsuario.codigo}&cui=${dpi}&campo=${campo}&valor=${valor}`);
   }
 }

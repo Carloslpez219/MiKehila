@@ -48,16 +48,31 @@ const routes: Routes = [
     loadChildren: () => import('./pages/detalle-multimedia/detalle-multimedia.module').then( m => m.DetalleMultimediaPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'photoalbum',
     loadChildren: () => import('./pages/photoalbum/photoalbum.module').then( m => m.PhotoalbumPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'detalle-photoalbum',
     loadChildren: () => import('./pages/detalle-photoalbum/detalle-photoalbum.module').then( m => m.DetallePhotoalbumPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'detalle-pinboard',
     loadChildren: () => import('./pages/detalle-pinboard/detalle-pinboard.module').then( m => m.DetallePinboardPageModule)
+  },
+  {
+    path: 'familaires',
+    loadChildren: () => import('./pages/familaires/familaires.module').then( m => m.FamilairesPageModule)
+  },
+  {
+    path: 'detalle-familiar',
+    loadChildren: () => import('./pages/detalle-familiar/detalle-familiar.module').then( m => m.DetalleFamiliarPageModule)
+  },
+  {
+    path: 'crear-familiar',
+    loadChildren: () => import('./pages/crear-familiar/crear-familiar.module').then( m => m.CrearFamiliarPageModule)
   }
 ];
 

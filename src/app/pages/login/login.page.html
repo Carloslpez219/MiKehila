@@ -7,7 +7,7 @@
   <span class="screen__background__shape screen__background__shape2"></span>
   <span class="screen__background__shape screen__background__shape3"></span>
   <span class="screen__background__shape screen__background__shape4"></span>
-    <ion-card class="body animate__animated animate__bounceInDown">
+    <ion-card class="body animate__animated animate__bounceInDown" *ngIf="inicio">
       <div class="img">
         <img src="../../../assets/img/logo.png" style="width: 100%;" class="animate__animated animate__bounce">
       </div>
@@ -45,6 +45,75 @@
             </ion-col>
           </ion-row>
         </ion-grid>
+        <p class="ion-text-center" style="margin-top: 15px; color: rgb(175, 174, 174); font-size: 14px;">¿No tienes una cuenta?&nbsp;&nbsp;<a (click)="goCrear()">Crea una fácil</a></p>
+      </form>
+    </ion-card>
+
+    <ion-card class="body animate__animated animate__bounceInDown" *ngIf="registro">
+      <div class="img">
+        <img src="../../../assets/img/logo.png" style="width: 100%;" class="animate__animated animate__bounce">
+      </div>
+      <br>
+      <br>
+      <form (ngSubmit)="crearCuenta()" [formGroup]="registroForm">
+        <ion-list>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="card-outline"></ion-icon>
+            <ion-input placeholder="CUI" type="name" clearOnEdit="true" clearInput formControlName="dpi">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="dpi!.invalid && (dpi!.dirty || dpi!.touched)">
+            <span *ngIf="dpi!.errors!['required']">
+              <ion-label class="error-container">Este campo es obligatorio</ion-label>
+            </span>
+            <span *ngIf="(dpi!.dirty || dpi!.touched) && dpi!.invalid && dpi!.errors!['pattern']">
+              <ion-label class="error-container">El CUI debe ser compuesto por numeros.</ion-label>
+            </span>
+          </div>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            <ion-input placeholder="Nombres" type="name" clearOnEdit="true" clearInput formControlName="nombres">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="nombres!.invalid && (nombres!.dirty || nombres!.touched)">
+            <span *ngIf="nombres!.errors!['required']">
+              <ion-label class="error-container">Este campo es obligatorio</ion-label>
+            </span>
+          </div>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            <ion-input placeholder="Apellidos" type="name" clearOnEdit="true" clearInput formControlName="apellidos">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="apellidos!.invalid && (apellidos!.dirty || apellidos!.touched)">
+            <span *ngIf="apellidos!.errors!['required']">
+              <ion-label class="error-container">Este campo es obligatorio</ion-label>
+            </span>
+          </div>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="mail"></ion-icon>
+            <ion-input placeholder="Mail" type="mail" clearOnEdit="true" clearInput formControlName="mail">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)">
+            <span *ngIf="mail!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+            <span *ngIf="(mail!.dirty || mail!.touched) && mail!.invalid && mail!.errors!['pattern']">
+              <ion-label class="error-container">Enter an email valid</ion-label>
+            </span>
+          </div>
+        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="block" class="button-1" type="submit" [disabled]="!registroForm.valid">Crear
+                <ion-icon slot="start" color="white" name="enter-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <p class="ion-text-center" style="margin-top: 15px; color: rgb(175, 174, 174); font-size: 14px;">¿Ya tienes una cuenta?&nbsp;&nbsp;<a (click)="gologin()">Inicia sesion</a></p>
       </form>
     </ion-card>
   </div>
