@@ -18,7 +18,7 @@ export class MultimediaPage implements OnInit {
   async ngOnInit() {
     this.presentLoading();
     (await this.asmsService.getMultimedia()).subscribe((resp: any)=>{
-      this.multimedia = resp;
+      this.multimedia = resp.data;
       this.loadingController.dismiss();
     })
   }

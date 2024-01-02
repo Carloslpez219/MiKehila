@@ -48,7 +48,7 @@
           <ion-col size="3"></ion-col>
           <ion-col size="6">
             <ion-avatar class="avatar">
-              <img src="../../../assets/img/user.jpg">
+              <img src="{{perfilData?.url_foto}}">
             </ion-avatar>
           </ion-col>
           <ion-col size="3">
@@ -56,12 +56,21 @@
         </ion-row>
       </ion-grid>
       <ion-card-title class="container">{{perfilData?.nombre}}</ion-card-title>
+
+
+      <ion-item class="ion-item">
+        <ion-button (click)="fileInput.click()" expand="block" fill="outline" class="ion-button">Subir Foto</ion-button>
+        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
+      </ion-item>
+      
+      
+
       <form (ngSubmit)="updatePerfil()" [formGroup]="profileForm">
         <ion-list>
           <small>DPI:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="id-card-outline"></ion-icon>
-            <ion-input placeholder="DPI" type="name" clearOnEdit="false" clearInput formControlName="dpi" (keypress)="onlyNumbers($event)">
+            <ion-input placeholder="DPI" type="name" clearOnEdit="false" clearInput formControlName="dpi" (keypress)="onlyNumbers($event)" maxlength="13">
             </ion-input>
           </ion-item>
           <div class="errors" *ngIf="dpi!.invalid && (dpi!.dirty || dpi!.touched)">
@@ -103,8 +112,30 @@
             </span>
           </div>
           <small>Fecha de nacimiento:*</small>
-          <ion-datetime presentation="day-month-year" (ionChange)="cambioFecha($event)" [value]="date"></ion-datetime>
-          <br>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="calendar"></ion-icon>
+            <ion-input placeholder="Fecha de nacimiento" type="text" clearOnEdit="false" 
+                       clearInput formControlName="date" (keypress)="onlyNumbers($event)" 
+                       (keyup)="formatDate($event)" maxlength="10">
+            </ion-input>
+        </ion-item>        
+          <div class="errors" *ngIf="date!.invalid && (date!.dirty || date!.touched)">
+            <span *ngIf="date!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Momento del día:*</small>
+          <ion-item>
+            <ion-select formControlName="momento" placeholder="Selecciona uno">
+              <ion-select-option value="antes">Antes de las 6pm</ion-select-option>
+              <ion-select-option value="despues">Después de las 6pm</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="errors" *ngIf="momento!.invalid && (momento!.dirty || momento!.touched)">
+            <span *ngIf="momento!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
           <small>Telefono:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="call-sharp"></ion-icon>

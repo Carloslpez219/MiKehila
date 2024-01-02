@@ -46,9 +46,9 @@
     </ion-item>
   </ion-list>
 
-  <ion-card *ngIf="segmento == 'notificaciones' && notificaciones == null">
+  <ion-card *ngIf="segmento == 'notificaciones' && notificaciones?.length == 0">
     <ion-card-header>
-      <ion-card-subtitle class="ion-text-center">No tienes notificaciones!</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center">No tienes notificaciones sin leer!</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
 
@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <ion-card *ngIf="segmento == 'pinboard' && postIts == null">
+  <ion-card *ngIf="segmento == 'pinboard' && postIts?.length == 0">
     <ion-card-header>
       <ion-card-subtitle class="ion-text-center">No tienes PostIts!</ion-card-subtitle>
     </ion-card-header>
@@ -113,7 +113,7 @@
     </ion-card>
 </div>
 
-<ion-card *ngIf="segmento == 'circulares' && circulares == null">
+<ion-card *ngIf="segmento == 'circulares' && circulares?.length == 0">
   <ion-card-header>
     <ion-card-subtitle class="ion-text-center">No tienes circulares disponibles!</ion-card-subtitle>
   </ion-card-header>

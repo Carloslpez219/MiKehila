@@ -63,17 +63,24 @@ const routes: Routes = [
     loadChildren: () => import('./pages/detalle-pinboard/detalle-pinboard.module').then( m => m.DetallePinboardPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'familaires',
     loadChildren: () => import('./pages/familaires/familaires.module').then( m => m.FamilairesPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'detalle-familiar',
     loadChildren: () => import('./pages/detalle-familiar/detalle-familiar.module').then( m => m.DetalleFamiliarPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'crear-familiar',
     loadChildren: () => import('./pages/crear-familiar/crear-familiar.module').then( m => m.CrearFamiliarPageModule)
+  },  {
+    path: 'image-modal',
+    loadChildren: () => import('./pages/image-modal/image-modal.module').then( m => m.ImageModalPageModule)
   }
+
 ];
 
 @NgModule({

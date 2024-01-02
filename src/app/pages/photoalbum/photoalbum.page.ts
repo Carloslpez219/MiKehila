@@ -18,7 +18,7 @@ export class PhotoalbumPage implements OnInit {
   async ngOnInit() {
     this.presentLoading();
     (await this.asmsService.getPhotoAlbum()).subscribe((resp: any)=>{
-      this.multimedia = resp;
+      this.multimedia = resp.data;
       this.loadingController.dismiss();
     })
   }

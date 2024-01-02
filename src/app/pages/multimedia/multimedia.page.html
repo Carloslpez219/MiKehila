@@ -25,4 +25,10 @@
       <ion-note slot="end"></ion-note>
     </ion-item>
   </ion-list>
+
+  <ion-card *ngIf="multimedia?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No tienes notificaciones sin leer!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
 </ion-content>

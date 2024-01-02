@@ -11,23 +11,21 @@ import { AsmsServiceService } from '../services/asms-service.service';
 })
 export class FolderPage implements OnInit {
   segmento = 'notificaciones';
-  postIts: any = null;
-  circulares: any = null;
-  notificaciones: any = null;
+  postIts: any;
+  circulares: any;
+  notificaciones: any;
 
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController) {}
 
   async ngOnInit() {
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
-      if(resp.status !== 'vacio'){
-        this.notificaciones = resp;
-      }
+      this.notificaciones = resp.data;
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
-      this.postIts = resp;
+      this.postIts = resp.data;
     });
-    (await this.asmsService.getCirculares()).subscribe((res: any)=>{
-      this.circulares = res;
+    (await this.asmsService.getCirculares()).subscribe((resp: any)=>{
+      this.circulares = resp.data;
     })
   }
 

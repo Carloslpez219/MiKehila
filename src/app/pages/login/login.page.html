@@ -59,7 +59,7 @@
         <ion-list>
           <ion-item mode="md">
             <ion-icon slot="start" name="card-outline"></ion-icon>
-            <ion-input placeholder="CUI" type="name" clearOnEdit="true" clearInput formControlName="dpi">
+            <ion-input placeholder="CUI" type="name" clearOnEdit="true" clearInput formControlName="dpi"  (keypress)="onlyNumbers($event)" maxlength="13">
             </ion-input>
           </ion-item>
           <div class="errors" *ngIf="dpi!.invalid && (dpi!.dirty || dpi!.touched)">

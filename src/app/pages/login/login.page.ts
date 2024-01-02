@@ -4,6 +4,8 @@ import { NavController, LoadingController} from '@ionic/angular';
 import { UserService } from '../../services/user.service';
 import { Storage } from '@ionic/storage';
 import { AlertService } from 'src/app/services/alert.service';
+import { MenuController } from '@ionic/angular';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +21,49 @@ export class LoginPage implements OnInit {
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController,
-              private alertService: AlertService,  private storage: Storage) {
+              private alertService: AlertService,  private storage: Storage, private menu: MenuController) {
                 this.loginForm = this.createFormGroup();
                 this.registroForm = this.createFormGroupRegistro();
               }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.registroForm.get('dpi')?.valueChanges.pipe(
+      debounceTime(500)
+    ).subscribe(async value => {
+      if (value && value.length === 13 && this.registroForm.get('dpi')?.valid) {
+        (await this.userService.buscaCUI(value)).subscribe(
+          (response: any) => {
+            if(!response.status){
+              this.alertService.presentAlert(response.message);
+              this.registroForm.reset();
+            }
+          },
+          (error: any) => {
+            if(!error.status){
+              this.alertService.presentAlert(error.message);
+              this.registroForm.reset();
+            }
+          }
+        );
+      }
+    });
+  }
+
+  onlyNumbers(event: KeyboardEvent) {
+    const allowedRegex = /[0-9]/;
+  
+    if (!allowedRegex.test(event.key) && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+  }
+
+  ionViewWillEnter() {
+    this.menu.enable(false);
+  }
+  
+  ionViewDidLeave() {
+    this.menu.enable(true);
+  }  
 
   createFormGroup() {
     return new FormGroup({
@@ -74,10 +113,15 @@ export class LoginPage implements OnInit {
 
   async crearCuenta(){
     this.presentLoading();
-    (await this.userService.registro(this.registroForm.value.dpi, this.registroForm.value.nombres, this.registroForm.value.apellidos, this.registroForm.value.mail))
-      .subscribe(resp => {
-        this.alertService.presentToast('Usuario creado con exito', 'success', 3000);
+    (await this.userService.registro(this.registroForm.value.dpi, this.registroForm.value.mail, this.registroForm.value.nombres, this.registroForm.value.apellidos))
+      .subscribe((resp: any) => {
+        if(resp.status){
+          this.alertService.presentToast(resp.message, 'success', 4000);
+        }else{
+          this.alertService.presentToast(resp.message, 'danger', 3000);
+        }
         this.loadingController.dismiss();
+        this.registroForm.reset();
         this.gologin();
       })
   }
