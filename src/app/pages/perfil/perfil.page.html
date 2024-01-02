@@ -80,6 +80,17 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+          <small>Nombre Judio:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            <ion-input placeholder="Nombre Judio" type="name" clearOnEdit="false" clearInput formControlName="nombrejudio">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="nombrejudio!.invalid && (nombrejudio!.dirty || nombrejudio!.touched)">
+            <span *ngIf="nombrejudio!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
           <small>Apellidos:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="person-circle-outline"></ion-icon>
@@ -94,7 +105,7 @@
           <small>Fecha de nacimiento:*</small>
           <ion-datetime presentation="day-month-year" (ionChange)="cambioFecha($event)" [value]="date"></ion-datetime>
           <br>
-          <small>Telefono casa:*</small>
+          <small>Telefono:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="call-sharp"></ion-icon>
             <ion-input placeholder="Telefono" type="name" clearOnEdit="false" clearInput formControlName="telefono" (keypress)="onlyNumbers($event)" maxlength="8">
@@ -113,6 +124,17 @@
           </ion-item>
           <div class="errors" *ngIf="celular!.invalid && (celular!.dirty || celular!.touched)">
             <span *ngIf="celular!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Parasha:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            <ion-input placeholder="parasha" type="name" clearOnEdit="false" clearInput formControlName="parasha">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="parasha!.invalid && (parasha!.dirty || parasha!.touched)">
+            <span *ngIf="parasha!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
@@ -141,36 +163,80 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          <small>Lugar de trabajo:*</small>
+          <small>Departamento:*</small>
           <ion-item mode="md">
-            <ion-icon slot="start" name="business-sharp"></ion-icon>
-            <ion-input placeholder="Lugar de trabajo" type="name" clearOnEdit="false" clearInput formControlName="trabajo">
+            <ion-icon slot="start" name="home-sharp"></ion-icon>
+            <ion-input placeholder="Departamento" type="name" clearOnEdit="false" clearInput formControlName="departamento">
             </ion-input>
           </ion-item>
-          <div class="errors" *ngIf="trabajo!.invalid && (trabajo!.dirty || trabajo!.touched)">
-            <span *ngIf="trabajo!.errors!['required']">
+          <div class="errors" *ngIf="departamento!.invalid && (departamento!.dirty || departamento!.touched)">
+            <span *ngIf="departamento!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          <small>Telefono trabajo:*</small>
+          <small>Municipio:*</small>
           <ion-item mode="md">
-            <ion-icon slot="start" name="call-sharp"></ion-icon>
-            <ion-input placeholder="telefono" type="name" clearOnEdit="false" clearInput formControlName="telTra" (keypress)="onlyNumbers($event)" maxlength="8">
+            <ion-icon slot="start" name="home-sharp"></ion-icon>
+            <ion-input placeholder="Municipio" type="name" clearOnEdit="false" clearInput formControlName="municipio">
             </ion-input>
           </ion-item>
-          <div class="errors" *ngIf="telTra!.invalid && (telTra!.dirty || telTra!.touched)">
-            <span *ngIf="telTra!.errors!['required']">
+          <div class="errors" *ngIf="municipio!.invalid && (municipio!.dirty || municipio!.touched)">
+            <span *ngIf="municipio!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          <small>Profesion:*</small>
+          <small>Edad:*</small>
           <ion-item mode="md">
-            <ion-icon slot="start" name="briefcase-sharp"></ion-icon>
-            <ion-input placeholder="Profesion" type="name" clearOnEdit="false" clearInput formControlName="profesion">
+            <ion-icon slot="start" name="today-outline"></ion-icon>
+            <ion-input placeholder="Edad" type="name" clearOnEdit="false" clearInput formControlName="edad" (keypress)="onlyNumbers($event)" maxlength="2">
             </ion-input>
           </ion-item>
-          <div class="errors" *ngIf="profesion!.invalid && (profesion!.dirty || profesion!.touched)">
-            <span *ngIf="profesion!.errors!['required']">
+          <div class="errors" *ngIf="edad!.invalid && (edad!.dirty || edad!.touched)">
+            <span *ngIf="edad!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Genero:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="people"></ion-icon>
+            <ion-input placeholder="Genero" type="name" clearOnEdit="false" clearInput formControlName="genero" >
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="genero!.invalid && (genero!.dirty || genero!.touched)">
+            <span *ngIf="genero!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Nacionalidad:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="earth-outline"></ion-icon>
+            <ion-input placeholder="Nacionalidad" type="name" clearOnEdit="false" clearInput formControlName="nacionalidad">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="nacionalidad!.invalid && (nacionalidad!.dirty || nacionalidad!.touched)">
+            <span *ngIf="nacionalidad!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Tipo de Sangre:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="bandage-outline"></ion-icon>
+            <ion-input placeholder="Tipo de sangre" type="name" clearOnEdit="false" clearInput formControlName="tipoSangre">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="tipoSangre!.invalid && (tipoSangre!.dirty || tipoSangre!.touched)">
+            <span *ngIf="tipoSangre!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
+          <small>Estado civil:*</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="code-working"></ion-icon>
+            <ion-input placeholder="Estado civil" type="name" clearOnEdit="false" clearInput formControlName="estado">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="estado!.invalid && (estado!.dirty || estado!.touched)">
+            <span *ngIf="estado!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
