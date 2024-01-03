@@ -1,13 +1,51 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>detalleFamiliar</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">detalleFamiliar</ion-title>
+      <ion-title size="large">Detalle del familiar</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-card color="light" class="ion-activatable animate__animated animate__fadeIn">
+    <ion-card-header>
+      <ion-card-title style="font-size: 23px;">{{ multimedia.nombre }} {{ multimedia.apellido }}</ion-card-title>
+      <ion-card-subtitle style="font-size: 12px;">CUI: {{ multimedia.cui }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Fecha de Nacimiento:</strong> {{ multimedia.fechaNacimiento || 'No especificado' }}</p>
+      <p><strong>Fecha de Nacimiento Judía:</strong> {{ multimedia['fecnacJudia '] || 'No especificado' }}</p>
+      <p><strong>Bar Mitzvah:</strong> {{ multimedia['barmitzvah '] || 'No especificado' }}</p>
+      <p><strong>Fallecimiento:</strong> {{ multimedia['fallecimiento '] || 'No especificado' }}</p>
+      <p><strong>Celular:</strong> {{ multimedia.celular || 'No especificado' }}</p>
+      <p><strong>Teléfono Casa:</strong> {{ multimedia.telcasa || 'No especificado' }}</p>
+      <p><strong>Teléfono Trabajo:</strong> {{ multimedia.teltrabajo || 'No especificado' }}</p>
+      <p><strong>Email:</strong> {{ multimedia.mail || 'No especificado' }}</p>
+      <p><strong>Dirección:</strong> {{ multimedia.direccion || 'No especificada' }}</p>
+      <p><strong>Departamento:</strong> {{ multimedia.departamento || 'No especificado' }}</p>
+      <p><strong>Municipio:</strong> {{ multimedia.municipio || 'No especificado' }}</p>
+      <p><strong>Edad:</strong> {{ multimedia.edad || 'No especificado' }}</p>
+      <p><strong>Estado Civil:</strong> {{ multimedia.estadoCivil || 'No especificado' }}</p>
+      <p><strong>Género:</strong> {{ multimedia.genero || 'No especificado' }}</p>
+      <p><strong>Lugar de Trabajo:</strong> {{ multimedia.lugarTrabajo || 'No especificado' }}</p>
+      <p><strong>Nacionalidad:</strong> {{ multimedia.nacionalidad || 'No especificado' }}</p>
+      <p><strong>Nombre Judío:</strong> {{ multimedia.nombreJudio || 'No especificado' }}</p>
+      <p><strong>Profesión:</strong> {{ multimedia.profesion || 'No especificado' }}</p>
+      <p><strong>Tipo DPI:</strong> {{ multimedia.tipodpi || 'No especificado' }}</p>
+    </ion-card-content>
+  </ion-card>
+  
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+  
 </ion-content>

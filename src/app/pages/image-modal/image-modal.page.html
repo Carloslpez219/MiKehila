@@ -10,8 +10,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-img [src]="imgSrc" #myImage style="max-width: 100%; height: auto; display: block; margin: auto;"></ion-img>
-  <!-- Botón de descarga -->
+  <div style="text-align: center;">
+    <img #myImage [src]="imgSrc" style="max-width: 100%; height: auto; display: inline-block;"/>
+  </div>
   <ion-button (click)="downloadImage(imgSrc)" expand="block" fill="outline">
     Descargar Imagen
   </ion-button>

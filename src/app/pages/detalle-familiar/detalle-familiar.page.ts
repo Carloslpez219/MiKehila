@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalle-familiar',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetalleFamiliarPage implements OnInit {
 
-  constructor() { }
+  @Input() multimedia: any;
+  viewEntered: any;
+
+  constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform) { }
 
   ngOnInit() {
+    console.log(this.multimedia)
+  }
+
+  ionViewDidEnter() {
+    this.viewEntered = true;
+    this.loadingController.dismiss();
+  }
+
+  ionViewWillLeave(){
+    this.viewEntered = false;
+  }
+
+  back(){
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.modalController.dismiss();
+    });
+    this.modalController.dismiss();
   }
 
 }

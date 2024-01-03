@@ -37,7 +37,7 @@ export class MultimediaPage implements OnInit {
   async mostrarModal( codigo: any ) {
     await this.presentLoading();
     (await this.asmsService.getDetalleMUltimedia(codigo)).subscribe(async (resp: any) =>{
-        const multimedia = resp[0];
+        const multimedia = resp.data[0];
         const modal = await this.modalController.create({
           component: DetalleMultimediaPage,
           backdropDismiss: false,

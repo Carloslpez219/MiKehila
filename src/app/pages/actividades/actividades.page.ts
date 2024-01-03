@@ -26,13 +26,11 @@ export class ActividadesPage implements OnInit {
   async mostrarModal( codigo: any ) {
     await this.presentLoading();
     (await this.asmsService.getActividad(codigo)).subscribe(async (resp: any) =>{
-        const respuesta = Object.values(resp).filter((item: any) => typeof item === 'object' && item.codigo);
-        const imagen = resp.imagen;
-        const actividad = respuesta[0];
+        const actividad = resp.data[0];
         const modal = await this.modalController.create({
           component: ActividadPage,
           backdropDismiss: false,
-          componentProps: { actividad, imagen}
+          componentProps: { actividad }
         });
         await modal.present();      
       

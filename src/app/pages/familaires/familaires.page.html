@@ -26,13 +26,20 @@
 
   <ion-list [inset]="true">
     <ion-item [button]="true" color="light" *ngFor="let item of familiares" (click)="mostrarModal(item.codigo)" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="{{item.url_foto}}" />
+      </ion-avatar>
       <ion-label class="ion-text-wrap">
-        <strong>{{item.nombre}}</strong>
-        <strong>{{item.apellido}}</strong>
+        <strong>{{item.nombre}} {{item.apellido}}</strong>
         <p> {{item.cui}}</p>
         <ion-note style="font-size: 11px;">{{item.fecha_nacimiento}}</ion-note>
       </ion-label>
       <ion-note slot="end"></ion-note>
     </ion-item>
   </ion-list>
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
 </ion-content>

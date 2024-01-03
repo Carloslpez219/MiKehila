@@ -19,14 +19,13 @@ export class AsmsServiceService {
    }
 
   async getActividades<T>(){
-    this.datosUsuario = await this.storage.get('datos');
-    return this.http.get<T>(`${asmsURL}API_gestor_actividades.php?request=actividades&tipo=${this.datosUsuario.tipo_usuario}`);
+    return this.http.get<T>(`${asmsURL}API_informacion.php?request=informacion&personas=3`);
     //return this.http.get<T>(`${asmsURL}API_gestor_actividades.php?request=actividades&tipo=5`);
   }
 
   async getCirculares<T>(){
     this.datosUsuario = await this.storage.get('datos');
-    return this.http.get<T>(`${asmsURL}API_informacion.php?request=circulares&miembros=4,2&codigo_usuario=${this.datosUsuario.codigo}`);
+    return this.http.get<T>(`${asmsURL}API_informacion.php?request=circulares&miembros=${this.datosUsuario.codigo}`);
     //return this.http.get<T>(`${asmsURL}API_gestor_circulares.php?request=circulares&usuario=1969`);
   }
 

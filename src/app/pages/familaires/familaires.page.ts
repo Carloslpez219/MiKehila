@@ -39,11 +39,11 @@ export class FamilairesPage implements OnInit {
     async mostrarModal( codigo: any ) {
       await this.presentLoading();
       (await this.asmsService.getDetallefamiliar(codigo)).subscribe(async (resp: any) =>{
-          const multimedia = resp[0];
+          const multimedia = resp.data[0];
           const modal = await this.modalController.create({
             component: DetalleFamiliarPage,
             backdropDismiss: false,
-            componentProps: { multimedia}       
+            componentProps: { multimedia }       
           });
           await modal.present();      
         

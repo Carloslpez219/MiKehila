@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as Hammer from 'hammerjs';
 
@@ -8,9 +8,8 @@ import * as Hammer from 'hammerjs';
   styleUrls: ['./image-modal.page.scss'],
 })
 export class ImageModalPage implements AfterViewInit {
-  @Input() imgSrc!: string;
-  @ViewChild('myImage')
-  myImage!: ElementRef;
+  @Input() imgSrc: string  = '';
+  @ViewChild('myImage') myImage!: ElementRef;
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -25,38 +24,40 @@ export class ImageModalPage implements AfterViewInit {
 
     let lastScale = 1;
     let currentScale = 1;
+    let posX = 0;
+    let posY = 0;
+    let lastPosX = 0;
+    let lastPosY = 0;
 
     hammertime.on('pinch pinchend pan', (ev) => {
       if (ev.type === 'pinch') {
-        currentScale = lastScale * ev.scale;
-        element.style.transform = `scale(${currentScale})`;
+        currentScale = Math.max(1, Math.min(lastScale * ev.scale, 10));
       }
       if (ev.type === 'pinchend') {
         lastScale = currentScale;
       }
       if (ev.type === 'pan') {
-        element.style.transform = `translate(${ev.deltaX}px, ${ev.deltaY}px) scale(${currentScale})`;
+        posX = lastPosX + ev.deltaX;
+        posY = lastPosY + ev.deltaY;
       }
+      if (ev.type === 'panend') {
+        lastPosX = posX;
+        lastPosY = posY;
+      }
+      element.style.transform = `translate(${posX}px, ${posY}px) scale(${currentScale})`;
     });
   }
 
   downloadImage(url: string) {
-    // Crear un elemento <a> temporal
     const a = document.createElement('a');
-    // Poner la URL de la imagen en el href
     a.href = url;
-    // Establecer el atributo de descarga con un nombre de archivo
-    a.download = 'downloaded-image.png'; // Puedes elegir un nombre diferente
-    // Agregar el elemento <a> al DOM
+    a.download = 'downloaded-image.png';
     document.body.appendChild(a);
-    // Hacer clic en el enlace
     a.click();
-    // Eliminar el elemento <a> del DOM
     document.body.removeChild(a);
   }
 
   dismiss() {
     this.modalCtrl.dismiss();
   }
-
 }

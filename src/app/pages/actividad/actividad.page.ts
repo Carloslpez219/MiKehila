@@ -10,7 +10,6 @@ import { LoadingController, ModalController, Platform } from '@ionic/angular';
 export class ActividadPage implements OnInit {
 
   @Input() actividad: any;
-  @Input() imagen: any;
   viewEntered: any;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform) { }
@@ -25,6 +24,7 @@ export class ActividadPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.actividad)
   }
 
   back(){
