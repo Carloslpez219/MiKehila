@@ -20,10 +20,7 @@ export class FamilairesPage implements OnInit {
     async ngOnInit() {
       this.presentLoading();
       (await this.asmsService.getFamiliares()).subscribe((resp: any)=>{
-        if(resp.status == 'error'){
-          this.alerService.presentToast(resp.message, 'danger', 3000);
-        } 
-        this.familiares = resp;
+        this.familiares = resp.data;
         this.loadingController.dismiss();
       })
     }

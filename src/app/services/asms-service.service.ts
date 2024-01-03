@@ -86,7 +86,9 @@ export class AsmsServiceService {
   }
 
   async nuevofamiliar<T>(dpi: any, nombres: any, apellidos: any, parentesco: any, tel: any ,mail: any){
-    return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=1&tel=${tel}&mail=${mail}`);
+    this.datosUsuario = await this.storage.get('datos');
+    console.log(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigoUsuario}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`)
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigoUsuario}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
   }
   
 }

@@ -12,8 +12,8 @@
   <ion-card>
     <div class="carousel">
       <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
-        <div class="item" *ngFor="let img of multimedia.imagenes">
-          <img src="{{img.foto}}"/>
+        <div class="item" *ngFor="let img of multimedia.imagenes" (click)="openModal(img.foto)">
+          <img [src]="img.foto"/>
         </div>
       </div>
     </div>

@@ -54,15 +54,20 @@
         </div>
   
         <!-- Campo Parentesco -->
-        <ion-item mode="md">
-          <ion-icon slot="start" name="people-circle-outline"></ion-icon>
-          <ion-input placeholder="Parentesco" type="text" clearOnEdit="true" clearInput formControlName="parentesco"></ion-input>
-        </ion-item>
-        <div class="errors" *ngIf="parentesco!.invalid && (parentesco!.dirty || parentesco!.touched)">
-          <span *ngIf="parentesco!.errors!['required']">
-            <ion-label class="error-container">Este campo es requerido</ion-label>
-          </span>
-        </div>
+          <ion-item>
+            <ion-select formControlName="parentesco" placeholder="Selecciona uno">
+              <ion-select-option value="1">Esposo</ion-select-option>
+              <ion-select-option value="2">Esposa</ion-select-option>
+              <ion-select-option value="3">Padre/Madre</ion-select-option>
+              <ion-select-option value="4">Hijo</ion-select-option>
+              <ion-select-option value="5">Hermano/Hermana</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="errors" *ngIf="parentesco!.invalid && (parentesco!.dirty || parentesco!.touched)">
+            <span *ngIf="parentesco!.errors!['required']">
+              <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+          </div>
   
         <!-- Campo Teléfono -->
         <ion-item mode="md">

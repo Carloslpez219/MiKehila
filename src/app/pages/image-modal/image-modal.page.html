@@ -1,13 +1,18 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>imageModal</ion-title>
+    <ion-title>Ver Imagen</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">imageModal</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-img [src]="imgSrc" #myImage style="max-width: 100%; height: auto; display: block; margin: auto;"></ion-img>
+  <!-- Botón de descarga -->
+  <ion-button (click)="downloadImage(imgSrc)" expand="block" fill="outline">
+    Descargar Imagen
+  </ion-button>
 </ion-content>

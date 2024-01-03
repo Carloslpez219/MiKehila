@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
+import { ImageModalPage } from '../image-modal/image-modal.page';
 
 @Component({
   selector: 'app-detalle-photoalbum',
@@ -48,6 +49,16 @@ export class DetallePhotoalbumPage implements OnInit {
     } else {
       this.currentSlide = this.multimedia.imagenes.length - 1;
     }
+  }
+
+  async openModal(imgSrc: string) {
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      componentProps: {
+        'imgSrc': imgSrc
+      }
+    });
+    return await modal.present();
   }
 
 }
