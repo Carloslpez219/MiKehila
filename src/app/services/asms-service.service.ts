@@ -66,7 +66,7 @@ export class AsmsServiceService {
   }
 
   async getDetallePostIt<T>(codigo: any){
-    return this.http.get<T>(`${asmsURL}API_gestor_pinboard.php?request=postit&codigo=${codigo}`);
+    return this.http.get<T>(`${asmsURL}API_informacion.php?request=detalle_pinboard&codigo=${codigo}`);
   }
 
   async getNotificaciones<T>(){

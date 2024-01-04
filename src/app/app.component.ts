@@ -10,7 +10,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Inicio', url: '/folder/Notificaciones', icon: 'home' },
     { title: 'Perfil', url: '/perfil', icon: 'people' },
-    //{ title: 'Encuestas', url: '/encuestas', icon: 'checkbox' },
+    { title: 'Encuestas', url: '/encuestas', icon: 'checkbox' },
     { title: 'Actividades', url: '/actividades', icon: 'calendar' },
     { title: 'Familiares', url: '/familaires', icon: 'people' },
     { title: 'Soporte Tecnico', url: '/folder/trash', icon: 'construct' },
