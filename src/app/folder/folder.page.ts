@@ -19,15 +19,18 @@ export class FolderPage implements OnInit {
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
   async ngOnInit() {
+    this.presentLoading();
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
+      this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
       this.postIts = resp.data;
+      this.loadingController.dismiss();
     });
     (await this.asmsService.getCirculares()).subscribe((resp: any)=>{
       this.circulares = resp.data;
-      console.log(resp)
+      this.loadingController.dismiss();
     });
   }
 

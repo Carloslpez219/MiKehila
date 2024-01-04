@@ -98,4 +98,9 @@ export class AsmsServiceService {
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=dispositivos&codigoMiembro=${this.datosUsuario.codigo}`);
   }
+
+  async activarDesactivar<T>(dispositivo: any, situacion: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=situacion_dispositivo&codigoMiembro=${this.datosUsuario.codigo}&dispositivo=${dispositivo}&situacion=${situacion}`);
+  }
 }

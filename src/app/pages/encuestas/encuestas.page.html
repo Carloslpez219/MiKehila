@@ -25,6 +25,12 @@
     </ion-item>
   </ion-list>
 
+  <ion-card *ngIf="encuestas?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No se registran datos!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
 
   <span class="screen__background__shape screen__background__shape1"></span>
   <span class="screen__background__shape screen__background__shape2"></span>

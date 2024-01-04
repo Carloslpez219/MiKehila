@@ -16,8 +16,7 @@ export class EncuestasPage implements OnInit {
   async ngOnInit() {
     this.presentLoading();
     (await this.asmsService.getEncuestas()).subscribe((resp: any)=>{
-      this.encuestas = resp.data[0];
-      console.log(resp)
+      this.encuestas = resp.data;
       this.loadingController.dismiss();
     })
   }

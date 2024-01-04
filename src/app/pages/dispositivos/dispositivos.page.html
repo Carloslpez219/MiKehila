@@ -18,7 +18,7 @@
 
 
   <ion-list [inset]="true">
-    <ion-item [button]="true" color="light" *ngFor="let item of dispositivos" class="ion-activatable animate__animated animate__fadeIn">
+    <ion-item [button]="true" color="light" *ngFor="let item of dispositivos" (click)="presentActionSheet(item.estado, item.dispositivo)" class="ion-activatable animate__animated animate__fadeIn">
       <ion-label class="ion-text-wrap">
         <strong>Tipo: {{item.tipo}}</strong>
         <p>Creación: {{item.fecha_creacion}}</p>
@@ -26,6 +26,8 @@
         <ion-note style="font-size: 11px;">Dispositivo: {{item.dispositivo}}</ion-note>
       </ion-label>
       <ion-note slot="end"></ion-note>
+      <ion-badge color="danger" *ngIf="item.estado == 0">Inactivo</ion-badge>
+      <ion-badge color="success" *ngIf="item.estado == 1">Activo</ion-badge>
     </ion-item>
   </ion-list>
 
