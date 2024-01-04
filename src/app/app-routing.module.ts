@@ -76,10 +76,28 @@ const routes: Routes = [
     canActivate: [GuardGuard],
     path: 'crear-familiar',
     loadChildren: () => import('./pages/crear-familiar/crear-familiar.module').then( m => m.CrearFamiliarPageModule)
-  },  {
+  },
+  {
+    canActivate: [GuardGuard],
     path: 'image-modal',
     loadChildren: () => import('./pages/image-modal/image-modal.module').then( m => m.ImageModalPageModule)
+  },
+  {
+    canActivate: [GuardGuard],
+    path: 'pdf-viewer',
+    loadChildren: () => import('./pages/pdf-viewer/pdf-viewer.module').then( m => m.PdfViewerPageModule)
+  },
+  {
+    canActivate: [GuardGuard],
+    path: 'soporte',
+    loadChildren: () => import('./pages/soporte/soporte.module').then( m => m.SoportePageModule)
+  },
+  {
+    canActivate: [GuardGuard],
+    path: 'dispositivos',
+    loadChildren: () => import('./pages/dispositivos/dispositivos.module').then( m => m.DispositivosPageModule)
   }
+
 
 ];
 

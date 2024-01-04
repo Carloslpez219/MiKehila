@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Dispositivos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-list [inset]="true">
+    <ion-item [button]="true" color="light" *ngFor="let item of dispositivos" class="ion-activatable animate__animated animate__fadeIn">
+      <ion-label class="ion-text-wrap">
+        <strong>Tipo: {{item.tipo}}</strong>
+        <p>Creación: {{item.fecha_creacion}}</p>
+        <p>Utimo ingreso: {{item.fecha_ultimo_ingreso}}</p>
+        <ion-note style="font-size: 11px;">Dispositivo: {{item.dispositivo}}</ion-note>
+      </ion-label>
+      <ion-note slot="end"></ion-note>
+    </ion-item>
+  </ion-list>
+
+
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+  
+</ion-content>

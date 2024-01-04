@@ -90,4 +90,12 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigoUsuario}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
   }
   
+  async soporte<T>(json: any){
+    return this.http.get<T>(`${asmsURL}API_contactanos.php?request=contactanos&data=${json}`);
+  }
+
+  async getDispositivos<T>(){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=dispositivos&codigoMiembro=${this.datosUsuario.codigo}`);
+  }
 }

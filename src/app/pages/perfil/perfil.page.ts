@@ -79,7 +79,19 @@ export class PerfilPage implements OnInit {
         genero: new FormControl('', [Validators.required]),
         nacionalidad: new FormControl('', [Validators.required]),
         tipoSangre: new FormControl('', [Validators.required]),
-        estado: new FormControl('', [Validators.required])
+        estado: new FormControl('', [Validators.required]),
+
+        tipocui: new FormControl('', [Validators.required]),
+        fechaJudia: new FormControl('', [Validators.required]),
+        barMitzva: new FormControl('', [Validators.required]),
+        fechaFallecimiento: new FormControl('', [Validators.required]),
+        telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        trabajo: new FormControl('', [Validators.required]),
+        teltrabajo: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        profesion: new FormControl('', [Validators.required]),
+        alergia: new FormControl('', [Validators.required]),
+        emergencia: new FormControl('', [Validators.required]),
+        emetel: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
     });
 }
 
@@ -134,6 +146,18 @@ formatDate(event: any) {
     this.profileForm.controls['nacionalidad'].setValue(perfilData.nacionalidad);
     this.profileForm.controls['tipoSangre'].setValue(perfilData.tipoSangre);
     this.profileForm.controls['estado'].setValue(perfilData.estado_civil);
+
+    this.profileForm.controls['tipocui'].setValue(perfilData.tipocui);
+    this.profileForm.controls['fechaJudia'].setValue(perfilData.fechaJudia);
+    this.profileForm.controls['barMitzva'].setValue(perfilData.barmitsva);
+    this.profileForm.controls['fechaFallecimiento'].setValue(perfilData.fallecimiento);
+    this.profileForm.controls['telcasa'].setValue(perfilData.telefono);
+    this.profileForm.controls['trabajo'].setValue(perfilData.lugar_trabajo);
+    this.profileForm.controls['teltrabajo'].setValue(perfilData.telefono_trabajo);
+    this.profileForm.controls['profesion'].setValue(perfilData.profesion);
+    this.profileForm.controls['alergia'].setValue(perfilData.alergico);
+    this.profileForm.controls['emergencia'].setValue(perfilData.nombreEmergencia);
+    this.profileForm.controls['emetel'].setValue(perfilData.telefonoEmergencia);
   }
 
   get dpi() { return this.profileForm.get('dpi'); }
@@ -156,6 +180,18 @@ formatDate(event: any) {
   get nacionalidad() { return this.profileForm.get('nacionalidad'); }
   get tipoSangre() { return this.profileForm.get('tipoSangre'); }
   get estado() { return this.profileForm.get('estado'); }
+
+  get tipocui() { return this.profileForm.get('tipocui'); }
+  get fechaJudia() { return this.profileForm.get('fechaJudia'); }
+  get barMitzva() { return this.profileForm.get('barMitzva'); }
+  get fechaFallecimiento() { return this.profileForm.get('fechaFallecimiento'); }
+  get telcasa() { return this.profileForm.get('telcasa'); }
+  get trabajo() { return this.profileForm.get('trabajo'); }
+  get teltrabajo() { return this.profileForm.get('teltrabajo'); }
+  get profesion() { return this.profileForm.get('profesion'); }
+  get alergia() { return this.profileForm.get('alergia'); }
+  get emergencia() { return this.profileForm.get('emergencia'); }
+  get emetel() { return this.profileForm.get('emetel'); }
 
   async getData() {
       (await this.userService.getPerfil()).subscribe((resp: any) => {
@@ -197,7 +233,7 @@ formatDate(event: any) {
     }else if(this.profileForm.value.momento == "despues"){
       momento = "noche";
     }
-    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, 'DPI', this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.date, momento, this.profileForm.value.date, "", this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telefono, this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, '', '', '', this.profileForm.value.genero, this.profileForm.value.tipoSangre, '', '', '', this.profileForm.value.parasha )).subscribe(async resp =>{
+    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.fecha_nacimiento, this.profileForm.value.fechaJudia, this.profileForm.value.momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
       console.log(resp);
       this.mostrarData = false;
       setTimeout(async () => {

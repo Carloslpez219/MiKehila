@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { DetallePinboardPage } from '../pages/detalle-pinboard/detalle-pinboard.page';
 import { AsmsServiceService } from '../services/asms-service.service';
+import { PdfViewerPage } from '../pages/pdf-viewer/pdf-viewer.page';
 
 @Component({
   selector: 'app-folder',
@@ -15,7 +16,7 @@ export class FolderPage implements OnInit {
   circulares: any;
   notificaciones: any;
 
-  constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController) {}
+  constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
   async ngOnInit() {
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
@@ -26,11 +27,12 @@ export class FolderPage implements OnInit {
     });
     (await this.asmsService.getCirculares()).subscribe((resp: any)=>{
       this.circulares = resp.data;
-    })
+      console.log(resp)
+    });
   }
 
-  openLink(url: string) {
-    window.open(url, '_system');
+  getSafeUrl(url: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   segment(ev: any){
@@ -76,5 +78,16 @@ export class FolderPage implements OnInit {
       console.error('Error al obtener actividad:', error);
     }
     ); 
+  } 
+
+  async mostrarModalPDF(pdf: string) {
+        let pdfSrc = pdf; 
+        const modal = await this.modalController.create({
+          component: PdfViewerPage,
+          backdropDismiss: false,
+          componentProps: { pdfSrc }
+        });
+        await modal.present();      
+   
   } 
 }

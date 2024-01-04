@@ -18,6 +18,15 @@
       <label class="textPara">Para: {{multimedia.data[0].target}}</label>
       <br>
       <label class="textCodigo">Codigo: {{multimedia.data[0].codigo}}</label>
+      <br>
+      <br>
+      <div *ngIf="multimedia?.data[0].imagenes.length != 0">
+        <div  *ngFor="let img of multimedia?.data[0].imagenes">
+          <img [src]="img.imagen_url" alt="">
+          <br>
+          <br>
+        </div>
+      </div>
     </div>
   </div>
 
