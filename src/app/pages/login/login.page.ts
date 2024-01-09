@@ -106,6 +106,8 @@ export class LoginPage implements OnInit {
       const valid = await this.userService.login(this.loginForm.value.nombre, this.loginForm.value.password);
       if (valid){
         if (Capacitor.isPluginAvailable('PushNotifications')){
+          await this.loadingController.dismiss();
+          this.navCtrl.navigateRoot('/');
           await this.initializeApp();
         }
         await this.loadingController.dismiss();
