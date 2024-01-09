@@ -129,14 +129,16 @@
           <ion-item mode="md">
             <ion-icon slot="start" name="calendar"></ion-icon>
             <ion-input placeholder="Fecha de nacimiento" type="text" clearOnEdit="false" 
-                       clearInput formControlName="date" (keypress)="onlyNumbers($event)" 
-                       (keyup)="formatDate($event)" maxlength="10">
+                       clearInput formControlName="date" (keypress)="onlyDates($event)" maxlength="10">
             </ion-input>
         </ion-item>        
           <div class="errors" *ngIf="date!.invalid && (date!.dirty || date!.touched)">
             <span *ngIf="date!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
+          </div>
+          <div class="errors" *ngIf="profileForm.get('date')?.errors?.['dateFormat']">
+            <ion-label class="error-container">Fecha no válida. El formato debe ser dd/mm/YYYY.</ion-label>
           </div>
           <small>Momento del día:*</small>
           <ion-item>
@@ -155,8 +157,7 @@
           <ion-item mode="md">
             <ion-icon slot="start" name="calendar"></ion-icon>
             <ion-input placeholder="Fecha Judía" type="text" clearOnEdit="false" 
-                       clearInput formControlName="fechaJudia" (keypress)="onlyNumbers($event)" 
-                       (keyup)="formatDate($event)" maxlength="10">
+                       clearInput formControlName="fechaJudia" (keypress)="onlyDates($event)" maxlength="10">
             </ion-input>
           </ion-item>        
           <div class="errors" *ngIf="fechaJudia!.invalid && (fechaJudia!.dirty || fechaJudia!.touched)">
@@ -164,19 +165,23 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-
+          <div class="errors" *ngIf="profileForm.get('fechaJudia')?.errors?.['dateFormat']">
+            <ion-label class="error-container">Fecha no válida. El formato debe ser dd/mm/YYYY.</ion-label>
+          </div>
           <small>Bar Mitzva:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="calendar"></ion-icon>
             <ion-input placeholder="Bar Mitzva" type="text" clearOnEdit="false" 
-                       clearInput formControlName="barMitzva" (keypress)="onlyNumbers($event)" 
-                       (keyup)="formatDate($event)" maxlength="10">
+                       clearInput formControlName="barMitzva" (keypress)="onlyDates($event)" maxlength="10">
             </ion-input>
           </ion-item>        
           <div class="errors" *ngIf="barMitzva!.invalid && (barMitzva!.dirty || barMitzva!.touched)">
             <span *ngIf="barMitzva!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
+          </div>
+          <div class="errors" *ngIf="profileForm.get('barMitzva')?.errors?.['dateFormat']">
+            <ion-label class="error-container">Fecha no válida. El formato debe ser dd/mm/YYYY.</ion-label>
           </div>
 
           <small>Telefono:*</small>
@@ -237,32 +242,37 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
+
           <small>Departamento:*</small>
-          <ion-item mode="md">
-            <ion-icon slot="start" name="home-sharp"></ion-icon>
-            <ion-input placeholder="Departamento" type="name" clearOnEdit="false" clearInput formControlName="departamento">
-            </ion-input>
+          <ion-item>
+            <ion-select formControlName="departamento" placeholder="Selecciona uno">
+              <ion-select-option *ngFor="let item of departamentos" [value]="item.codigo">{{item.descripcion}}</ion-select-option>
+            </ion-select>
           </ion-item>
           <div class="errors" *ngIf="departamento!.invalid && (departamento!.dirty || departamento!.touched)">
             <span *ngIf="departamento!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
+
           <small>Municipio:*</small>
-          <ion-item mode="md">
-            <ion-icon slot="start" name="home-sharp"></ion-icon>
-            <ion-input placeholder="Municipio" type="name" clearOnEdit="false" clearInput formControlName="municipio">
-            </ion-input>
+          <ion-item>
+            <ion-select formControlName="municipio" placeholder="Selecciona uno">
+              <ion-select-option *ngFor="let item of municipios" [value]="item.codigo">{{item.descripcion}}</ion-select-option>
+            </ion-select>
           </ion-item>
           <div class="errors" *ngIf="municipio!.invalid && (municipio!.dirty || municipio!.touched)">
             <span *ngIf="municipio!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
           <small>Edad:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="today-outline"></ion-icon>
-            <ion-input placeholder="Edad" type="name" clearOnEdit="false" clearInput formControlName="edad" (keypress)="onlyNumbers($event)" maxlength="2">
+            <ion-input placeholder="Edad" type="name" clearOnEdit="false" formControlName="edad" (keypress)="onlyNumbers($event)" maxlength="2">
             </ion-input>
           </ion-item>
           <div class="errors" *ngIf="edad!.invalid && (edad!.dirty || edad!.touched)">

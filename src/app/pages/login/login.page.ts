@@ -6,6 +6,11 @@ import { Storage } from '@ionic/storage';
 import { AlertService } from 'src/app/services/alert.service';
 import { MenuController } from '@ionic/angular';
 import { debounceTime } from 'rxjs/operators';
+import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
+import { Device } from '@capacitor/device';
+import { Platform } from '@ionic/angular';
+import { AsmsServiceService } from 'src/app/services/asms-service.service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +26,7 @@ export class LoginPage implements OnInit {
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController,
-              private alertService: AlertService,  private storage: Storage, private menu: MenuController) {
+              private alertService: AlertService,  private storage: Storage, private menu: MenuController, private service: AsmsServiceService, private platform: Platform) {
                 this.loginForm = this.createFormGroup();
                 this.registroForm = this.createFormGroupRegistro();
               }
@@ -100,6 +105,9 @@ export class LoginPage implements OnInit {
       this.presentLoading();
       const valid = await this.userService.login(this.loginForm.value.nombre, this.loginForm.value.password);
       if (valid){
+        if (Capacitor.isPluginAvailable('PushNotifications')){
+          await this.initializeApp();
+        }
         await this.loadingController.dismiss();
         this.navCtrl.navigateRoot('/');
       }else{
@@ -135,6 +143,37 @@ export class LoginPage implements OnInit {
     this.registro = false;
     this.inicio = true;
   }
+
+  async initializeApp() {
+    const permission = await PushNotifications.requestPermissions();
+    if (permission.receive === 'granted') {
+      PushNotifications.register();
+
+      const id = await Device.getId();
+
+      await PushNotifications.addListener('registration', async token => {
+        console.info('Registration token: ', token.value);
+        let device_type = '';
+        if (this.platform.is('android')) {
+          device_type = await 'android';
+        }else if (this.platform.is('ios')) {
+          device_type = await 'ios';
+        }
+        await (await this.service.registrarDispositivo(id.identifier, token.value, device_type)).subscribe(resp =>{
+          console.log(resp);
+        })
+      });
+
+      PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
+        console.log('Push received: ', notification);
+        this.navCtrl.navigateForward('/');
+      });
+
+      PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
+        this.navCtrl.navigateForward('/');
+      });
+    }
+}
 
 }
 

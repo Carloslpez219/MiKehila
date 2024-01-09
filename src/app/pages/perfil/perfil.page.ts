@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { UserService } from '../../services/user.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AlertService } from '../../services/alert.service';
 import { LoadingController, NavController } from '@ionic/angular';
+import { AsmsServiceService } from 'src/app/services/asms-service.service';
 
 @Component({
   selector: 'app-perfil',
@@ -15,6 +16,8 @@ export class PerfilPage implements OnInit {
   perfilData: any;
   mostrarData = false;
   profileForm: FormGroup;
+  departamentos: any;
+  municipios: any;
   items = Array(3);
   myImage = null;
   // eslint-disable-next-line max-len
@@ -22,7 +25,7 @@ export class PerfilPage implements OnInit {
   selectedFile!: File;
 
   constructor(private userService: UserService, private storage: Storage, private alertService: AlertService,
-              private navCtrl: NavController, private loadingController: LoadingController) {
+              private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService) {
     this.profileForm = this.createFormGroup();
   }
 
@@ -52,7 +55,10 @@ export class PerfilPage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    (await this.asmsService.getDepartamentos()).subscribe((resp: any) => {
+      this.departamentos = resp.data;
+    });
   }
 
   async ionViewWillEnter() {
@@ -66,16 +72,16 @@ export class PerfilPage implements OnInit {
         nombre: new FormControl('', [Validators.required]),
         nombrejudio: new FormControl('', [Validators.required]),
         apellido: new FormControl('', [Validators.required]),
-        date: new FormControl('', [Validators.required]),
+        date: new FormControl('', [Validators.required, this.dateFormatValidator(/^\d{2}\/\d{2}\/\d{4}$/)]),
         momento: new FormControl('', [Validators.required]),
-        telefono: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        telefono: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         parasha: new FormControl('', [Validators.required]),
-        celular: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        celular: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         mail: new FormControl('', [Validators.required, Validators.pattern(this.pattern)]),
         direccion: new FormControl('', [Validators.required]),
         departamento: new FormControl('', [Validators.required]),
         municipio: new FormControl('', [Validators.required]),
-        edad: new FormControl('', [Validators.required, Validators.pattern(/^\d{2}$/)]),
+        edad: new FormControl({value: '', disabled: true}, [Validators.required, Validators.pattern(/^\d+$/)]),
         genero: new FormControl('', [Validators.required]),
         nacionalidad: new FormControl('', [Validators.required]),
         tipoSangre: new FormControl('', [Validators.required]),
@@ -85,13 +91,13 @@ export class PerfilPage implements OnInit {
         fechaJudia: new FormControl('', [Validators.required]),
         barMitzva: new FormControl('', [Validators.required]),
         fechaFallecimiento: new FormControl('', [Validators.required]),
-        telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         trabajo: new FormControl('', [Validators.required]),
-        teltrabajo: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        teltrabajo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         profesion: new FormControl('', [Validators.required]),
         alergia: new FormControl('', [Validators.required]),
         emergencia: new FormControl('', [Validators.required]),
-        emetel: new FormControl('', [Validators.required, Validators.pattern(/^\d{8}$/)]),
+        emetel: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
     });
 }
 
@@ -103,23 +109,19 @@ onlyNumbers(event: KeyboardEvent) {
   }
 }
 
-formatDate(event: any) {
-  let input = event.target.value;
-  let lastChar = input.substr(input.length - 1);
-  let formattedInput = input;
+onlyDates(event: KeyboardEvent) {
+  const allowedRegex = /^[0-9\/]*$/;
 
-  if (!isNaN(lastChar)) {
-    // Inserta '/' después de 2 y 4 dígitos
-    if (input.length === 2 || input.length === 5) {
-      formattedInput = input + '/';
-    }
-  } else {
-    // Elimina el último caracter si no es un número
-    formattedInput = input.slice(0, -1);
+  if (!allowedRegex.test(event.key) && event.key !== 'Backspace') {
+    event.preventDefault();
   }
+}
 
-  // Actualiza el valor del input
-  event.target.value = formattedInput;
+dateFormatValidator(format: RegExp): ValidatorFn {
+  return (control: AbstractControl): {[key: string]: any} | null => {
+    const valid = format.test(control.value);
+    return valid ? null : {'dateFormat': {value: control.value}};
+  };
 }
 
   defaultValue( perfilData: any ){
@@ -128,6 +130,11 @@ formatDate(event: any) {
       this.profileForm.controls['momento'].setValue("antes");
     }else if(perfilData.momentoNacimiento == "noche"){
       this.profileForm.controls['momento'].setValue("despues");
+    }
+    if(perfilData.tipo_dpi == "DPI"){
+      this.profileForm.controls['tipocui'].setValue("DPI");
+    }else if(perfilData.tipo_dpi == "PASAPORTE"){
+      this.profileForm.controls['tipocui'].setValue("PASAPORTE");
     }
     this.profileForm.controls['dpi'].setValue(perfilData.cui);
     this.profileForm.controls['nombre'].setValue(perfilData.nombre);
@@ -146,8 +153,6 @@ formatDate(event: any) {
     this.profileForm.controls['nacionalidad'].setValue(perfilData.nacionalidad);
     this.profileForm.controls['tipoSangre'].setValue(perfilData.tipoSangre);
     this.profileForm.controls['estado'].setValue(perfilData.estado_civil);
-
-    this.profileForm.controls['tipocui'].setValue(perfilData.tipocui);
     this.profileForm.controls['fechaJudia'].setValue(perfilData.fechaJudia);
     this.profileForm.controls['barMitzva'].setValue(perfilData.barmitsva);
     this.profileForm.controls['fechaFallecimiento'].setValue(perfilData.fallecimiento);
@@ -194,15 +199,18 @@ formatDate(event: any) {
   get emetel() { return this.profileForm.get('emetel'); }
 
   async getData() {
-      (await this.userService.getPerfil()).subscribe((resp: any) => {
-        if(resp.status){
-          this.perfilData = resp.data[0];
-          this.defaultValue( this.perfilData );
-          this.mostrarData = true;
-        }else{
-          this.alertService.presentToast(resp.message, 'danger', 3000);
-        }
-      });
+    (await this.userService.getPerfil()).subscribe(async (resp: any) => {
+      if(resp.status){
+        this.perfilData = resp.data[0];
+        this.defaultValue( this.perfilData );
+        (await this.asmsService.getMunicipios(resp.data[0].departamento)).subscribe((resp: any) => {
+          this.municipios = resp.data;
+        });
+        this.mostrarData = true;
+      }else{
+        this.alertService.presentToast(resp.message, 'danger', 3000);
+      }
+    });
   }
 
   clean(){
@@ -233,7 +241,7 @@ formatDate(event: any) {
     }else if(this.profileForm.value.momento == "despues"){
       momento = "noche";
     }
-    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.fecha_nacimiento, this.profileForm.value.fechaJudia, this.profileForm.value.momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
+    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.fechaJudia, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
       console.log(resp);
       this.mostrarData = false;
       setTimeout(async () => {

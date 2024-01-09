@@ -4,6 +4,9 @@ import { LoadingController, ModalController, NavController } from '@ionic/angula
 import { DetallePinboardPage } from '../pages/detalle-pinboard/detalle-pinboard.page';
 import { AsmsServiceService } from '../services/asms-service.service';
 import { PdfViewerPage } from '../pages/pdf-viewer/pdf-viewer.page';
+import { DetalleMultimediaPage } from '../pages/detalle-multimedia/detalle-multimedia.page';
+import { DetallePhotoalbumPage } from '../pages/detalle-photoalbum/detalle-photoalbum.page';
+import { ActividadPage } from '../pages/actividad/actividad.page';
 
 @Component({
   selector: 'app-folder',
@@ -22,6 +25,7 @@ export class FolderPage implements OnInit {
     this.presentLoading();
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
+      console.log(resp)
       this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
@@ -91,6 +95,82 @@ export class FolderPage implements OnInit {
           componentProps: { pdfSrc }
         });
         await modal.present();      
-   
   } 
+
+  async mostrarModalMultimedia( codigo: any ) {
+    await this.presentLoading();
+    (await this.asmsService.getDetalleMUltimedia(codigo)).subscribe(async (resp: any) =>{
+        const multimedia = resp.data[0];
+        const modal = await this.modalController.create({
+          component: DetalleMultimediaPage,
+          backdropDismiss: false,
+          componentProps: { multimedia}
+        });
+        await modal.present();      
+      
+    },
+    (error: any) => {
+      console.error('Error al obtener actividad:', error);
+    }
+    ); 
+  } 
+
+  async mostrarModalPhotoAlbum( codigo: any ) {
+    await this.presentLoading();
+    (await this.asmsService.getDetalleAlbum(codigo)).subscribe(async (resp: any) =>{
+        const multimedia = resp.data[0];
+        const modal = await this.modalController.create({
+          component: DetallePhotoalbumPage,
+          backdropDismiss: false,
+          componentProps: { multimedia}       
+        });
+        await modal.present();      
+      
+    },
+    (error: any) => {
+      console.error('Error al obtener actividad:', error);
+    }
+    ); 
+  } 
+
+  async mostrarModalActividad( codigo: any ) {
+    await this.presentLoading();
+    (await this.asmsService.getActividad(codigo)).subscribe(async (resp: any) =>{
+        const actividad = resp.data[0];
+        const modal = await this.modalController.create({
+          component: ActividadPage,
+          backdropDismiss: false,
+          componentProps: { actividad }
+        });
+        await modal.present();      
+    },
+    (error: any) => {
+      console.error('Error al obtener actividad:', error);
+    }
+    ); 
+  } 
+
+  redirigir(item: any){
+    if (item.type === '1') {
+      this.mostrarModal(item.item_id);
+    } else if (item.type === '3') {
+      this.mostrarModalActividad(item.item_id);
+    } else if (item.type === '4') {
+      console.log("Encuesta");
+    } else if (item.type === '5') {
+      this.mostrarModalMultimedia(item.item_id);
+    } else if (item.type === '6') {
+      this.mostrarModalPDF(item.link)
+    } else if (item.type === '11') {
+      this.mostrarModalPhotoAlbum(item.item_id);
+    } else if (item.type === '12') {
+      console.log("Chat");
+    } else if (item.type === '100') {
+      console.log("General");
+    } else {
+      console.log("Tipo de notificación desconocido");
+    }
+    
+  }
+
 }

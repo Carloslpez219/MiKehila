@@ -96,6 +96,10 @@ const routes: Routes = [
     canActivate: [GuardGuard],
     path: 'dispositivos',
     loadChildren: () => import('./pages/dispositivos/dispositivos.module').then( m => m.DispositivosPageModule)
+  },
+  {
+    path: 'detalle-encuesta',
+    loadChildren: () => import('./pages/detalle-encuesta/detalle-encuesta.module').then( m => m.DetalleEncuestaPageModule)
   }
 
 

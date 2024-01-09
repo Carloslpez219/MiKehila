@@ -103,4 +103,18 @@ export class AsmsServiceService {
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=situacion_dispositivo&codigoMiembro=${this.datosUsuario.codigo}&dispositivo=${dispositivo}&situacion=${situacion}`);
   }
+
+  async getDepartamentos<T>(){
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=get_departamentos`);
+  }
+
+  async getMunicipios<T>(codigo: any){
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=get_municipios&departamento=${codigo}`);
+  }
+
+  async registrarDispositivo<T>(device_id: any, device_token: any, device_type: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=register&user_id=${this.datosUsuario.codigo}&device_id=${device_id}&device_token=${device_token}&device_type=${device_type}&certificate_type=0`);
+  }
+
 }

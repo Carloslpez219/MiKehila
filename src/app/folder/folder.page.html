@@ -35,13 +35,16 @@
 <!-- Notificaciones -->
 
    <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones">
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones" (click)="redirigir(notificacion)">
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="{{notificacion.url_logo}}" />
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <h3>{{notificacion.categoria}}</h3>
         <p>{{notificacion.message}}</p>
+        <ion-note color="medium" class="ion-text-wrap">
+          {{notificacion.updated_at}}
+         </ion-note>
       </ion-label>
     </ion-item>
   </ion-list>
