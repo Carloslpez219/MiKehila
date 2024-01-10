@@ -34,14 +34,20 @@
 
 <!-- Notificaciones -->
 
+
    <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
-    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones" (click)="redirigir(notificacion)">
+    <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones" (click)="redirigir(notificacion); setReadNotification(notificacion.type, notificacion.item_id)">
+      <div class="unread-indicator-wrapper" slot="start" *ngIf="notificacion.clase == 'noleida'">
+        <div class="unread-indicator"></div>
+      </div>
       <ion-avatar aria-hidden="true" slot="start">
         <img alt="" src="{{notificacion.url_logo}}" />
       </ion-avatar>
       <ion-label class="ion-text-wrap">
-        <h3>{{notificacion.categoria}}</h3>
-        <p>{{notificacion.message}}</p>
+        <strong *ngIf="notificacion.clase == 'noleida'">{{notificacion.categoria}}</strong>
+        <strong *ngIf="notificacion.clase == 'noleida'">{{notificacion.message}}</strong>
+        <h3 *ngIf="notificacion.clase !== 'noleida'">{{notificacion.categoria}}</h3>
+        <p *ngIf="notificacion.clase !== 'noleida'">{{notificacion.message}}</p>
         <ion-note color="medium" class="ion-text-wrap">
           {{notificacion.updated_at}}
          </ion-note>

@@ -280,17 +280,20 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
           <small>Genero:*</small>
-          <ion-item mode="md">
-            <ion-icon slot="start" name="people"></ion-icon>
-            <ion-input placeholder="Genero" type="name" clearOnEdit="false" clearInput formControlName="genero" >
-            </ion-input>
+          <ion-item>
+            <ion-select formControlName="genero" placeholder="Selecciona uno">
+              <ion-select-option value="F">Femenino</ion-select-option>
+              <ion-select-option value="M">Masculino</ion-select-option>
+            </ion-select>
           </ion-item>
           <div class="errors" *ngIf="genero!.invalid && (genero!.dirty || genero!.touched)">
             <span *ngIf="genero!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
           <small>Nacionalidad:*</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="earth-outline"></ion-icon>
@@ -302,22 +305,32 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+          
           <small>Tipo de Sangre:*</small>
-          <ion-item mode="md">
-            <ion-icon slot="start" name="bandage-outline"></ion-icon>
-            <ion-input placeholder="Tipo de sangre" type="name" clearOnEdit="false" clearInput formControlName="tipoSangre">
-            </ion-input>
+          <ion-item>
+            <ion-select formControlName="tipoSangre" placeholder="Selecciona uno">
+              <ion-select-option value="O Rh +">O Rh +</ion-select-option>
+              <ion-select-option value="O Rh -">O Rh -</ion-select-option>
+              <ion-select-option value="A Rh +">A Rh +</ion-select-option>
+              <ion-select-option value="A Rh -">A Rh -</ion-select-option>
+              <ion-select-option value="B Rh +">B Rh +</ion-select-option>
+              <ion-select-option value="B Rh -">B Rh -</ion-select-option>
+              <ion-select-option value="AB Rh +">AB Rh +</ion-select-option>
+              <ion-select-option value="AB Rh -">AB Rh -</ion-select-option>
+            </ion-select>
           </ion-item>
           <div class="errors" *ngIf="tipoSangre!.invalid && (tipoSangre!.dirty || tipoSangre!.touched)">
             <span *ngIf="tipoSangre!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
+
           <small>Estado civil:*</small>
-          <ion-item mode="md">
-            <ion-icon slot="start" name="code-working"></ion-icon>
-            <ion-input placeholder="Estado civil" type="name" clearOnEdit="false" clearInput formControlName="estado">
-            </ion-input>
+          <ion-item>
+            <ion-select formControlName="estado" placeholder="Selecciona uno">
+              <ion-select-option value="SOLTERO">Soltero</ion-select-option>
+              <ion-select-option value="CASADO">Casado</ion-select-option>
+            </ion-select>
           </ion-item>
           <div class="errors" *ngIf="estado!.invalid && (estado!.dirty || estado!.touched)">
             <span *ngIf="estado!.errors!['required']">

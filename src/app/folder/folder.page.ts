@@ -21,8 +21,12 @@ export class FolderPage implements OnInit {
 
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.presentLoading();
+    this.getData();
+  }
+
+  async getData(){
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
       console.log(resp)
@@ -149,6 +153,14 @@ export class FolderPage implements OnInit {
     }
     ); 
   } 
+
+  async setReadNotification(type: any, item: any){
+    (await this.asmsService.setReadNotification(type, item)).subscribe((resp: any) =>{
+      if(resp.status){
+        this.getData();
+      }
+    })
+  }
 
   redirigir(item: any){
     if (item.type === '1') {
