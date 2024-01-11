@@ -32,19 +32,21 @@ export class PerfilPage implements OnInit {
   
   async onFileSelected(event: any) {
     await this.presentLoading();
-    this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.myImage = e.target.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
-      this.uploadImage();
-      this.mostrarData = false;
-      setTimeout(async () => {
-        await this.loadingController.dismiss();
-        this.getData();
-      }, 1000);
+    if (event.target.files && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+      if (this.selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.myImage = e.target.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
+        this.uploadImage();
+        this.mostrarData = false;
+        setTimeout(async () => {
+          await this.loadingController.dismiss();
+          this.getData();
+        }, 1000);
+      }
     }
   }
 

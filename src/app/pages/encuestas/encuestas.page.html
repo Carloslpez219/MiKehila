@@ -16,7 +16,7 @@
   </ion-header>
 
   <ion-list [inset]="true">
-    <ion-item [button]="true" color="light" *ngFor="let item of encuestas" class="ion-activatable animate__animated animate__fadeIn">
+    <ion-item [button]="true" color="light" *ngFor="let item of encuestas" class="ion-activatable animate__animated animate__fadeIn" (click)="openModal(item)">
       <ion-label class="ion-text-wrap">
         <strong>{{item.titulo}}</strong>
         <p>{{item.descripcion}}</p>

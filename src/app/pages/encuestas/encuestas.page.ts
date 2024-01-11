@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AsmsServiceService } from 'src/app/services/asms-service.service';
+import { DetalleEncuestaPage } from '../detalle-encuesta/detalle-encuesta.page';
 
 @Component({
   selector: 'app-encuestas',
@@ -11,7 +12,7 @@ export class EncuestasPage implements OnInit {
 
   encuestas: any;
 
-  constructor(private navCtrl: NavController, private asmsService: AsmsServiceService, private loadingController: LoadingController) { }
+  constructor(private navCtrl: NavController, private asmsService: AsmsServiceService, private loadingController: LoadingController, private modalController: ModalController) { }
 
   async ngOnInit() {
     this.presentLoading();
@@ -19,7 +20,7 @@ export class EncuestasPage implements OnInit {
       this.encuestas = resp.data;
       console.log(resp)
       this.loadingController.dismiss();
-    })
+    });
   }
 
   back(){
@@ -31,6 +32,17 @@ export class EncuestasPage implements OnInit {
       message: 'Cargando...'
     });
     await loading.present();
+  }
+
+  async openModal(encuesta: any) {
+    this.presentLoading();
+    const modal = await this.modalController.create({
+      component: DetalleEncuestaPage,
+      componentProps: {
+        encuesta
+      }
+    });
+    return await modal.present();
   }
 
 }

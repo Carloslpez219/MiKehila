@@ -60,7 +60,7 @@
 
       <ion-item class="ion-item">
         <ion-button (click)="fileInput.click()" expand="block" fill="outline" class="ion-button">Subir Foto</ion-button>
-        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
       </ion-item>
       
       
@@ -305,7 +305,7 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          
+
           <small>Tipo de Sangre:*</small>
           <ion-item>
             <ion-select formControlName="tipoSangre" placeholder="Selecciona uno">

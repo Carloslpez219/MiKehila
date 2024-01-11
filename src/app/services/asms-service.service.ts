@@ -122,4 +122,9 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=reset_especifica&user_id=${this.datosUsuario.codigo}&type=${type}&type_id=${item}`);
   }
 
+  async getPreguntas<T>(codigo: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_encuestas.php?request=preguntas&encuesta=${codigo}&persona=${this.datosUsuario.codigo}`);
+  }
+
 }

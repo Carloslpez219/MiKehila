@@ -1,13 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>detalleEncuesta</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detalleEncuesta</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <ion-list>
+    <ion-item *ngFor="let item of preguntas">
+
+      <ion-radio-group value="custom-checked" *ngIf="item.cinco" >
+        <ion-row>
+          <ion-col *ngFor="let number of [1, 2, 3, 4, 5]">
+            <ion-item lines="none">
+              <ion-note>{{number}}</ion-note>
+              <ion-radio [value]="number"></ion-radio>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+      
+      
+      
+
+      <ion-segment value="default" *ngIf="item.vf">
+        <ion-segment-button value="V">
+          <ion-label>Verdadero</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="F">
+          <ion-label>Falso</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-item *ngIf="item.abierta">
+        <ion-input label="Floating label" labelPlacement="floating" placeholder="Respuesta"></ion-input>
+      </ion-item>
+
+    </ion-item>
+  </ion-list>
+  
 </ion-content>
