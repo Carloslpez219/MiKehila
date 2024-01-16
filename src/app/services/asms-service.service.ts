@@ -86,8 +86,8 @@ export class AsmsServiceService {
 
   async nuevofamiliar<T>(dpi: any, nombres: any, apellidos: any, parentesco: any, tel: any ,mail: any){
     this.datosUsuario = await this.storage.get('datos');
-    console.log(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigoUsuario}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`)
-    return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigoUsuario}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
+    console.log(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`)
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
   }
   
   async soporte<T>(json: any){
@@ -125,6 +125,11 @@ export class AsmsServiceService {
   async getPreguntas<T>(codigo: any){
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_encuestas.php?request=preguntas&encuesta=${codigo}&persona=${this.datosUsuario.codigo}`);
+  }
+
+  async responderPreguntas<T>(codigo: any, pregunta: any, tipo: any, ponderacion: any, respuesta: any ){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_encuestas.php?request=responder&pregunta=${pregunta}&encuesta=${codigo}&persona=${this.datosUsuario.codigo}&tipo=${tipo}&ponderacion=${ponderacion}&respuesta=${respuesta}`);
   }
 
 }

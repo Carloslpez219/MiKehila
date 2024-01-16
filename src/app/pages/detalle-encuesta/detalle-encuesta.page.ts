@@ -12,6 +12,7 @@ export class DetalleEncuestaPage implements OnInit {
   @Input() encuesta: any;
   viewEntered: any;
   preguntas: any;
+  segmentValue: string = '';
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform, private asmsService: AsmsServiceService) { }
 
@@ -36,6 +37,28 @@ export class DetalleEncuestaPage implements OnInit {
       this.modalController.dismiss();
     });
     this.modalController.dismiss();
+  }
+
+  async responder(pregunta: any, respuesta: any){
+    (await this.asmsService.responderPreguntas(this.encuesta.codigo, pregunta.codigo, pregunta.tipo, respuesta.detail.value, ''))
+    .subscribe((resp: any) =>{
+      console.log(resp)
+    });
+  }
+
+  async responderVF(pregunta: any, respuesta: any){
+    this.segmentValue = pregunta.detail.value;
+    (await this.asmsService.responderPreguntas(this.encuesta.codigo, pregunta.codigo, pregunta.tipo, " ", respuesta.detail.value))
+    .subscribe((resp: any) =>{
+      console.log(resp)
+    });
+  }
+
+  async responderInput(pregunta: any, respuesta: any){
+    (await this.asmsService.responderPreguntas(this.encuesta.codigo, pregunta.codigo, pregunta.tipo, " ", respuesta))
+    .subscribe((resp: any) =>{
+      console.log(resp)
+    });
   }
 
 }

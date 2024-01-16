@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { AlertService } from '../../services/alert.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { AsmsServiceService } from 'src/app/services/asms-service.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -25,10 +26,13 @@ export class PerfilPage implements OnInit {
   selectedFile!: File;
 
   constructor(private userService: UserService, private storage: Storage, private alertService: AlertService,
-              private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService) {
+              private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService, private platform: Platform) {
     this.profileForm = this.createFormGroup();
   }
 
+  isIos() {
+    return this.platform.is('ios');
+  }
   
   async onFileSelected(event: any) {
     await this.presentLoading();

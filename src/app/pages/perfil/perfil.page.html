@@ -59,11 +59,9 @@
 
 
       <ion-item class="ion-item">
-        <ion-button (click)="fileInput.click()" expand="block" fill="outline" class="ion-button">Subir Foto</ion-button>
-        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
-      </ion-item>
-      
-      
+        <ion-button (click)="fileInput.click()" expand="block" fill="outline" class="ion-button" [disabled]="isIos()">Subir Foto</ion-button>
+        <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;" [disabled]="isIos()">
+      </ion-item> 
 
       <form (ngSubmit)="updatePerfil()" [formGroup]="profileForm">
         <ion-list>
