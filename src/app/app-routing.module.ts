@@ -100,6 +100,14 @@ const routes: Routes = [
   {
     path: 'detalle-encuesta',
     loadChildren: () => import('./pages/detalle-encuesta/detalle-encuesta.module').then( m => m.DetalleEncuestaPageModule)
+  },
+  {
+    path: 'chats',
+    loadChildren: () => import('./pages/chats/chats.module').then( m => m.ChatsPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
   }
 
 

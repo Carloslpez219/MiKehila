@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { AlertService } from './services/alert.service';
+import { AsmsServiceService } from './services/asms-service.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +20,44 @@ export class AppComponent {
     { title: 'Soporte Tecnico', url: '/soporte', icon: 'construct' },
     
   ];
-  constructor(private navCtrl: NavController, private storage: Storage) {}
+  constructor(private navCtrl: NavController, private storage: Storage, private actionSheetCtrl: ActionSheetController, private asmsService: AsmsServiceService, private alertService: AlertService) {}
 
   async logOut(){
     this.navCtrl.navigateRoot('/login')
     this.storage.remove('datos');
     this.storage.remove('ordenes');
     this.storage.clear();
+  }
+
+  async eliminarCuenta(){
+      const actionSheet1 = await this.actionSheetCtrl.create({
+        header: 'Esta seguro de eliminar su cuenta?',
+        buttons: [
+          {
+            text: 'Aceptar',
+            role: 'destructive',
+            handler: () => {
+              this.desactivar();
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+        ],
+      });
+  
+      await actionSheet1.present();
+  }
+
+  async desactivar(){
+    (await this.asmsService.eliminarCuenta()).subscribe((resp: any)=>{
+      if(resp.status){
+        this.alertService.presentToast(resp.message, 'success', 3000);
+        this.logOut();
+      }else{
+        this.alertService.presentToast(resp.message, 'danger', 3000);
+      }
+    })
   }
 }

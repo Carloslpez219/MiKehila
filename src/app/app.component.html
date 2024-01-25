@@ -15,6 +15,10 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item lines="none" detail="false" (click)="eliminarCuenta()">
+            <ion-icon aria-hidden="true" slot="start" [ios]="'trash' + '-outline'" [md]="'trash' + '-sharp'"></ion-icon>
+            <ion-label>Eliminar cuenta</ion-label>
+          </ion-item>
         </ion-list>
         <span class="screen__background__shape screen__background__shape1"></span>
   <span class="screen__background__shape screen__background__shape2"></span>

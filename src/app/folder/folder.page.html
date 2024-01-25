@@ -129,6 +129,17 @@
   </ion-card-header>
 </ion-card>
 
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="chevron-up-circle"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button (click)="toChats()">
+      <ion-icon name="chatbubble-ellipses"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
 <div *ngIf="segmento != 'multimedia'">
   <span class="screen__background__shape screen__background__shape1"></span>
   <span class="screen__background__shape screen__background__shape2"></span>

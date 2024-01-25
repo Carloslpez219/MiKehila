@@ -1,0 +1,57 @@
+ion-footer {
+    --background: transparent; // Puedes ajustar el color de fondo si es necesario
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --border-style: solid;
+    --border-width: 8px;
+    --color: #3880ff;
+    --min-height: 56px;
+    --opacity: 1;
+    --padding-bottom: 4px;
+    --padding-end: 4px;
+    --padding-start: 4px;
+    --padding-top: 4px;
+  }
+
+  .contenedor-mensajes {
+    overflow-y: auto;
+    height: 100%; // Ajusta según tu diseño
+    display: flex;
+    flex-direction: column;
+    // Otros estilos que necesites
+  }
+  
+
+  .mensaje-enviado {
+  text-align: right;
+  background-color: #DCF8C6; // color para mensajes enviados
+  border-radius: 10px 0px 10px 10px;
+  margin-right: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+  float: right;
+  max-width: 70%;
+}
+
+.mensaje-recibido {
+  text-align: left;
+  background-color: #ECECEC; // color para mensajes recibidos
+  border-radius: 0px 10px 10px 10px;
+  margin-left: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: fit-content;
+  float: left;
+  max-width: 70%;
+}
+
+.tiempo {
+  font-size: xx-small;
+  opacity: 0.4;
+  margin-top: 7px;
+}
+
+  

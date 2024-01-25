@@ -1,0 +1,45 @@
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+  opacity: 0.8;  
+}
+
+.screen__background__shape1 {
+	height: 30px;
+	width: 340px;
+	background: #259bbe;	
+	top: 800px;
+	right: -150px;	
+	border-radius: 60px;
+  z-index: -10;
+}
+
+.screen__background__shape2 {
+	height: 30px;
+	width: 325px;
+	background: #062e47;	
+	top: 788px;
+	right: -196px;	
+	border-radius: 32px;
+  z-index: -10;
+}
+
+.screen__background__shape3 {
+	height: 30px;
+	width: 310px;
+	background: #f6851f;	
+	top: 735px;
+	right: -200px;	
+	border-radius: 60px;
+  z-index: -10;
+}
+
+.screen__background__shape4 {
+	height: 30px;
+	width: 350px;
+	background: #fcb712;	
+	top: 707px;
+	right: -260px;	
+	border-radius: 60px;
+  z-index: -10;
+}

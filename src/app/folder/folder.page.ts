@@ -185,4 +185,8 @@ export class FolderPage implements OnInit {
     
   }
 
+  toChats(){
+    this.navCtrl.navigateForward('/chats');
+  }
+
 }

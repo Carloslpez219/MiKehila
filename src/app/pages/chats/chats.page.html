@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-row>
+        <ion-col size="8">
+          <ion-title size="large">Chats</ion-title>
+        </ion-col>
+        <ion-col size="4">
+          <ion-list>
+            <ion-item>
+              <ion-select
+                interface="popover"
+                toggleIcon="add-circle"
+                expandedIcon="remove"
+                placeholder="Nuevo chat"
+                (ionChange)="newChat($event)">
+                <ion-select-option *ngFor="let item of comunity" [value]="item">{{item.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list [inset]="true">
+    <ion-item [button]="false" color="light" *ngFor="let item of chats" (click)="mostrarModal(item)" class="ion-activatable">
+      <ion-avatar aria-hidden="true" slot="start">
+        <img alt="" src="{{item.fotoComunity}}" />
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <ion-row>
+          <ion-col size="9">
+            <strong style="font-size: 16px;">{{item.nombre_comunity}}</strong>
+          </ion-col>
+          <ion-col size="3" class="ion-text-right">
+            <ion-note style="font-size: 11px;">{{item.fecha_ultimo_mensaje}}</ion-note>
+          </ion-col>
+        </ion-row>
+      <ion-row>
+        <ion-col size="12" *ngIf="item.extension != 'jpg'">
+          <p style="color: rgb(96, 96, 96); margin-top: -5px;"> {{item.ultimo_mensaje}}</p>
+        </ion-col>
+        <ion-col size="12" *ngIf="item.extension == 'jpg'" style="margin-top: -5px;">
+          <p style="color: rgb(96, 96, 96);"> <ion-icon slot="start" name="camera" style="zoom: 1.5; color: rgb(158, 156, 156);"></ion-icon> Foto</p>
+        </ion-col>
+      </ion-row>
+        
+       
+        
+      </ion-label>
+      <ion-note slot="end"></ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="chats?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No tienes chats activos!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+</ion-content>

@@ -132,4 +132,37 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_encuestas.php?request=responder&pregunta=${pregunta}&encuesta=${codigo}&persona=${this.datosUsuario.codigo}&tipo=${tipo}&ponderacion=${ponderacion}&respuesta=${respuesta}`);
   }
 
+  async eliminarCuenta<T>(){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=situacion_usuario&codigoUsuario=${this.datosUsuario.codigo}`);
+  }
+
+  async getChats<T>(){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=lista_dialogos&codigoMiembro=14&tipo_usuario=3`);
+    return this.http.get<T>(`${asmsURL}API_chat.php?request=lista_dialogos&codigoMiembro=${this.datosUsuario.codigo}&tipo=${this.datosUsuario.tipo_usuario}`);
+  }
+
+  async getMessages<T>(dialogo: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=lista_mensajes&codigoMiembro=14&dialogo=${dialogo}`);
+    return this.http.get<T>(`${asmsURL}API_chat.php?request=lista_mensajes&codigoMiembro=${this.datosUsuario.codigo}&dialogo=${dialogo}`);
+  }
+
+  async getComunity<T>(){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_chat.php?request=get_usuarios_cm&tipo=${this.datosUsuario.tipo_usuario}`);
+  }
+  
+  async sendMessage<T>(dialogo: any, message: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=enviar&dialogo=${dialogo}&sender=14&sender_type=3&message=${message}`);
+    return this.http.get<T>(`${asmsURL}API_chat.php?request=enviar&dialogo=${dialogo}&sender=${this.datosUsuario.codigo}&sender_type=${this.datosUsuario.tipo_usuario}&message=${message}`);
+  }
+
+  async nuevoDialogo<T>(receiver_type: any, receiver: any, message: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=nuevo_dialogo&sender_type=3&sender=14&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
+    return this.http.get<T>(`${asmsURL}API_chat.php?request=nuevo_dialogo&sender_type=${this.datosUsuario.tipo_usuario}&sender=${this.datosUsuario.codigo}&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
+  }
 }
