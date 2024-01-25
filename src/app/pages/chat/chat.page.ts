@@ -18,6 +18,7 @@ export class ChatPage implements AfterViewChecked {
   viewEntered: any;
   message: any;
   dialog: any;
+  cambioHeader = true;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform,
               private asmsService: AsmsServiceService) { 
@@ -74,7 +75,21 @@ export class ChatPage implements AfterViewChecked {
   async obtainMessages(){
     (await this.asmsService.getMessages(this.dialog)).subscribe(async (resp: any) =>{
         this.messages =  resp.data;
+        console.log(this.messages.length, resp.data.length);
      }); 
+  }
+
+  async obtainMessagesRecursive(){
+    (await this.asmsService.getMessages(this.dialog)).subscribe(async (resp: any) =>{
+        if(resp.data.length !== this.messages.length ){
+          console.log('call');
+          this.messages =  resp.data;
+        }
+     }); 
+
+     setTimeout(() => {
+      this.obtainMessagesRecursive();
+     }, 2000);
   }
 
   async sendMessage(){
@@ -84,21 +99,25 @@ export class ChatPage implements AfterViewChecked {
         if(resp.status){
           this.message = '';
           this.obtainMessages();
+          this.obtainMessagesRecursive();
           setTimeout(() => {
             this.scrollToBottom();
           }, 300);
         }
       });
     }else{
+      this.cambioHeader = false;
       (await this.asmsService.nuevoDialogo(this.object.tipo, this.object.codigoComunity, this.message)).subscribe((resp: any)=>{
+        console.log(resp);
         if(resp.status){
           this.message = '';
+          this.dialog = resp.dialogo;
+          this.page = 'messages';
           this.obtainMessages();
+          this.obtainMessagesRecursive();
           setTimeout(() => {
             this.scrollToBottom();
           }, 300);
-          this.dialog = resp.data[0].dialogo;
-          this.page = 'messages';
         }
       });
     }

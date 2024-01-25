@@ -139,6 +139,7 @@ export class AsmsServiceService {
 
   async getChats<T>(){
     this.datosUsuario = await this.storage.get('datos');
+    console.log(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=lista_dialogos&codigoMiembro=14&tipo_usuario=3`);
     return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=lista_dialogos&codigoMiembro=14&tipo_usuario=3`);
     return this.http.get<T>(`${asmsURL}API_chat.php?request=lista_dialogos&codigoMiembro=${this.datosUsuario.codigo}&tipo=${this.datosUsuario.tipo_usuario}`);
   }
@@ -151,6 +152,7 @@ export class AsmsServiceService {
 
   async getComunity<T>(){
     this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=get_usuarios_cm&tipo=3`);
     return this.http.get<T>(`${asmsURL}API_chat.php?request=get_usuarios_cm&tipo=${this.datosUsuario.tipo_usuario}`);
   }
   
@@ -162,6 +164,7 @@ export class AsmsServiceService {
 
   async nuevoDialogo<T>(receiver_type: any, receiver: any, message: any){
     this.datosUsuario = await this.storage.get('datos');
+    console.log(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=nuevo_dialogo&sender_type=3&sender=14&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
     return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=nuevo_dialogo&sender_type=3&sender=14&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
     return this.http.get<T>(`${asmsURL}API_chat.php?request=nuevo_dialogo&sender_type=${this.datosUsuario.tipo_usuario}&sender=${this.datosUsuario.codigo}&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
   }
