@@ -74,7 +74,7 @@ export class PerfilPage implements OnInit {
 
   createFormGroup() {
     return new FormGroup({
-        dpi: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+        dpi: new FormControl('', [ Validators.pattern(/^\d+$/)]),
         nombre: new FormControl('', [Validators.required]),
         nombrejudio: new FormControl('', [Validators.required]),
         apellido: new FormControl('', [Validators.required]),

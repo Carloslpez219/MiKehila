@@ -90,8 +90,8 @@ export class UserService {
     );
   }
   
-  async buscaCUI<T>(cui: string){
-    return this.http.get<T>(`${asmsURL}API_familia.php?request=buscar_cui&dpi=${cui}`);
+  async buscaCUI<T>(cui: string, email: any, celular: any){
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=busca_datos&cui=${cui}&email=${email}&celular=${celular}`);
   }
 
 }

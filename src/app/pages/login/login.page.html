@@ -59,7 +59,7 @@
         <ion-list>
           <ion-item mode="md">
             <ion-icon slot="start" name="card-outline"></ion-icon>
-            <ion-input placeholder="CUI" type="name" clearOnEdit="true" clearInput formControlName="dpi"  (keypress)="onlyNumbers($event)" maxlength="13">
+            <ion-input placeholder="CUI (opcional)" type="name" clearOnEdit="true" clearInput formControlName="dpi"  (keypress)="onlyNumbers($event)" maxlength="13">
             </ion-input>
           </ion-item>
           <div class="errors" *ngIf="dpi!.invalid && (dpi!.dirty || dpi!.touched)">
@@ -103,6 +103,21 @@
               <ion-label class="error-container">Enter an email valid</ion-label>
             </span>
           </div>
+
+          <ion-item mode="md">
+            <ion-icon slot="start" name="call"></ion-icon>
+            <ion-input placeholder="Celular" type="mail" clearOnEdit="true" clearInput formControlName="celular" (keypress)="onlyNumbers($event)" maxlength="8">
+            </ion-input>
+          </ion-item>
+          <div class="errors" *ngIf="celular!.invalid && (celular!.dirty || celular!.touched)">
+            <span *ngIf="celular!.errors!['required']">
+              <ion-label class="error-container">Este campo es obligatorio</ion-label>
+            </span>
+            <span *ngIf="(celular!.dirty || celular!.touched) && celular!.invalid && celular!.errors!['pattern']">
+              <ion-label class="error-container">El celular debe ser compuesto por numeros.</ion-label>
+            </span>
+          </div>
+
         </ion-list>
         <ion-grid>
           <ion-row>

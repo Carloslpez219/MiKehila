@@ -7,6 +7,7 @@ import { PdfViewerPage } from '../pages/pdf-viewer/pdf-viewer.page';
 import { DetalleMultimediaPage } from '../pages/detalle-multimedia/detalle-multimedia.page';
 import { DetallePhotoalbumPage } from '../pages/detalle-photoalbum/detalle-photoalbum.page';
 import { ActividadPage } from '../pages/actividad/actividad.page';
+import { DetalleEncuestaPage } from '../pages/detalle-encuesta/detalle-encuesta.page';
 
 @Component({
   selector: 'app-folder',
@@ -37,8 +38,16 @@ export class FolderPage implements OnInit {
       this.loadingController.dismiss();
     });
     (await this.asmsService.getCirculares()).subscribe((resp: any)=>{
+      console.log(resp);
       this.circulares = resp.data;
       this.loadingController.dismiss();
+    });
+  }
+
+  async doRefresh(event: any){
+    this.presentLoading();
+    this.getData().then(() => {
+      event.target.complete();
     });
   }
 
@@ -100,6 +109,11 @@ export class FolderPage implements OnInit {
         });
         await modal.present();      
   } 
+
+  abrirEnlace(link: string) {
+    window.open(link, '_system');
+  }
+  
 
   async mostrarModalMultimedia( codigo: any ) {
     await this.presentLoading();
@@ -168,7 +182,8 @@ export class FolderPage implements OnInit {
     } else if (item.type === '3') {
       this.mostrarModalActividad(item.item_id);
     } else if (item.type === '4') {
-      console.log("Encuesta");
+      console.log(item);
+      this.openModal(item);
     } else if (item.type === '5') {
       this.mostrarModalMultimedia(item.item_id);
     } else if (item.type === '6') {
@@ -187,6 +202,17 @@ export class FolderPage implements OnInit {
 
   toChats(){
     this.navCtrl.navigateForward('/chats');
+  }
+
+  async openModal(encuesta: any) {
+    this.presentLoading();
+    const modal = await this.modalController.create({
+      component: DetalleEncuestaPage,
+      componentProps: {
+        encuesta
+      }
+    });
+    return await modal.present();
   }
 
 }

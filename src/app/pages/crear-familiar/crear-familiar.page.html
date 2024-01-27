@@ -23,7 +23,7 @@
         <!-- Campo DPI -->
         <ion-item mode="md">
           <ion-icon slot="start" name="card-outline"></ion-icon>
-          <ion-input placeholder="DPI" type="text" clearOnEdit="true" clearInput formControlName="dpi"></ion-input>
+          <ion-input placeholder="DPI (opcional)" type="text" clearOnEdit="true" clearInput formControlName="dpi"></ion-input>
         </ion-item>
         <div class="errors" *ngIf="dpi!.invalid && (dpi!.dirty || dpi!.touched)">
           <span *ngIf="dpi!.errors!['required']">

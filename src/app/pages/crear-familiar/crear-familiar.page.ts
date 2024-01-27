@@ -19,7 +19,7 @@ export class CrearFamiliarPage implements OnInit {
   ngOnInit() {
     this.loadingController.dismiss();
     this.familiarForm = new FormGroup({
-      dpi: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      dpi: new FormControl('', [ Validators.pattern(/^\d+$/)]),
       nombres: new FormControl('', [Validators.required]),
       apellidos: new FormControl('', [Validators.required]),
       parentesco: new FormControl('', [Validators.required]),

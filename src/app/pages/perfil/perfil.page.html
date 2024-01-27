@@ -65,7 +65,7 @@
 
       <form (ngSubmit)="updatePerfil()" [formGroup]="profileForm">
         <ion-list>
-          <small>DPI:*</small>
+          <small>DPI: (opcional)</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="id-card-outline"></ion-icon>
             <ion-input placeholder="DPI" type="name" clearOnEdit="false" clearInput formControlName="dpi" (keypress)="onlyNumbers($event)" maxlength="13">

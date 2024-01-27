@@ -27,13 +27,26 @@
     <ion-toolbar>
       <ion-title size="large" *ngIf="segmento == 'notificaciones'">Notificaciones</ion-title>
       <ion-title size="large" *ngIf="segmento == 'multimedia'">Multimedia</ion-title>
-      <ion-title size="large" *ngIf="segmento == 'pinboard'">PinBoard</ion-title>
+      <ion-title size="large" *ngIf="segmento == 'pinboard'">Flyers</ion-title>
       <ion-title size="large" *ngIf="segmento == 'circulares'">Circulares</ion-title>
     </ion-toolbar>
   </ion-header>
 
-<!-- Notificaciones -->
 
+  <div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  </div>
+  <ion-row class="row-refresh" class="ion-text-center" style="margin-bottom: -20px;">
+    <ion-col size="12" class="center">
+        <p><ion-icon name="arrow-down-outline" style="zoom:0.9;" class="ion-icon-refresh" slot="start"></ion-icon>
+          Desliza para recargar
+          <ion-icon name="arrow-down-outline" style="zoom:0.9;" class="ion-icon-refresh" slot="end"></ion-icon></p>
+    </ion-col>
+  </ion-row>
+
+<!-- Notificaciones -->
 
    <ion-list [inset]="true" *ngIf="segmento == 'notificaciones'">
     <ion-item [button]="true" color="light" class="ion-activatable animate__animated animate__fadeIn" *ngFor="let notificacion of notificaciones" (click)="redirigir(notificacion); setReadNotification(notificacion.type, notificacion.item_id)">
@@ -111,16 +124,20 @@
   
   <div *ngIf="segmento == 'circulares'">
 
-    <ion-card *ngFor="let item of circulares"
-          [ngStyle]="{'background-image': 'url(' + item.url_logo + ')'}" 
-          color="light"
-          (click)="mostrarModalPDF(item.link)" class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
-      <ion-card-header>
-        <ion-card-title style="font-size: 22px;">{{item.titulo}}</ion-card-title>
-        <ion-card-subtitle style="font-size: 10px;">{{item.fecha_publicacion}} - {{item.hora_publicacion}}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content> {{item.descripcion}} </ion-card-content>
-    </ion-card>
+
+    <ng-container *ngFor="let item of circulares">
+      <ion-card [ngStyle]="{'background-image': 'url(' + item.url_logo + ')'}" 
+                color="light"
+                (click)="item.extension === 'pdf' ? mostrarModalPDF(item.link) : abrirEnlace(item.link)" 
+                class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
+                <ion-card-header>
+                  <ion-card-title style="font-size: 22px;">{{item.titulo}}</ion-card-title>
+                  <ion-card-subtitle style="font-size: 10px;">{{item.fecha_publicacion}} - {{item.hora_publicacion}}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content> {{item.descripcion}} </ion-card-content>
+      </ion-card>
+    </ng-container>
+
 </div>
 
 <ion-card *ngIf="segmento == 'circulares' && circulares?.length == 0">

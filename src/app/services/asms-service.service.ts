@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Storage } from '@ionic/storage-angular';
@@ -52,7 +52,8 @@ export class AsmsServiceService {
   }
 
   async getEncuestas<T>(){
-    return this.http.get<T>(`${asmsURL}API_encuestas.php?request=encuestas`);
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_encuestas.php?request=encuestas&codigo=${this.datosUsuario.codigo}`);
   }
 
   async getPhotoAlbum<T>(){
@@ -129,6 +130,7 @@ export class AsmsServiceService {
 
   async responderPreguntas<T>(codigo: any, pregunta: any, tipo: any, ponderacion: any, respuesta: any ){
     this.datosUsuario = await this.storage.get('datos');
+    console.log(`${asmsURL}API_encuestas.php?request=responder&pregunta=${pregunta}&encuesta=${codigo}&persona=${this.datosUsuario.codigo}&tipo=${tipo}&ponderacion=${ponderacion}&respuesta=${respuesta}`);
     return this.http.get<T>(`${asmsURL}API_encuestas.php?request=responder&pregunta=${pregunta}&encuesta=${codigo}&persona=${this.datosUsuario.codigo}&tipo=${tipo}&ponderacion=${ponderacion}&respuesta=${respuesta}`);
   }
 
@@ -168,4 +170,32 @@ export class AsmsServiceService {
     return this.http.get<T>(`https://asms.pruebasgt.net/SISTEM/API/API_chat.php?request=nuevo_dialogo&sender_type=3&sender=14&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
     return this.http.get<T>(`${asmsURL}API_chat.php?request=nuevo_dialogo&sender_type=${this.datosUsuario.tipo_usuario}&sender=${this.datosUsuario.codigo}&receiver_type=${receiver_type}&receiver=${receiver}&message=${message}`);
   }
+
+
+  async uploadFile(file: File, object: any, dialogo: any,) {
+    this.datosUsuario = await this.storage.get('datos');
+    const formData = new FormData();
+  
+    formData.append('archivo', file, file.name);
+    formData.append('request', 'mensaje_archivo');
+    formData.append('sender_type', this.datosUsuario.tipo_usuario);
+    formData.append('sender', this.datosUsuario.codigo);
+    formData.append('receiver_type', object.tipo);
+    formData.append('receiver', object.codigoComunity);
+    formData.append('dialogo', dialogo);
+  
+    const url = 'https://asms.pruebasgt.com/SISTEM/API/API_archivo_chat.php';
+
+console.log(url, formData);
+    this.http.post(url, formData).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Error al subir el archivo:', error);
+      }
+    );
+  }
+  
+
 }

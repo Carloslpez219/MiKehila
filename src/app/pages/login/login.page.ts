@@ -5,12 +5,13 @@ import { UserService } from '../../services/user.service';
 import { Storage } from '@ionic/storage';
 import { AlertService } from 'src/app/services/alert.service';
 import { MenuController } from '@ionic/angular';
-import { debounceTime } from 'rxjs/operators';
 import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
 import { Device } from '@capacitor/device';
 import { Platform } from '@ionic/angular';
 import { AsmsServiceService } from 'src/app/services/asms-service.service';
 import { Capacitor } from '@capacitor/core';
+import { combineLatest, of } from 'rxjs';
+import { map, debounceTime, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -31,28 +32,37 @@ export class LoginPage implements OnInit {
                 this.registroForm = this.createFormGroupRegistro();
               }
 
-  ngOnInit() {
-    this.registroForm.get('dpi')?.valueChanges.pipe(
-      debounceTime(500)
-    ).subscribe(async value => {
-      if (value && value.length === 13 && this.registroForm.get('dpi')?.valid) {
-        (await this.userService.buscaCUI(value)).subscribe(
-          (response: any) => {
-            if(!response.status){
-              this.alertService.presentAlert(response.message);
-              this.registroForm.reset();
-            }
-          },
-          (error: any) => {
-            if(!error.status){
-              this.alertService.presentAlert(error.message);
-              this.registroForm.reset();
-            }
-          }
-        );
-      }
-    });
-  }
+
+              ngOnInit() {
+                const dpi$ = this.registroForm.get('dpi')?.valueChanges.pipe(debounceTime(500)) ?? of(null);
+                const mail$ = this.registroForm.get('mail')?.valueChanges.pipe(debounceTime(500)) ?? of(null);
+                const celular$ = this.registroForm.get('celular')?.valueChanges.pipe(debounceTime(500)) ?? of(null);
+              
+                combineLatest([dpi$, mail$, celular$]).pipe(
+                  filter(([dpi, mail, celular]) => 
+                    (dpi && dpi.length === 13 && this.registroForm.get('dpi')?.valid) &&
+                    (mail && this.registroForm.get('mail')?.valid) &&
+                    (celular && this.registroForm.get('celular')?.valid)
+                  )
+                ).subscribe(async ([dpi, mail, celular]) => {
+                  (await this.userService.buscaCUI(dpi, mail, celular)).subscribe(
+                    (response: any) => {
+                      console.log('Response', response);
+                      if (!response.status) {
+                        this.alertService.presentAlert(response.message);
+                        this.registroForm.reset();
+                      }
+                    },
+                    (error: any) => {
+                      if (!error.status) {
+                        this.alertService.presentAlert(error.message);
+                        this.registroForm.reset();
+                      }
+                    }
+                  );
+                });
+              }
+              
 
   onlyNumbers(event: KeyboardEvent) {
     const allowedRegex = /[0-9]/;
@@ -81,8 +91,9 @@ export class LoginPage implements OnInit {
     return new FormGroup({
       nombres: new FormControl('', [Validators.required]),
       apellidos: new FormControl('', [Validators.required]),
-      dpi: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      dpi: new FormControl('', [Validators.pattern(/^\d+$/)]),
       mail: new FormControl('', [Validators.required, Validators.pattern(this.pattern)]),
+      celular: new FormControl('', [Validators.pattern(/^\d+$/)]),
     });
   }
 
@@ -93,6 +104,7 @@ export class LoginPage implements OnInit {
   get apellidos() { return this.registroForm.get('apellidos'); }
   get dpi() { return this.registroForm.get('dpi'); }
   get mail() { return this.registroForm.get('mail'); }
+  get celular() { return this.registroForm.get('celular'); }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -168,11 +180,12 @@ export class LoginPage implements OnInit {
 
       PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
         console.log('Push received: ', notification);
-        this.navCtrl.navigateForward('/');
+        this.navCtrl.navigateForward('folder/Notificaciones');
       });
 
       PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
-        this.navCtrl.navigateForward('/');
+        console.log('Push received: ', action);
+        this.navCtrl.navigateForward('folder/Notificaciones');
       });
     }
 }
