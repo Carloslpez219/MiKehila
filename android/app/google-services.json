@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "53454690794",
-    "project_id": "mikehila-66195",
-    "storage_bucket": "mikehila-66195.appspot.com"
+    "project_number": "508282559851",
+    "project_id": "comunidad-judia-de-guatemala",
+    "storage_bucket": "comunidad-judia-de-guatemala.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:53454690794:android:d9c8a308ca946ebfe0fa93",
+        "mobilesdk_app_id": "1:508282559851:android:13dc14dd76a1b05712002e",
         "android_client_info": {
-          "package_name": "com.farasi.mikehila"
+          "package_name": "app.farasi.mikehila"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDIG4D1og_sEHhOUiSsPEuoVHq4mmPM9fw"
+          "current_key": "AIzaSyDZCE8_NmZuWV8hSH_Dxp6F9cn45-W8GwI"
         }
       ],
       "services": {

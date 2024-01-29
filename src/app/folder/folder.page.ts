@@ -34,6 +34,7 @@ export class FolderPage implements OnInit {
       this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
+      console.log(resp);
       this.postIts = resp.data;
       this.loadingController.dismiss();
     });
