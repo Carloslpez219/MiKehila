@@ -17,7 +17,7 @@ export class DispositivosPage implements OnInit {
   async ngOnInit() {
     this.presentLoading();
     (await this.asmsService.getDispositivos()).subscribe((resp: any)=>{
-      console.log(resp)
+       (resp)
       this.dispositivos = resp.data;
       this.loadingController.dismiss();
     })
@@ -87,7 +87,7 @@ export class DispositivosPage implements OnInit {
       }
       this.presentLoading();
       (await this.asmsService.getDispositivos()).subscribe((resp: any)=>{
-        console.log(resp)
+         (resp)
         this.dispositivos = resp.data;
         this.loadingController.dismiss();
       })

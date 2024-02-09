@@ -24,7 +24,7 @@ export class ActividadPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.actividad)
+     (this.actividad)
   }
 
   back(){

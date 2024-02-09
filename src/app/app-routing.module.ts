@@ -98,14 +98,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dispositivos/dispositivos.module').then( m => m.DispositivosPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'detalle-encuesta',
     loadChildren: () => import('./pages/detalle-encuesta/detalle-encuesta.module').then( m => m.DetalleEncuestaPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'chats',
     loadChildren: () => import('./pages/chats/chats.module').then( m => m.ChatsPageModule)
   },
   {
+    canActivate: [GuardGuard],
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
   }

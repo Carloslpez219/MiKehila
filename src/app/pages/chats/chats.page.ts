@@ -19,12 +19,12 @@ export class ChatsPage implements OnInit {
   async ngOnInit() {
     this.presentLoading();
     (await this.asmsService.getChats()).subscribe((resp:any)=>{
-      console.log(resp);
+       (resp);
       this.chats = resp.data;
       this.loadingController.dismiss();
     });
     (await this.asmsService.getComunity()).subscribe((resp:any)=>{
-      console.log(resp);
+       (resp);
       this.comunity = resp;
     });
   }
@@ -33,7 +33,7 @@ export class ChatsPage implements OnInit {
     const object = item;
     await this.presentLoading();
      (await this.asmsService.getMessages(item.dialogo)).subscribe(async (resp: any) =>{
-      console.log(resp);
+       (resp);
          const messages =  resp.data;
          const page = 'messages';
          const modal = await this.modalController.create({
@@ -46,12 +46,12 @@ export class ChatsPage implements OnInit {
         const value: any = await modal.onDidDismiss();
         if(value.data === true){
           (await this.asmsService.getChats()).subscribe((resp:any)=>{
-            console.log(resp);
+             (resp);
             this.chats = resp.data;
             this.loadingController.dismiss();
           });
           (await this.asmsService.getComunity()).subscribe((resp:any)=>{
-            console.log(resp);
+             (resp);
             this.comunity = resp;
           });
         }
@@ -91,12 +91,12 @@ export class ChatsPage implements OnInit {
     const value: any = await modal.onDidDismiss();
         if(value.data === true){
           (await this.asmsService.getChats()).subscribe((resp:any)=>{
-            console.log(resp);
+             (resp);
             this.chats = resp.data;
             this.loadingController.dismiss();
           });
           (await this.asmsService.getComunity()).subscribe((resp:any)=>{
-            console.log(resp);
+             (resp);
             this.comunity = resp;
           });
         }

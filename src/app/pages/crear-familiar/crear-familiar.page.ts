@@ -12,6 +12,7 @@ import { AsmsServiceService } from 'src/app/services/asms-service.service';
 export class CrearFamiliarPage implements OnInit {
 
   familiarForm!: FormGroup;
+  telDisabled = false;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private asmsService: AsmsServiceService,
     private navCtrl: NavController, private alertService: AlertService) { }
@@ -23,7 +24,7 @@ export class CrearFamiliarPage implements OnInit {
       nombres: new FormControl('', [Validators.required]),
       apellidos: new FormControl('', [Validators.required]),
       parentesco: new FormControl('', [Validators.required]),
-      tel: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      tel: new FormControl('', [Validators.required]),
       mail: new FormControl('', [Validators.required, Validators.email])
     });
   }
@@ -38,16 +39,15 @@ export class CrearFamiliarPage implements OnInit {
 
   async onSubmit() {
     if (this.familiarForm.valid) {
-      console.log(this.familiarForm.value);
       (await this.asmsService.nuevofamiliar(this.familiarForm.value.dpi, this.familiarForm.value.nombres, this.familiarForm.value.apellidos,
         this.familiarForm.value.parentesco, this.familiarForm.value.tel, this.familiarForm.value.mail)).subscribe((resp: any) =>{
-          console.log(resp)
+           (resp)
           if(resp.status){
             this.alertService.presentToast(resp.message, 'success', 3000);
           }else{
             this.alertService.presentToast(resp.message, 'danger', 3000);
           }
-          this.modalController.dismiss();
+          this.modalController.dismiss(true);
         })
     }
   }
@@ -61,6 +61,28 @@ export class CrearFamiliarPage implements OnInit {
 
   back(){
     this.modalController.dismiss();
+  }
+
+  noTel(ev:any){
+    if(ev.detail.checked){
+      this.familiarForm.get('tel')?.disable()
+      this.familiarForm.get('tel')?.removeValidators(Validators.required)
+    }else{
+      this.familiarForm.get('tel')?.addValidators(Validators.required)
+      this.familiarForm.get('tel')?.enable()
+      this.familiarForm.get('tel')?.setValidators(Validators.required)
+    }
+  }
+
+  noMail(ev:any){
+    if(ev.detail.checked){
+      this.familiarForm.get('mail')?.disable()
+      this.familiarForm.get('mail')?.removeValidators([Validators.required, Validators.email])
+    }else{
+      this.familiarForm.get('mail')?.addValidators([Validators.required, Validators.email])
+      this.familiarForm.get('mail')?.enable()
+      this.familiarForm.get('mail')?.setValidators([Validators.required, Validators.email])
+    }
   }
 
 

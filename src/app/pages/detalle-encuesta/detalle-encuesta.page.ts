@@ -21,7 +21,7 @@ export class DetalleEncuestaPage implements OnInit {
     (await this.asmsService.getPreguntas(this.encuesta.codigo || this.encuesta.item_id)).subscribe((resp:any)=>{
       this.preguntas = resp.data;
       this.loadingController.dismiss();
-      console.log(resp)
+       (resp)
     })
   }
 
@@ -55,7 +55,7 @@ export class DetalleEncuestaPage implements OnInit {
     this.segmentValue = respuesta.detail.value;
     (await this.asmsService.responderPreguntas(this.encuesta.codigo|| this.encuesta.item_id, pregunta.codigo, pregunta.tipo, " ", respuesta.detail.value))
     .subscribe((resp: any) =>{
-      console.log(resp);
+       (resp);
       if(resp.status){
         this.alertService.presentToast(resp.message, 'success', 3000);
       }else{

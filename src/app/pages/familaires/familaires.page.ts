@@ -45,8 +45,7 @@ export class FamilairesPage implements OnInit {
             backdropDismiss: false,
             componentProps: { multimedia }       
           });
-          await modal.present();      
-        
+          await modal.present(); 
       },
       (error: any) => {
         console.error('Error al obtener actividad:', error);
@@ -60,7 +59,18 @@ export class FamilairesPage implements OnInit {
             component: CrearFamiliarPage,
             backdropDismiss: false,     
           });
-          await modal.present();      
+          await modal.present();  
+          
+                
+          const value: any = await modal.onDidDismiss();
+          if(value.data === true){
+            this.presentLoading();
+            (await this.asmsService.getFamiliares()).subscribe((resp: any)=>{
+              this.familiares = resp.data;
+              this.loadingController.dismiss();
+            })
+          }
+        
     } 
 
 }

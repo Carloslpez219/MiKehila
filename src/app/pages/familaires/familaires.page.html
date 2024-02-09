@@ -24,6 +24,12 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-card *ngIf="familiares?.length == 0">
+    <ion-card-header>
+      <ion-card-subtitle class="ion-text-center">No hay familiares que mostrar!</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
   <ion-list [inset]="true">
     <ion-item [button]="true" color="light" *ngFor="let item of familiares" (click)="mostrarModal(item.codigo)" class="ion-activatable animate__animated animate__fadeIn">
       <ion-avatar aria-hidden="true" slot="start">

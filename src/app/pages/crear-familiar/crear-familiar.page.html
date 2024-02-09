@@ -70,29 +70,54 @@
           </div>
   
         <!-- Campo Teléfono -->
-        <ion-item mode="md">
-          <ion-icon slot="start" name="call-outline"></ion-icon>
-          <ion-input placeholder="Teléfono" type="text" clearOnEdit="true" clearInput formControlName="tel" (keypress)="onlyNumbers($event)" maxlength="8"></ion-input>
-        </ion-item>
-        <div class="errors" *ngIf="tel!.invalid && (tel!.dirty || tel!.touched)">
-          <span *ngIf="tel!.errors!['required']">
-            <ion-label class="error-container">Este campo es requerido</ion-label>
-          </span>
-        </div>
+        
   
+        <ion-row>
+          <ion-col size="9">
+            <ion-item mode="md">
+              <ion-icon slot="start" name="call-outline"></ion-icon>
+              <ion-input placeholder="Teléfono" type="text" clearOnEdit="true" formControlName="tel" (keypress)="onlyNumbers($event)" maxlength="8"></ion-input>
+            </ion-item>
+            <div class="errors" *ngIf="tel!.invalid && (tel!.dirty || tel!.touched)">
+              <span *ngIf="tel!.errors!['required']">
+                <ion-label class="error-container">Este campo es requerido</ion-label>
+              </span>
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item style="zoom: 0.5; margin-top: 15%;" class="none">
+              <ion-checkbox slot="start" (ionChange)="noTel($event)"></ion-checkbox>
+              <ion-label>N/A</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
         <!-- Campo Email -->
-        <ion-item mode="md">
-          <ion-icon slot="start" name="mail-outline"></ion-icon>
-          <ion-input placeholder="Email" type="email" clearOnEdit="true" clearInput formControlName="mail"></ion-input>
-        </ion-item>
-        <div class="errors" *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)">
-          <span *ngIf="mail!.errors!['required']">
-            <ion-label class="error-container">Este campo es requerido</ion-label>
-          </span>
-          <span *ngIf="(mail!.dirty || mail!.touched) && mail!.invalid && mail!.errors!['pattern']">
-            <ion-label class="error-container">Enter an email valid</ion-label>
-          </span>
-        </div>
+
+        <ion-row>
+          <ion-col size="9">
+            <ion-item mode="md">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-input placeholder="Email" type="email" clearOnEdit="true" clearInput formControlName="mail"></ion-input>
+            </ion-item>
+            <div class="errors" *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)">
+              <span *ngIf="mail!.errors!['required']">
+                <ion-label class="error-container">Este campo es requerido</ion-label>
+              </span>
+              <span *ngIf="(mail!.dirty || mail!.touched) && mail!.invalid && mail!.errors!['pattern']">
+                <ion-label class="error-container">Enter an email valid</ion-label>
+              </span>
+            </div>
+          </ion-col>
+          <ion-col size="3">
+            <ion-item style="zoom: 0.5; margin-top: 15%;" class="none">
+              <ion-checkbox slot="start" (ionChange)="noMail($event)"></ion-checkbox>
+              <ion-label>N/A</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        
       </ion-list>
       <ion-grid>
         <ion-row>

@@ -40,7 +40,7 @@ export class SoportePage implements OnInit {
     if (this.soporteForm.valid) {
       await this.crearJsonDeSoporte();
       (await this.asmsService.soporte(this.jsonString)).subscribe((resp: any) =>{
-          console.log(resp)
+           (resp)
           if(resp.status){
             this.alertService.presentToast(resp.message, 'success', 3000);
           }else{

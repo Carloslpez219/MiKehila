@@ -94,3 +94,11 @@ ion-item {
                 border-radius: 60px;
               z-index: -10;
             }
+
+.none{
+  --border-color: transparent !important;
+  --background: none;
+  border-radius: none;
+  margin-bottom: none;
+  
+}

@@ -15,7 +15,7 @@ export class PdfViewerPage implements OnInit {
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    console.log(this.pdfSrc)
+     (this.pdfSrc)
   }
 
   dismiss() {
@@ -28,7 +28,7 @@ export class PdfViewerPage implements OnInit {
 
   zoomIn() {
     this.zoom += 0.1;
-    console.log("x")
+     ("x")
   }
 
   zoomOut() {

@@ -41,7 +41,7 @@ export class ChatPage {
     this.scrollToBottom();
     this.loadingController.dismiss();
 
-    console.log(this.object, this.page);
+     (this.object, this.page);
     if(this.page === 'messages'){
       this.dialog = this.object.dialogo;
     }
@@ -113,8 +113,8 @@ export class ChatPage {
     }else{
       this.cambioHeader = false;
       (await this.asmsService.nuevoDialogo(this.object.tipo, this.object.codigoComunity, this.message)).subscribe((resp: any)=>{
-        console.log(resp);
-        console.log(resp);
+         (resp);
+         (resp);
         if(resp.status){
           this.message = '';
           this.dialog = resp.dialogo;

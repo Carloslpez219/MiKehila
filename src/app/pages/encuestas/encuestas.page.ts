@@ -18,7 +18,7 @@ export class EncuestasPage implements OnInit {
     this.presentLoading();
     (await this.asmsService.getEncuestas()).subscribe((resp: any)=>{
       this.encuestas = resp.data;
-      console.log(resp)
+       (resp)
       this.loadingController.dismiss();
     });
   }

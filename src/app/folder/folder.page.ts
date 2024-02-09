@@ -30,16 +30,16 @@ export class FolderPage implements OnInit {
   async getData(){
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
-      console.log(resp)
+       (resp)
       this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
-      console.log(resp);
+       (resp);
       this.postIts = resp.data;
       this.loadingController.dismiss();
     });
     (await this.asmsService.getCirculares()).subscribe((resp: any)=>{
-      console.log(resp);
+       (resp);
       this.circulares = resp.data;
       this.loadingController.dismiss();
     });
@@ -183,7 +183,7 @@ export class FolderPage implements OnInit {
     } else if (item.type === '3') {
       this.mostrarModalActividad(item.item_id);
     } else if (item.type === '4') {
-      console.log(item);
+       (item);
       this.openModal(item);
     } else if (item.type === '5') {
       this.mostrarModalMultimedia(item.item_id);
@@ -192,11 +192,11 @@ export class FolderPage implements OnInit {
     } else if (item.type === '11') {
       this.mostrarModalPhotoAlbum(item.item_id);
     } else if (item.type === '12') {
-      console.log("Chat");
+       ("Chat");
     } else if (item.type === '100') {
-      console.log("General");
+       ("General");
     } else {
-      console.log("Tipo de notificación desconocido");
+       ("Tipo de notificación desconocido");
     }
     
   }

@@ -94,4 +94,9 @@ export class UserService {
     return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=busca_datos&cui=${cui}&email=${email}&celular=${celular}`);
   }
 
+  async fechaJudia<T>(fecha: string, moemnto: any){
+    console.log(moemnto);
+    console.log(`${asmsURL}API_perfil_padre.php?request=calcular&fecha=${fecha}&momentoDia=${moemnto}`);
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=calcular&fecha=${fecha}&momentoDia=${moemnto}`);
+  }
 }

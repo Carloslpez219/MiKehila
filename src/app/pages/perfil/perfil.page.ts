@@ -24,6 +24,7 @@ export class PerfilPage implements OnInit {
   // eslint-disable-next-line max-len
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   selectedFile!: File;
+  fechaJudiaQ = "-"
 
   constructor(private userService: UserService, private storage: Storage, private alertService: AlertService,
               private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService, private platform: Platform) {
@@ -94,7 +95,7 @@ export class PerfilPage implements OnInit {
         estado: new FormControl('', [Validators.required]),
 
         tipocui: new FormControl('', [Validators.required]),
-        fechaJudia: new FormControl('', [Validators.required]),
+        fechaJudia: new FormControl({value: '', disabled: true}, [Validators.required]),
         barMitzva: new FormControl('', [Validators.required]),
         fechaFallecimiento: new FormControl('', [Validators.required]),
         telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
@@ -131,7 +132,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
 }
 
   defaultValue( perfilData: any ){
-    console.log(perfilData)
+     (perfilData)
     if(perfilData.momentoNacimiento == "dia"){
       this.profileForm.controls['momento'].setValue("antes");
     }else if(perfilData.momentoNacimiento == "noche"){
@@ -228,7 +229,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
   }
 
   cambioFecha(ev: any){
-    console.log(ev)
+     (ev)
   }
 
   async presentLoading() {
@@ -247,13 +248,35 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     }else if(this.profileForm.value.momento == "despues"){
       momento = "noche";
     }
-    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.fechaJudia, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
-      console.log(resp);
+    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.fechaJudiaQ, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
+       (resp);
       this.mostrarData = false;
       setTimeout(async () => {
         await this.loadingController.dismiss();
         this.getData();
       }, 1000);
+    });
+  }
+
+  async calcularFechaJudia(){
+    let momento = "";
+    if(this.profileForm.value.momento == "antes"){
+      momento = "dia";
+    }else if(this.profileForm.value.momento == "despues"){
+      momento = "noche";
+    }
+    (await this.userService.fechaJudia(this.profileForm.value.date, momento)).subscribe((resp: any)=>{
+      if(resp){
+        this.profileForm.controls['fechaJudia'].setValue(resp.data);
+        this.fechaJudiaQ = resp.data;
+        console.log(this.profileForm.value.fechaJudia);
+      }
+    })
+  }
+
+  async departamentoChange(ev: any){
+    (await this.asmsService.getMunicipios(ev.detail.value)).subscribe((resp: any) => {
+      this.municipios = resp.data;
     });
   }
 

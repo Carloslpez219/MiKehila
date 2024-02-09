@@ -115,8 +115,10 @@ export class LoginPage implements OnInit {
 
   async login(){
       this.presentLoading();
+      const id = await Device.getId();
       const valid = await this.userService.login(this.loginForm.value.nombre, this.loginForm.value.password);
-      if (valid){
+      const valido = await this.service.validarDispositivo(id.identifier);
+      if (valid && valido){
         if (Capacitor.isPluginAvailable('PushNotifications')){
           await this.loadingController.dismiss();
           this.navCtrl.navigateRoot('/');
@@ -130,6 +132,9 @@ export class LoginPage implements OnInit {
         this.alertService.presentToast(message, 'dark', 3000);
         this.loginForm.reset();
         this.storage.clear();
+        if(!valido){
+          this.alertService.presentToast('Este dispositivo se encuentra bloquedo por el usuario.', 'danger', 3000);
+        }
       }
   }
 

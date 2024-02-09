@@ -15,7 +15,7 @@ export class DetallePinboardPage implements OnInit {
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform) { }
 
   ngOnInit() {
-    console.log(this.multimedia)
+     (this.multimedia)
   }
 
   ionViewDidEnter() {
