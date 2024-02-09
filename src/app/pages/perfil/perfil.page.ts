@@ -24,7 +24,6 @@ export class PerfilPage implements OnInit {
   // eslint-disable-next-line max-len
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   selectedFile!: File;
-  fechaJudiaQ = "-"
 
   constructor(private userService: UserService, private storage: Storage, private alertService: AlertService,
               private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService, private platform: Platform) {
@@ -77,31 +76,31 @@ export class PerfilPage implements OnInit {
     return new FormGroup({
         dpi: new FormControl('', [ Validators.pattern(/^\d+$/)]),
         nombre: new FormControl('', [Validators.required]),
-        nombrejudio: new FormControl('', [Validators.required]),
+        nombrejudio: new FormControl('', []),
         apellido: new FormControl('', [Validators.required]),
         date: new FormControl('', [Validators.required, this.dateFormatValidator(/^\d{2}\/\d{2}\/\d{4}$/)]),
         momento: new FormControl('', [Validators.required]),
-        telefono: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-        parasha: new FormControl('', [Validators.required]),
+        telefono: new FormControl('', [Validators.pattern(/^\d+$/)]),
+        parasha: new FormControl('', []),
         celular: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         mail: new FormControl('', [Validators.required, Validators.pattern(this.pattern)]),
         direccion: new FormControl('', [Validators.required]),
         departamento: new FormControl('', [Validators.required]),
         municipio: new FormControl('', [Validators.required]),
-        edad: new FormControl({value: '', disabled: true}, [Validators.required, Validators.pattern(/^\d+$/)]),
+        edad: new FormControl({value: '', disabled: true}, [Validators.pattern(/^\d+$/)]),
         genero: new FormControl('', [Validators.required]),
         nacionalidad: new FormControl('', [Validators.required]),
         tipoSangre: new FormControl('', [Validators.required]),
         estado: new FormControl('', [Validators.required]),
 
-        tipocui: new FormControl('', [Validators.required]),
-        fechaJudia: new FormControl({value: '', disabled: true}, [Validators.required]),
-        barMitzva: new FormControl('', [Validators.required]),
+        tipocui: new FormControl('', []),
+        fechaJudia: new FormControl('', [Validators.required]),
+        barMitzva: new FormControl('', []),
         fechaFallecimiento: new FormControl('', [Validators.required]),
         telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-        trabajo: new FormControl('', [Validators.required]),
-        teltrabajo: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-        profesion: new FormControl('', [Validators.required]),
+        trabajo: new FormControl('', []),
+        teltrabajo: new FormControl('', [Validators.pattern(/^\d+$/)]),
+        profesion: new FormControl('', []),
         alergia: new FormControl('', [Validators.required]),
         emergencia: new FormControl('', [Validators.required]),
         emetel: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
@@ -132,7 +131,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
 }
 
   defaultValue( perfilData: any ){
-     (perfilData)
+    console.log(perfilData)
     if(perfilData.momentoNacimiento == "dia"){
       this.profileForm.controls['momento'].setValue("antes");
     }else if(perfilData.momentoNacimiento == "noche"){
@@ -155,7 +154,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     this.profileForm.controls['direccion'].setValue(perfilData.direccion);
     this.profileForm.controls['departamento'].setValue(perfilData.departamento);
     this.profileForm.controls['municipio'].setValue(perfilData.municipio);
-    this.profileForm.controls['edad'].setValue(perfilData.edad);
+    this.profileForm.controls['edad'].setValue(perfilData.edad + " años");
     this.profileForm.controls['genero'].setValue(perfilData.genero);
     this.profileForm.controls['nacionalidad'].setValue(perfilData.nacionalidad);
     this.profileForm.controls['tipoSangre'].setValue(perfilData.tipoSangre);
@@ -229,7 +228,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
   }
 
   cambioFecha(ev: any){
-     (ev)
+    console.log(ev)
   }
 
   async presentLoading() {
@@ -240,6 +239,8 @@ dateFormatValidator(format: RegExp): ValidatorFn {
   }
 
 
+  
+
   async updatePerfil(){
     await this.presentLoading();
     let momento = "";
@@ -248,8 +249,9 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     }else if(this.profileForm.value.momento == "despues"){
       momento = "noche";
     }
-    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.fechaJudiaQ, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, this.profileForm.value.tipoSangre, this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
-       (resp);
+    console.log(this.profileForm.value.fechaJudia);
+    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.fechaJudia, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, encodeURIComponent(this.profileForm.value.tipoSangre), this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
+      console.log(resp);
       this.mostrarData = false;
       setTimeout(async () => {
         await this.loadingController.dismiss();
@@ -258,20 +260,25 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     });
   }
 
-  async calcularFechaJudia(){
+  async calcularFechas(){
     let momento = "";
     if(this.profileForm.value.momento == "antes"){
       momento = "dia";
     }else if(this.profileForm.value.momento == "despues"){
       momento = "noche";
     }
-    (await this.userService.fechaJudia(this.profileForm.value.date, momento)).subscribe((resp: any)=>{
-      if(resp){
-        this.profileForm.controls['fechaJudia'].setValue(resp.data);
-        this.fechaJudiaQ = resp.data;
-        console.log(this.profileForm.value.fechaJudia);
-      }
-    })
+
+    if(this.profileForm.value.momento != "" && this.profileForm.value.date != ""){
+      (await this.userService.calculoDeFechas(this.profileForm.value.date, momento)).subscribe(async (resp : any) =>{
+        console.log(resp.data);
+        if (resp.status){
+          this.profileForm.controls['fechaJudia'].setValue(resp.data.fechaJudia);
+          this.profileForm.controls['edad'].setValue(resp.data.edad + " años");
+          this.profileForm.controls['parasha'].setValue(resp.data.parasha);
+          // this.profileForm.controls['barMitzva'].setValue(resp.data.barMitzva);
+        }
+      });
+    }
   }
 
   async departamentoChange(ev: any){
