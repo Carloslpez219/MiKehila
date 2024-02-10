@@ -184,11 +184,11 @@
           <small>Teléfono Domiciliar:</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="call-sharp"></ion-icon>
-            <ion-input placeholder="Telefono" type="name" clearOnEdit="false" clearInput formControlName="telefono" (keypress)="onlyNumbers($event)" maxlength="8">
+            <ion-input placeholder="Telefono" type="name" clearOnEdit="false" clearInput formControlName="telcasa" (keypress)="onlyNumbers($event)" maxlength="8">
             </ion-input>
           </ion-item>
-          <div class="errors" *ngIf="telefono!.invalid && (telefono!.dirty || telefono!.touched)">
-            <span *ngIf="telefono!.errors!['required']">
+          <div class="errors" *ngIf="telcasa!.invalid && (telcasa!.dirty || telcasa!.touched)">
+            <span *ngIf="telcasa!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
@@ -326,10 +326,10 @@
           <small>Estado Civil:*</small>
           <ion-item>
             <ion-select formControlName="estado" placeholder="Selecciona uno">
-              <ion-select-option value="SOLTERO">Soltero</ion-select-option>
-              <ion-select-option value="CASADO">Casado</ion-select-option>
-              <ion-select-option value="VIUDO">Viudo</ion-select-option>
-              <ion-select-option value="DIVORCIADO">Divorciado</ion-select-option>
+              <ion-select-option value="S">Soltero</ion-select-option>
+              <ion-select-option value="C">Casado</ion-select-option>
+              <ion-select-option value="V">Viudo</ion-select-option>
+              <ion-select-option value="D">Divorciado</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="errors" *ngIf="estado!.invalid && (estado!.dirty || estado!.touched)">
@@ -359,6 +359,9 @@
           <div class="errors" *ngIf="teltrabajo!.invalid && (teltrabajo!.dirty || teltrabajo!.touched)">
             <span *ngIf="teltrabajo!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+            <span *ngIf="(teltrabajo!.dirty || teltrabajo!.touched) && teltrabajo!.invalid && teltrabajo!.errors!['pattern']">
+              <ion-label class="error-container">Ingrese un teléfono válido</ion-label>
             </span>
           </div>
 
@@ -412,6 +415,9 @@
           <div class="errors" *ngIf="emetel!.invalid && (emetel!.dirty || emetel!.touched)">
             <span *ngIf="emetel!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
+            </span>
+            <span *ngIf="(emetel!.dirty || emetel!.touched) && emetel!.invalid && emetel!.errors!['pattern']">
+              <ion-label class="error-container">Ingrese un teléfono válido</ion-label>
             </span>
           </div>
 

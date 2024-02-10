@@ -30,7 +30,7 @@ export class FolderPage implements OnInit {
   async getData(){
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
-       (resp)
+       console.log(resp)
       this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
@@ -169,6 +169,23 @@ export class FolderPage implements OnInit {
     ); 
   } 
 
+  // async mostrarModalChat( codigo: any ) {
+  //   await this.presentLoading();
+  //   (await this.asmsService.getActividad(codigo)).subscribe(async (resp: any) =>{
+  //       const actividad = resp.data[0];
+  //       const modal = await this.modalController.create({
+  //         component: ActividadPage,
+  //         backdropDismiss: false,
+  //         componentProps: { actividad }
+  //       });
+  //       await modal.present();      
+  //   },
+  //   (error: any) => {
+  //     console.error('Error al obtener actividad:', error);
+  //   }
+  //   ); 
+  // } 
+
   async setReadNotification(type: any, item: any){
     (await this.asmsService.setReadNotification(type, item)).subscribe((resp: any) =>{
       if(resp.status){
@@ -192,6 +209,8 @@ export class FolderPage implements OnInit {
     } else if (item.type === '11') {
       this.mostrarModalPhotoAlbum(item.item_id);
     } else if (item.type === '12') {
+      const dialog = item.item_id;
+      this.navCtrl.navigateForward(`/chats?dialog=${dialog}`);
        ("Chat");
     } else if (item.type === '100') {
        ("General");

@@ -80,7 +80,7 @@ export class PerfilPage implements OnInit {
         apellido: new FormControl('', [Validators.required]),
         date: new FormControl('', [Validators.required, this.dateFormatValidator(/^\d{2}\/\d{2}\/\d{4}$/)]),
         momento: new FormControl('', [Validators.required]),
-        telefono: new FormControl('', [Validators.pattern(/^\d+$/)]),
+        // telefono: new FormControl('', [Validators.pattern(/^\d+$/)]),
         parasha: new FormControl('', []),
         celular: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
         mail: new FormControl('', [Validators.required, Validators.pattern(this.pattern)]),
@@ -97,7 +97,7 @@ export class PerfilPage implements OnInit {
         fechaJudia: new FormControl('', [Validators.required]),
         barMitzva: new FormControl('', []),
         fechaFallecimiento: new FormControl('', [Validators.required]),
-        telcasa: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+        telcasa: new FormControl('', [Validators.pattern(/^\d+$/)]),
         trabajo: new FormControl('', []),
         teltrabajo: new FormControl('', [Validators.pattern(/^\d+$/)]),
         profesion: new FormControl('', []),
@@ -147,7 +147,6 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     this.profileForm.controls['nombrejudio'].setValue(perfilData.nombreJudio);
     this.profileForm.controls['apellido'].setValue(perfilData.apellido);
     this.profileForm.controls['date'].setValue(perfilData.fecha_nacimiento);
-    this.profileForm.controls['telefono'].setValue(perfilData.telefono);
     this.profileForm.controls['parasha'].setValue(perfilData.parasha);
     this.profileForm.controls['celular'].setValue(perfilData.celular);
     this.profileForm.controls['mail'].setValue(perfilData.mail);
@@ -162,7 +161,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
     this.profileForm.controls['fechaJudia'].setValue(perfilData.fechaJudia);
     this.profileForm.controls['barMitzva'].setValue(perfilData.barmitsva);
     this.profileForm.controls['fechaFallecimiento'].setValue(perfilData.fallecimiento);
-    this.profileForm.controls['telcasa'].setValue(perfilData.telefono);
+    this.profileForm.controls['telcasa'].setValue(perfilData.telefono); // Se utilizaba telefono en el input pero se enviaba telcasa en la api
     this.profileForm.controls['trabajo'].setValue(perfilData.lugar_trabajo);
     this.profileForm.controls['teltrabajo'].setValue(perfilData.telefono_trabajo);
     this.profileForm.controls['profesion'].setValue(perfilData.profesion);
@@ -179,7 +178,6 @@ dateFormatValidator(format: RegExp): ValidatorFn {
   get momento() {
     return this.profileForm.get('momento');
   }
-  get telefono() { return this.profileForm.get('telefono'); }
   get parasha() { return this.profileForm.get('parasha'); }
   get celular() { return this.profileForm.get('celular'); }
   get mail() { return this.profileForm.get('mail'); }
