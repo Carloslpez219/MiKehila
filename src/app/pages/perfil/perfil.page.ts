@@ -272,8 +272,12 @@ dateFormatValidator(format: RegExp): ValidatorFn {
         if (resp.status){
           this.profileForm.controls['fechaJudia'].setValue(resp.data.fechaJudia);
           this.profileForm.controls['edad'].setValue(resp.data.edad + " años");
-          this.profileForm.controls['parasha'].setValue(resp.data.parasha);
-          // this.profileForm.controls['barMitzva'].setValue(resp.data.barMitzva);
+          if (resp.data.parasha != ""){
+            this.profileForm.controls['parasha'].setValue(resp.data.parasha);
+          }
+          if (resp.data.barMitzva != "" && resp.data.barMitzva != undefined){
+            this.profileForm.controls['barMitzva'].setValue(resp.data.barMitzva);
+          }
         }
       });
     }

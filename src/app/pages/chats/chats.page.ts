@@ -36,7 +36,7 @@ export class ChatsPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       const dialog = params['dialog'];
       console.log(dialog);
-      if (this.chats != null) {
+      if (this.chats != null && dialog != '') {
         this.chats.forEach((objeto:any) => {
           if (objeto.dialogo == dialog) {
             this.mostrarModal(objeto);
