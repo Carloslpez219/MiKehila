@@ -23,7 +23,7 @@ export class FolderPage implements OnInit {
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
-    this.presentLoading();
+    // this.presentLoading();
     this.getData();
   }
 

@@ -3,6 +3,8 @@ import { ActionSheetController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { AlertService } from './services/alert.service';
 import { AsmsServiceService } from './services/asms-service.service';
+import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
+
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,8 @@ export class AppComponent {
   constructor(private navCtrl: NavController, private storage: Storage, private actionSheetCtrl: ActionSheetController, private asmsService: AsmsServiceService, private alertService: AlertService) {}
 
   async logOut(){
+    PushNotifications.removeAllListeners();
+    PushNotifications.unregister();
     this.navCtrl.navigateRoot('/login')
     this.storage.remove('datos');
     this.storage.remove('ordenes');
