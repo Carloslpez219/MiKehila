@@ -48,10 +48,10 @@
           </ion-col>
         </ion-row>
       <ion-row>
-        <ion-col size="12" *ngIf="item.extension != 'jpg'">
+        <ion-col size="12" *ngIf="item.extension != 'jpg' && item.extension != 'jpeg' && item.extension != 'png'">
           <p style="color: rgb(96, 96, 96); margin-top: -5px;"> {{item.ultimo_mensaje}}</p>
         </ion-col>
-        <ion-col size="12" *ngIf="item.extension == 'jpg'" style="margin-top: -5px;">
+        <ion-col size="12" *ngIf="item.extension == 'jpg' || item.extension == 'jpeg' || item.extension == 'png'" style="margin-top: -5px;">
           <p style="color: rgb(96, 96, 96);"> <ion-icon slot="start" name="camera" style="zoom: 1.5; color: rgb(158, 156, 156);"></ion-icon> Foto</p>
         </ion-col>
       </ion-row>

@@ -39,9 +39,12 @@ export class CrearFamiliarPage implements OnInit {
 
   async onSubmit() {
     if (this.familiarForm.valid) {
+      const tel = (this.familiarForm.controls['tel'].disabled)? '':this.familiarForm.value.tel;
+      const mail = (this.familiarForm.controls['mail'].disabled)? '':this.familiarForm.value.mail;
+
       (await this.asmsService.nuevofamiliar(this.familiarForm.value.dpi, this.familiarForm.value.nombres, this.familiarForm.value.apellidos,
-        this.familiarForm.value.parentesco, this.familiarForm.value.tel, this.familiarForm.value.mail)).subscribe((resp: any) =>{
-           (resp)
+        this.familiarForm.value.parentesco, tel, mail)).subscribe((resp: any) =>{
+           console.log(resp)
           if(resp.status){
             this.alertService.presentToast(resp.message, 'success', 3000);
           }else{

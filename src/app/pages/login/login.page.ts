@@ -117,24 +117,28 @@ export class LoginPage implements OnInit {
       this.presentLoading();
       const id = await Device.getId();
       const valid = await this.userService.login(this.loginForm.value.nombre, this.loginForm.value.password);
-      const valido = await this.service.validarDispositivo(id.identifier);
-      if (valid && valido){
-        if (Capacitor.isPluginAvailable('PushNotifications')){
+      if (valid){
+        const valido = await this.service.validarDispositivo(id.identifier);
+        if (valido) {
+          if (Capacitor.isPluginAvailable('PushNotifications')){
+            await this.loadingController.dismiss();
+            this.navCtrl.navigateRoot('/');
+            await this.initializeApp();
+          }
           await this.loadingController.dismiss();
           this.navCtrl.navigateRoot('/');
-          await this.initializeApp();
+        } else {
+          await this.loadingController.dismiss();
+          this.alertService.presentToast('Este dispositivo se encuentra bloquedo por el usuario.', 'danger', 3000);
+          this.loginForm.reset();
+          this.storage.clear();
         }
-        await this.loadingController.dismiss();
-        this.navCtrl.navigateRoot('/');
       }else{
         this.loadingController.dismiss();
         const message = 'Usuario y/o Contraseña son incorrectos';
         this.alertService.presentToast(message, 'dark', 3000);
         this.loginForm.reset();
         this.storage.clear();
-        if(!valido){
-          this.alertService.presentToast('Este dispositivo se encuentra bloquedo por el usuario.', 'danger', 3000);
-        }
       }
   }
 
@@ -164,8 +168,15 @@ export class LoginPage implements OnInit {
   }
 
   async initializeApp() {
-    const permission = await PushNotifications.requestPermissions();
-    if (permission.receive === 'granted') {
+    var isGranted = '';
+    const permissionCheck = await PushNotifications.checkPermissions();
+    if (permissionCheck.receive !== 'granted'){
+      const permission = await PushNotifications.requestPermissions();
+      isGranted = permission.receive;
+    }else{
+      isGranted = 'granted';
+    }
+    if (isGranted === 'granted') {
       PushNotifications.register();
 
       const id = await Device.getId();
@@ -184,13 +195,15 @@ export class LoginPage implements OnInit {
       });
 
       PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
-        console.log('Push received: ', notification);
-        this.navCtrl.navigateForward('folder/Notificaciones');
+        console.error('Push received: ', notification);
+        this.navCtrl.navigateRoot('folder/Notificaciones');
+        // this.navCtrl.navigateForward('folder/Notificaciones');
       });
 
       PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
-        console.log('Push received: ', action);
-        this.navCtrl.navigateForward('folder/Notificaciones');
+        console.error('Push received: ', action);
+        this.navCtrl.navigateRoot('folder/Notificaciones');
+        // this.navCtrl.navigateForward('folder/Notificaciones');
       });
     }
 }

@@ -23,14 +23,14 @@ export class FolderPage implements OnInit {
   constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
-    this.presentLoading();
+    // this.presentLoading();
     this.getData();
   }
 
   async getData(){
     (await this.asmsService.getNotificaciones()).subscribe((resp: any)=>{
       this.notificaciones = resp.data;
-       (resp)
+       console.log(resp)
       this.loadingController.dismiss();
     });
     (await this.asmsService.getPostIts()).subscribe((resp: any)=>{
@@ -192,6 +192,8 @@ export class FolderPage implements OnInit {
     } else if (item.type === '11') {
       this.mostrarModalPhotoAlbum(item.item_id);
     } else if (item.type === '12') {
+      const dialog = item.item_id;
+      this.navCtrl.navigateForward(`/chats?dialog=${dialog}`);
        ("Chat");
     } else if (item.type === '100') {
        ("General");

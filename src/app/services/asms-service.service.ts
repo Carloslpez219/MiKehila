@@ -176,12 +176,12 @@ export class AsmsServiceService {
   }
 
 
-  async uploadFile(file: File, object: any, dialogo: any,) {
+  async uploadFile<T>(file: File, object: any, dialogo: any, request: string) {
     this.datosUsuario = await this.storage.get('datos');
     const formData = new FormData();
   
     formData.append('archivo', file, file.name);
-    formData.append('request', 'mensaje_archivo');
+    formData.append('request', request);
     formData.append('sender_type', this.datosUsuario.tipo_usuario);
     formData.append('sender', this.datosUsuario.codigo);
     formData.append('receiver_type', object.tipo);
@@ -189,14 +189,9 @@ export class AsmsServiceService {
     formData.append('dialogo', dialogo);
   
     const url = 'https://cjg.asms.gt/SISTEM/API/API_archivo_chat.php';
-    this.http.post(url, formData).subscribe(
-      (response: any) => {
-         (response);
-      },
-      (error) => {
-        console.error('Error al subir el archivo:', error);
-      }
-    );
+
+    console.log(url, formData);
+    return this.http.post<T>(url, formData);
   }
   
   async validarDispositivo<T>(device_id: any): Promise<boolean> {

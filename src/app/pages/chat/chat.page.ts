@@ -41,7 +41,7 @@ export class ChatPage {
     this.scrollToBottom();
     this.loadingController.dismiss();
 
-     (this.object, this.page);
+    console.log(this.object, this.page);
     if(this.page === 'messages'){
       this.dialog = this.object.dialogo;
     }
@@ -113,8 +113,8 @@ export class ChatPage {
     }else{
       this.cambioHeader = false;
       (await this.asmsService.nuevoDialogo(this.object.tipo, this.object.codigoComunity, this.message)).subscribe((resp: any)=>{
-         (resp);
-         (resp);
+        console.log(resp);
+        console.log(resp);
         if(resp.status){
           this.message = '';
           this.dialog = resp.dialogo;
@@ -138,15 +138,41 @@ async onFileSelected(event: any) {
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.readAsDataURL(this.selectedFile);
-      this.uploadImage();
+      await this.uploadImage();
+      this.loadingController.dismiss();
+
     }
   }
 }
 
 
-uploadImage() {
+async uploadImage() {
   if (this.selectedFile) {
-    this.asmsService.uploadFile(this.selectedFile, this.object, this.dialog);
+    if(this.page === 'messages'){
+      (await this.asmsService.uploadFile(this.selectedFile, this.object, this.dialog, "mensaje_archivo")).subscribe(
+      (resp: any)=>{
+        console.log(resp);
+        this.obtainMessages();
+        this.obtainMessagesRecursive();
+      }, (err: any) => {
+        console.error('Error al subir el archivo:', err);
+      });
+    } else {
+      (await this.asmsService.uploadFile(this.selectedFile, this.object, this.dialog, "nuevo_dialogo_archivo")).subscribe(
+        (resp: any)=>{
+          console.log(resp);
+          if(resp.status){
+            this.cambioHeader = false;
+            this.message = '';
+            this.dialog = resp.dialogo;
+            this.page = 'messages';
+            this.obtainMessages();
+            this.obtainMessagesRecursive();
+          }
+        }, (err: any) => {
+          console.error('Error al subir el archivo:', err);
+      });
+    }
   }
 }
 
