@@ -118,6 +118,11 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=register&user_id=${this.datosUsuario.codigo}&device_id=${device_id}&device_token=${device_token}&device_type=${device_type}&certificate_type=0`);
   }
 
+  async removerDispositivo<T>(device_id: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=unregister&user_id=${this.datosUsuario.codigo}&device_id=${device_id}`);
+  }
+
   async setReadNotification<T>( type: any, item: any){
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=reset_especifica&user_id=${this.datosUsuario.codigo}&type=${type}&type_id=${item}`);

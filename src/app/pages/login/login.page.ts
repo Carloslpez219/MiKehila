@@ -12,6 +12,7 @@ import { AsmsServiceService } from 'src/app/services/asms-service.service';
 import { Capacitor } from '@capacitor/core';
 import { combineLatest, of } from 'rxjs';
 import { map, debounceTime, filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginPage implements OnInit {
   inicio = true;
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController,
+  constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController, private router: Router, 
               private alertService: AlertService,  private storage: Storage, private menu: MenuController, private service: AsmsServiceService, private platform: Platform) {
                 this.loginForm = this.createFormGroup();
                 this.registroForm = this.createFormGroupRegistro();
@@ -195,16 +196,18 @@ export class LoginPage implements OnInit {
       });
 
       PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
-        console.error('Push received: ', notification);
+        console.log('Push received: ', notification);
+        this.alertService.presentToast('Nueva notificación', 'dark', 4000);
         this.navCtrl.navigateRoot('folder/Notificaciones');
         // this.navCtrl.navigateForward('folder/Notificaciones');
       });
 
-      PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
-        console.error('Push received: ', action);
-        this.navCtrl.navigateRoot('folder/Notificaciones');
-        // this.navCtrl.navigateForward('folder/Notificaciones');
-      });
+      PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification) => {
+        console.log('Push action performed: ', notification);
+        this.router.navigateByUrl('/folder/Notificaciones');
+      }
+    );
     }
 }
 

@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { AlertService } from './services/alert.service';
 import { AsmsServiceService } from './services/asms-service.service';
 import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
+import { Device } from '@capacitor/device';
 
 
 @Component({
@@ -25,12 +26,21 @@ export class AppComponent {
   constructor(private navCtrl: NavController, private storage: Storage, private actionSheetCtrl: ActionSheetController, private asmsService: AsmsServiceService, private alertService: AlertService) {}
 
   async logOut(){
-    PushNotifications.removeAllListeners();
-    PushNotifications.unregister();
-    this.navCtrl.navigateRoot('/login')
-    this.storage.remove('datos');
-    this.storage.remove('ordenes');
-    this.storage.clear();
+
+    const id = await Device.getId();
+    (await this.asmsService.removerDispositivo(id.identifier)).subscribe((resp: any)=>{
+      if(resp.status){
+        this.alertService.presentToast(resp.message, 'success', 3000);
+        PushNotifications.removeAllListeners();
+        PushNotifications.unregister();
+        this.navCtrl.navigateRoot('/login')
+        this.storage.remove('datos');
+        this.storage.remove('ordenes');
+        this.storage.clear();
+      }else{
+        this.alertService.presentToast(resp.message, 'danger', 3000);
+      }
+    })
   }
 
   async eliminarCuenta(){
