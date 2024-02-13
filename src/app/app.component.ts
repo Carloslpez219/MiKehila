@@ -30,7 +30,7 @@ export class AppComponent {
     const id = await Device.getId();
     (await this.asmsService.removerDispositivo(id.identifier)).subscribe((resp: any)=>{
       if(resp.status){
-        this.alertService.presentToast(resp.message, 'success', 3000);
+        // this.alertService.presentToast(resp.message, 'success', 3000);
         PushNotifications.removeAllListeners();
         PushNotifications.unregister();
         this.navCtrl.navigateRoot('/login')
