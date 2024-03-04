@@ -111,6 +111,11 @@ const routes: Routes = [
     canActivate: [GuardGuard],
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    canActivate: [GuardGuard],
+    path: 'familiares-perfil',
+    loadChildren: () => import('./pages/familiares-perfil/familiares-perfil.module').then( m => m.FamiliaresPerfilPageModule)
   }
 
 

@@ -12,7 +12,6 @@ import { AsmsServiceService } from 'src/app/services/asms-service.service';
 import { Capacitor } from '@capacitor/core';
 import { combineLatest, of } from 'rxjs';
 import { map, debounceTime, filter } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +26,7 @@ export class LoginPage implements OnInit {
   inicio = true;
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController, private router: Router, 
+  constructor(private navCtrl: NavController, private userService: UserService, public loadingController: LoadingController,
               private alertService: AlertService,  private storage: Storage, private menu: MenuController, private service: AsmsServiceService, private platform: Platform) {
                 this.loginForm = this.createFormGroup();
                 this.registroForm = this.createFormGroupRegistro();
@@ -121,11 +120,7 @@ export class LoginPage implements OnInit {
       if (valid){
         const valido = await this.service.validarDispositivo(id.identifier);
         if (valido) {
-          if (Capacitor.isPluginAvailable('PushNotifications')){
-            await this.loadingController.dismiss();
-            this.navCtrl.navigateRoot('/');
-            await this.initializeApp();
-          }
+          
           await this.loadingController.dismiss();
           this.navCtrl.navigateRoot('/');
         } else {
@@ -167,49 +162,6 @@ export class LoginPage implements OnInit {
     this.registro = false;
     this.inicio = true;
   }
-
-  async initializeApp() {
-    var isGranted = '';
-    const permissionCheck = await PushNotifications.checkPermissions();
-    if (permissionCheck.receive !== 'granted'){
-      const permission = await PushNotifications.requestPermissions();
-      isGranted = permission.receive;
-    }else{
-      isGranted = 'granted';
-    }
-    if (isGranted === 'granted') {
-      PushNotifications.register();
-
-      const id = await Device.getId();
-
-      await PushNotifications.addListener('registration', async token => {
-        console.info('Registration token: ', token.value);
-        let device_type = '';
-        if (this.platform.is('android')) {
-          device_type = await 'android';
-        }else if (this.platform.is('ios')) {
-          device_type = await 'ios';
-        }
-        await (await this.service.registrarDispositivo(id.identifier, token.value, device_type)).subscribe(resp =>{
-          console.log(resp);
-        })
-      });
-
-      PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
-        console.log('Push received: ', notification);
-        this.alertService.presentToast('Nueva notificación', 'dark', 4000);
-        this.navCtrl.navigateRoot('folder/Notificaciones');
-        // this.navCtrl.navigateForward('folder/Notificaciones');
-      });
-
-      PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification) => {
-        console.log('Push action performed: ', notification);
-        this.router.navigateByUrl('/folder/Notificaciones');
-      }
-    );
-    }
-}
 
 }
 

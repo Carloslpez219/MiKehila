@@ -44,7 +44,17 @@
 
     <div [ngClass]="{'mensaje-enviado': mensaje.type === 'sent', 'mensaje-recibido': mensaje.type === 'received'}" *ngIf="mensaje.isArchivo">
         <img [src]="mensaje.message" style="border-radius: 10px;" *ngIf="mensaje.extension == 'jpg' || mensaje.extension == 'jpeg' || mensaje.extension == 'png'">
-        <ion-icon slot="start" name="document-attach" style="zoom: 6;" *ngIf="mensaje.extension == 'pdf'" color="medium" (click)="mostrarModalPDF(mensaje.message)"></ion-icon>
+        <div *ngIf="mensaje.extension == 'pdf' || mensaje.extension == 'doc' || mensaje.extension == 'docx' || mensaje.extension == 'xlsx' || mensaje.extension == 'txt'">
+          <ion-item *ngIf="mensaje.extension == 'pdf'" lines="none" (click)="mostrarModalPDF(mensaje.message)">
+            <ion-icon slot="start" name="document" color="medium"  style="zoom: 1.2; color: rgb(158, 156, 156);" ></ion-icon>
+            <ion-label>Ver {{ mensaje.extension }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="mensaje.extension != 'pdf'" lines="none" (click)="viewFile(mensaje.message)">
+            <ion-icon slot="start" name="document" color="medium"  style="zoom: 1.2; color: rgb(158, 156, 156);" ></ion-icon>
+            <ion-label>Descargar {{ mensaje.extension }}</ion-label>
+          </ion-item>
+          <div class="tiempo">{{ mensaje.registrado }}</div>
+        </div>
     </div>
   </div>
 </div>

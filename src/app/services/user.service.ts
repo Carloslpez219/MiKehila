@@ -42,26 +42,45 @@ export class UserService {
     await this.storage.set('datos', data);
   }
 
-  async getPerfil<T>(){
-    this.datosUsuario = await this.storage.get('datos');
-    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=get_padre&tipo=${this.datosUsuario.tipo_usuario}&codigo=${this.datosUsuario.codigo}`);
+  async getPerfil<T>(codigoPerfil: any = '', tipoPerfil: any = ''){
+    var codigo: any;
+    var tipo_usuario: any;
+    if (codigoPerfil == "" && tipoPerfil == "") {
+      this.datosUsuario = await this.storage.get('datos');
+      codigo = this.datosUsuario.codigo;
+      tipo_usuario = this.datosUsuario.tipo_usuario
+    } else {
+      codigo = codigoPerfil;
+      tipo_usuario = tipoPerfil;
+    }
+    return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=get_padre&tipo=${tipo_usuario}&codigo=${codigo}`);
   }
 
   async registro<T>(dpi: any, email: any, nombre: any, apellido: any){
     return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=registro&dpi=${dpi}&email=${email}&nombre=${nombre}&apellido=${apellido}`);
   }
 
-  async updateFamilyMemberProfile(cui: string, tipoCui: string, nombre: string, apellido: string, nombreJudio: string, fechaNac: string, fechaJudia: string, momentoDia: string, barMitzva: string, fechaFallecimiento: string, estadoCivil: string, nacionalidad: string, telCasa: string, celular: string, email: string, direccion: string, departamento: string, municipio: string, trabajo: string, telTrabajo: string, profesion: string, genero: string, sangre: string, alergia: string, emergencia: string, emeTel: string, parasha: string) {
-    this.datosUsuario = await this.storage.get('datos');
-    console.log(`${asmsURL}API_perfil_padre.php?request=update_padre_completo&codigo_unico=${this.datosUsuario.codigo}&cui=${cui}&tipocui=${tipoCui}&nombre=${nombre}&apellido=${apellido}&nombreJudio=${nombreJudio}&fecnac=${fechaNac}&fechaJudia=${fechaJudia}&momentoDia=${momentoDia}&barMitzva=${barMitzva}&fechaFallecimiento=${fechaFallecimiento}&estadoCivil=${estadoCivil}&nacionalidad=${nacionalidad}&telcasa=${telCasa}&celular=${celular}&mail=${email}&direccion=${direccion}&departamento=${departamento}&municipio=${municipio}&trabajo=${trabajo}&teltrabajo=${telTrabajo}&profesion=${profesion}&genero=${genero}&sangre=${sangre}&alergia=${alergia}&emergencia=${emergencia}&emetel=${emeTel}&parasha=${parasha}`)
-    return this.http.get(`${asmsURL}API_perfil_padre.php?request=update_padre_completo&codigo_unico=${this.datosUsuario.codigo}&cui=${cui}&tipocui=${tipoCui}&nombre=${nombre}&apellido=${apellido}&nombreJudio=${nombreJudio}&fecnac=${fechaNac}&fechaJudia=${fechaJudia}&momentoDia=${momentoDia}&barMitzva=${barMitzva}&fechaFallecimiento=${fechaFallecimiento}&estadoCivil=${estadoCivil}&nacionalidad=${nacionalidad}&telcasa=${telCasa}&celular=${celular}&mail=${email}&direccion=${direccion}&departamento=${departamento}&municipio=${municipio}&trabajo=${trabajo}&teltrabajo=${telTrabajo}&profesion=${profesion}&genero=${genero}&sangre=${sangre}&alergia=${alergia}&emergencia=${emergencia}&emetel=${emeTel}&parasha=${parasha}`);
+  async updateFamilyMemberProfile(cui: string, tipoCui: string, nombre: string, apellido: string, nombreJudio: string, fechaNac: string, fechaJudia: string, momentoDia: string, barMitzva: string, fechaFallecimiento: string, estadoCivil: string, nacionalidad: string, telCasa: string, celular: string, email: string, direccion: string, departamento: string, municipio: string, trabajo: string, telTrabajo: string, profesion: string, genero: string, sangre: string, alergia: string, emergencia: string, emeTel: string, parasha: string, codigoPerfil: any = '') {
+    var codigo: any;
+    if (codigoPerfil == '') {
+      this.datosUsuario = await this.storage.get('datos');
+      codigo = this.datosUsuario.codigo;
+    } else {
+      codigo = codigoPerfil;
+    }
+    console.log(`${asmsURL}API_perfil_padre.php?request=update_padre_completo&codigo_unico=${codigo}&cui=${cui}&tipocui=${tipoCui}&nombre=${nombre}&apellido=${apellido}&nombreJudio=${nombreJudio}&fecnac=${fechaNac}&fechaJudia=${fechaJudia}&momentoDia=${momentoDia}&barMitzva=${barMitzva}&fechaFallecimiento=${fechaFallecimiento}&estadoCivil=${estadoCivil}&nacionalidad=${nacionalidad}&telcasa=${telCasa}&celular=${celular}&mail=${email}&direccion=${direccion}&departamento=${departamento}&municipio=${municipio}&trabajo=${trabajo}&teltrabajo=${telTrabajo}&profesion=${profesion}&genero=${genero}&sangre=${sangre}&alergia=${alergia}&emergencia=${emergencia}&emetel=${emeTel}&parasha=${parasha}`)
+    return this.http.get(`${asmsURL}API_perfil_padre.php?request=update_padre_completo&codigo_unico=${codigo}&cui=${cui}&tipocui=${tipoCui}&nombre=${nombre}&apellido=${apellido}&nombreJudio=${nombreJudio}&fecnac=${fechaNac}&fechaJudia=${fechaJudia}&momentoDia=${momentoDia}&barMitzva=${barMitzva}&fechaFallecimiento=${fechaFallecimiento}&estadoCivil=${estadoCivil}&nacionalidad=${nacionalidad}&telcasa=${telCasa}&celular=${celular}&mail=${email}&direccion=${direccion}&departamento=${departamento}&municipio=${municipio}&trabajo=${trabajo}&teltrabajo=${telTrabajo}&profesion=${profesion}&genero=${genero}&sangre=${sangre}&alergia=${alergia}&emergencia=${emergencia}&emetel=${emeTel}&parasha=${parasha}`);
   }
 
-  async uploadProfilePicture(file: File) {
+  async uploadProfilePicture(file: File, codigoPerfil: any = '') {
     this.datosUsuario = await this.storage.get('datos');
     const formData = new FormData();
     formData.append('imagen', file, file.name);
-    formData.append('codigoUsuarioMiembro', this.datosUsuario.codigo);
+    if (codigoPerfil == '') {
+      formData.append('codigoUsuarioMiembro', this.datosUsuario.codigo);
+    } else {
+      formData.append('codigoUsuarioMiembro', codigoPerfil);
+    }
   
     const url = 'https://cjg.asms.gt/SISTEM/API/API_foto_perfil_miembro.php';
   

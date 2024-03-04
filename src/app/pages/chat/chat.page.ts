@@ -41,7 +41,8 @@ export class ChatPage {
     this.scrollToBottom();
     this.loadingController.dismiss();
 
-    console.log(this.object, this.page);
+    // console.log(this.object, this.page);
+    // console.log(this.messages);
     if(this.page === 'messages'){
       this.dialog = this.object.dialogo;
     }
@@ -176,5 +177,8 @@ async uploadImage() {
   }
 }
 
+async viewFile(urlFile : string){
+  window.open(urlFile, '_system'); // Para mostrar como enlace externo. Utiliza la app/navegador por defecto.
+}
 }
 
