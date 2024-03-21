@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -9,13 +10,23 @@ import { ModalController } from '@ionic/angular';
 export class PdfViewerPage implements OnInit {
 
   @Input() pdfSrc: string  = '';
+  @Input() titulo: any  = '';
+  @Input() descripcion: any  = '';
   zoom: number = 1.0; // Valor inicial del zoom
   rotation: number = 0; // Valor inicial de la rotación
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    if (this.descripcion) {
+      this.descripcion = this.descripcion.replace("(Ver documento adjunto)", "");
+      this.getSafeComponent();
+    }
      (this.pdfSrc)
+  }
+
+  getSafeComponent() {
+    this.descripcion = this.sanitizer.bypassSecurityTrustHtml(this.descripcion);
   }
 
   dismiss() {

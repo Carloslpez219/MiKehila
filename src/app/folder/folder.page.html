@@ -107,7 +107,9 @@
             <div class="biography">Descripcion: {{postit.descripcion}}</div>
             <label class="textPara">Para: {{postit.target}}</label>
             <br>
-            <label class="textCodigo">Codigo: {{postit.codigo}}</label>
+            <br>
+            <!-- <label class="textCodigo">Codigo: {{postit.codigo}}</label> -->
+            <ion-note class="textCodigo">Ver más...</ion-note>
           </div>
         </ion-col>
       </ion-row>
@@ -128,7 +130,7 @@
     <ng-container *ngFor="let item of circulares">
       <ion-card [ngStyle]="{'background-image': 'url(' + item.url_logo + ')'}" 
                 color="light"
-                (click)="item.extension === 'pdf' ? mostrarModalPDF(item.link) : abrirEnlace(item.link)" 
+                (click)="item.extension === 'pdf' ? mostrarModalPDF(item.link, item.titulo, item.descripcion) : mostrarCircularImg(item.link, item.extension, item.titulo, item.descripcion)" 
                 class="ion-activatable animate__animated animate__fadeIn ion-card-circular">
                 <ion-card-header>
                   <ion-card-title style="font-size: 22px;">{{item.titulo}}</ion-card-title>

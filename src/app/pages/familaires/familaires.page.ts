@@ -19,10 +19,10 @@ export class FamilairesPage implements OnInit {
 
     async ngOnInit() {
       this.presentLoading();
-      // (await this.asmsService.getFamiliares()).subscribe((resp: any)=>{
-      //   this.familiares = resp.data;
-      //   this.loadingController.dismiss();
-      // })
+      (await this.asmsService.getFamiliares()).subscribe((resp: any)=>{
+        this.familiares = resp.data;
+        this.loadingController.dismiss();
+      })
     }
   
     back(){
@@ -34,14 +34,6 @@ export class FamilairesPage implements OnInit {
         message: 'Cargando...'
       });
       await loading.present();
-    }
-
-    async ionViewDidEnter(){
-      // this.presentLoading();
-      (await this.asmsService.getFamiliares()).subscribe((resp: any)=>{
-        this.familiares = resp.data;
-        this.loadingController.dismiss();
-      })
     }
   
     async mostrarModal( codigo: any ) {

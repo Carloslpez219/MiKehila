@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { ImageModalPage } from '../image-modal/image-modal.page';
+import { register } from 'swiper/element/bundle';
 
+register();
 @Component({
   selector: 'app-detalle-photoalbum',
   templateUrl: './detalle-photoalbum.page.html',
@@ -16,7 +18,7 @@ export class DetallePhotoalbumPage implements OnInit {
   constructor(private modalController: ModalController, private loadingController: LoadingController, private platform: Platform) { }
 
   ngOnInit() {
-     (this.multimedia)
+     console.log(this.multimedia)
   }
 
   ionViewDidEnter() {
@@ -33,22 +35,6 @@ export class DetallePhotoalbumPage implements OnInit {
       this.modalController.dismiss();
     });
     this.modalController.dismiss();
-  }
-
-  next() {
-    if (this.currentSlide < this.multimedia.imagenes.length - 1) {
-      this.currentSlide++;
-    } else {
-      this.currentSlide = 0;
-    }
-  }
-
-  previous() {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
-    } else {
-      this.currentSlide = this.multimedia.imagenes.length - 1;
-    }
   }
 
   async openModal(imgSrc: string) {

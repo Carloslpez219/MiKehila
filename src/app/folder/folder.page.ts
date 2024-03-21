@@ -13,6 +13,7 @@ import { Device } from '@capacitor/device';
 import { Platform } from '@ionic/angular';
 import { AlertService } from '../services/alert.service';
 import { Capacitor } from '@capacitor/core';
+import { DetalleCircularPage } from '../pages/detalle-circular/detalle-circular.page';
 
 
 @Component({
@@ -118,12 +119,22 @@ export class FolderPage implements OnInit {
     ); 
   } 
 
-  async mostrarModalPDF(pdf: string) {
+  async mostrarCircularImg(img: string, type: string, titulo: string, descripcion: string ) {
+        let imgSrc = img; 
+        const modal = await this.modalController.create({
+          component: DetalleCircularPage,
+          backdropDismiss: false,
+          componentProps: { imgSrc, type, titulo, descripcion }
+        });
+        await modal.present();      
+  }
+
+  async mostrarModalPDF(pdf: string, titulo: string, descripcion: string) {
         let pdfSrc = pdf; 
         const modal = await this.modalController.create({
           component: PdfViewerPage,
           backdropDismiss: false,
-          componentProps: { pdfSrc }
+          componentProps: { pdfSrc, titulo, descripcion }
         });
         await modal.present();      
   } 
@@ -205,7 +216,12 @@ export class FolderPage implements OnInit {
     } else if (item.type === '5') {
       this.mostrarModalMultimedia(item.item_id);
     } else if (item.type === '6') {
-      this.mostrarModalPDF(item.link)
+      if(item.extension === 'pdf'){
+        this.mostrarModalPDF(item.link, item.titulo, item.descripcion)
+      }else{
+        console.log(item.link);
+        this.mostrarCircularImg(item.link, item.extension, item.titulo, item.descripcion)
+      }
     } else if (item.type === '11') {
       this.mostrarModalPhotoAlbum(item.item_id);
     } else if (item.type === '12') {
