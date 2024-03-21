@@ -28,11 +28,18 @@ export class FolderPage implements OnInit {
 
   constructor(private alertService: AlertService, private platform: Platform, private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     // this.presentLoading();
     this.getData();
     if (Capacitor.isPluginAvailable('PushNotifications')){
-      this.initializeApp();
+      if (this.platform.is('ios')){
+        const id = await Device.getId();
+        (await this.asmsService.updateIos(id.identifier)).subscribe(resp => {
+            console.log(resp);
+        });
+      } else {
+        this.initializeApp();
+      }
     }
 
   }
