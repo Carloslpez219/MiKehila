@@ -116,7 +116,13 @@ const routes: Routes = [
     canActivate: [GuardGuard],
     path: 'familiares-perfil',
     loadChildren: () => import('./pages/familiares-perfil/familiares-perfil.module').then( m => m.FamiliaresPerfilPageModule)
+  },
+  {
+    canActivate: [GuardGuard],
+    path: 'detalle-circular',
+    loadChildren: () => import('./pages/detalle-circular/detalle-circular.module').then( m => m.DetalleCircularPageModule)
   }
+
 
 
 ];

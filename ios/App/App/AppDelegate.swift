@@ -1,13 +1,17 @@
 import UIKit
 import Capacitor
 import FirebaseMessaging
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let gcmMessageIDKey = "gcm.Message_ID"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = self
 
@@ -16,9 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           options: authOptions,
           completionHandler: { _, _ in }
         )
-        
+
         application.registerForRemoteNotifications()
         
+        Messaging.messaging().delegate = self
+
         return true
     }
 
@@ -60,5 +66,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+
+  // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification) async
+        -> UNNotificationPresentationOptions {
+        let userInfo = notification.request.content.userInfo
+
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+
+        // ...
+
+        // Print full message.
+        print(userInfo)
+
+        // Change this to your preferred presentation option
+        return [[.alert, .sound]]
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+
+        // ...
+
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+
+        // Print full message.
+        print(userInfo)
+    }
+    
+    func application(_ application: UIApplication,
+                    didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async
+        -> UIBackgroundFetchResult {
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+
+        // Print full message.
+        print(userInfo)
+
+        return UIBackgroundFetchResult.newData
+    }
+
+    
+}
+
+extension AppDelegate: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        debugPrint("Firebase registration token: \(String(describing: fcmToken))")
+              
+        let deviceId = UIDevice.current.identifierForVendor?.uuidString ?? "UNKNOWN_DEVICE_ID"
+                
+        // Agrega el parámetro 'device_type' con un valor fijo 'ios'
+        let deviceType = "ios"
+        
+        if let token = fcmToken?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+           let deviceIdEncoded = deviceId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+           let url = URL(string: "https://cjg.asms.gt/SISTEM/API/API_pushup_notification.php?request=register_ios&device_id=\(deviceIdEncoded)&device_token=\(token)&device_type=\(deviceType)") {
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            // Configura la sesión
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                guard error == nil else {
+                    debugPrint("Error al realizar la solicitud: \(error!.localizedDescription)")
+                    return
+                }
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    // La solicitud fue exitosa, maneja la respuesta según sea necesario
+                    debugPrint("Token enviado con éxito")
+                } else {
+                    // Maneja la respuesta de error
+                    debugPrint("Error al enviar el token")
+                }
+            }
+            // Ejecuta la tarea
+            task.resume()
+        }
+       
+    }
     
 }

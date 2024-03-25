@@ -13,11 +13,17 @@ export class CrearFamiliarPage implements OnInit {
 
   familiarForm!: FormGroup;
   telDisabled = false;
+  listaParentesco: any;
 
   constructor(private modalController: ModalController, private loadingController: LoadingController, private asmsService: AsmsServiceService,
     private navCtrl: NavController, private alertService: AlertService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    (await this.asmsService.getParentesco()).subscribe((resp : any) => {
+      if (resp.status){
+        this.listaParentesco = resp.data;
+      }
+    });
     this.loadingController.dismiss();
     this.familiarForm = new FormGroup({
       dpi: new FormControl('', [ Validators.pattern(/^\d+$/)]),

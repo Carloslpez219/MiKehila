@@ -13,20 +13,15 @@
     <div class="color1">
       <label class="textfechalit">{{multimedia.data[0].post_fecha_registro}}</label>
       <br>
-      <label class="textTitulo biography2">Titulo: {{multimedia.data[0].titulo}}</label>
-      <div class="biography">Descripcion: {{multimedia.data[0].descripcion}}</div>
-      <label class="textPara">Para: {{multimedia.data[0].target}}</label>
-      <br>
-      <label class="textCodigo">Codigo: {{multimedia.data[0].codigo}}</label>
+      <label class="textTitulo biography2">Título: {{multimedia.data[0].titulo}}</label>
+      <div class="biography" [innerHTML]="multimedia.data[0].descripcion"></div>
       <br>
       <br>
-      <div *ngIf="multimedia?.data[0].imagenes.length != 0">
-        <div  *ngFor="let img of multimedia?.data[0].imagenes">
-          <img [src]="img.imagen_url" alt="">
-          <br>
-          <br>
-        </div>
-      </div>
+      <swiper-container effect="flip" *ngIf="multimedia?.data[0].imagenes.length != 0">
+        <swiper-slide class="ion-text-center" *ngFor="let img of multimedia?.data[0].imagenes">
+          <img [src]="img.imagen_url" loading="lazy">
+        </swiper-slide>
+      </swiper-container>
     </div>
   </div>
 

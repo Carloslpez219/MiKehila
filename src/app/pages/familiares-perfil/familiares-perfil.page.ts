@@ -46,20 +46,42 @@ export class FamiliaresPerfilPage implements OnInit {
           this.myImage = e.target.result;
         };
         reader.readAsDataURL(this.selectedFile);
-        this.uploadImage();
-        this.mostrarData = false;
-        setTimeout(async () => {
-          await this.loadingController.dismiss();
-          this.getData();
-        }, 1000);
+        await this.uploadImage();
       }
     }
   }
 
 
-  uploadImage() {
+  async uploadImage() {
     if (this.selectedFile) {
-      this.userService.uploadProfilePicture(this.selectedFile, this.codigo);
+      (await this.userService.uploadProfilePicture(this.selectedFile, this.codigo)).subscribe((response: any) => {
+          // console.log('Foto de perfil actualizada con éxito', response);
+          if(response.status){
+            this.alertService.presentToast(response.message, 'success', 3000);
+          }else{
+            this.alertService.presentToast(response.message, 'danger', 3000);
+          }
+          this.mostrarData = false;
+          setTimeout(async () => {
+            await this.loadingController.dismiss();
+            this.getData();
+          }, 1000);
+        },
+        (error: any) => {
+          console.error('Error al actualizar la foto de perfil', error);
+          if(error.status){
+            this.alertService.presentToast(error.message, 'success', 3000);
+          }else{
+            this.alertService.presentToast(error.message, 'danger', 3000);
+          }
+          this.mostrarData = false;
+          setTimeout(async () => {
+            await this.loadingController.dismiss();
+            this.getData();
+          }, 1000);
+        }
+      );
+
     }
   }
 

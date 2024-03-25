@@ -90,6 +90,10 @@ export class AsmsServiceService {
      (`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`)
     return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
   }
+
+  async getParentesco<T>(){
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=parentescos`);
+  }
   
   async soporte<T>(json: any){
     return this.http.get<T>(`${asmsURL}API_contactanos.php?request=contactanos&data=${json}`);
@@ -116,6 +120,11 @@ export class AsmsServiceService {
   async registrarDispositivo<T>(device_id: any, device_token: any, device_type: any){
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=register&user_id=${this.datosUsuario.codigo}&device_id=${device_id}&device_token=${device_token}&device_type=${device_type}&certificate_type=0`);
+  }
+
+  async updateIos<T>(device_id: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=update_ios&device_id=${device_id}&user_id=${this.datosUsuario.codigo}`);
   }
 
   async removerDispositivo<T>(device_id: any){
@@ -193,7 +202,7 @@ export class AsmsServiceService {
     formData.append('receiver', object.codigoComunity);
     formData.append('dialogo', dialogo);
   
-    const url = 'https://cjg.asms.gt/SISTEM/API/API_archivo_chat.php';
+    const url = `${asmsURL}API_archivo_chat.php`;
 
     console.log(url, formData);
     return this.http.post<T>(url, formData);
