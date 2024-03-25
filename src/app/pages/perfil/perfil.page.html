@@ -63,6 +63,10 @@
         <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
       </ion-item> 
 
+      <ion-button (click)="takeOrPickPicture()" expand="block" fill="clear" shape="round" *ngIf="isIos()">
+        Subir foto
+      </ion-button>
+
       <form (ngSubmit)="updatePerfil()" [formGroup]="profileForm">
         <ion-list>
           <small>DPI / ID: (opcional)</small>

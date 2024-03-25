@@ -6,6 +6,7 @@ import { AlertService } from '../../services/alert.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { AsmsServiceService } from 'src/app/services/asms-service.service';
 import { Platform } from '@ionic/angular';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-perfil',
@@ -210,11 +211,11 @@ dateFormatValidator(format: RegExp): ValidatorFn {
         (await this.asmsService.getMunicipios(resp.data[0].departamento)).subscribe((resp: any) => {
           this.municipios = resp.data;
         });
-        this.mostrarData = true;
       }else{
         this.alertService.presentToast(resp.message, 'danger', 3000);
       }
     });
+    this.mostrarData = await true;
   }
 
   clean(){
@@ -288,5 +289,43 @@ dateFormatValidator(format: RegExp): ValidatorFn {
       this.municipios = resp.data;
     });
   }
+
+  dataUrltoFile(dataurl: any, filename: any) {
+    let arr = dataurl.split(',');
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let bstr = atob(arr[1]);
+    //console.log(bstr);
+    let n = bstr.length;
+    let u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  async takeOrPickPicture(){
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Prompt
+      });
+  
+      var imageUrl = image.dataUrl;
+      this.selectedFile = this.dataUrltoFile(imageUrl, 'image');
+      this.perfilData.url_foto = imageUrl;
+
+      this.uploadImage();
+        this.mostrarData = false;
+        setTimeout(async () => {
+          await this.loadingController.dismiss();
+          this.getData();
+        }, 1000);
+      this.mostrarData = true;
+    } catch (error) {
+      console.error('Error taking or picking a picture:', error);
+    }
+  };
 
 }
