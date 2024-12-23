@@ -99,6 +99,11 @@ export class AsmsServiceService {
     return this.http.get<T>(`${asmsURL}API_contactanos.php?request=contactanos&data=${json}`);
   }
 
+  async getPass<T>(pass: any){
+    return this.http.get<T>(`${asmsURL}API_recupera_pass.php?request=pidepass&mail=${pass}`);
+  }
+
+
   async getDispositivos<T>(){
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_perfil_padre.php?request=dispositivos&codigoMiembro=${this.datosUsuario.codigo}`);

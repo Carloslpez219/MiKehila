@@ -163,5 +163,9 @@ export class LoginPage implements OnInit {
     this.inicio = true;
   }
 
+  goGetPass(){
+    this.navCtrl.navigateRoot('/recuperar-pass');
+  }
+
 }
 
