@@ -19,6 +19,7 @@
     <ion-card-header>
       <ion-card-title style="font-size: 23px;">{{ multimedia.nombre }} {{ multimedia.apellido }}</ion-card-title>
       <ion-card-subtitle style="font-size: 12px;">CUI: {{ multimedia.cui }}</ion-card-subtitle>
+      <ion-button class="updateBtn" (click)="editarPerfilFamiliar()" fill="clear"> <ion-icon class="updateIcon" name="create-outline" slot="icon-only"></ion-icon> </ion-button>
     </ion-card-header>
     <ion-card-content>
       <p><strong>Fecha de Nacimiento:</strong> {{ multimedia.fechaNacimiento || 'No especificado' }}</p>

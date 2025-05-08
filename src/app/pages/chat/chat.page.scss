@@ -47,6 +47,13 @@ ion-footer {
   float: left;
   max-width: 70%;
 }
+  .mensaje-enviado ion-item {
+    --background: #DCF8C6; // color para mensajes enviados de tipo archivo
+}
+
+.mensaje-recibido ion-item {
+  --background: #ECECEC; // color para mensajes recibidos de tipo archivo
+}
 
 .tiempo {
   font-size: xx-small;

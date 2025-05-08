@@ -56,11 +56,7 @@
         <!-- Campo Parentesco -->
           <ion-item>
             <ion-select formControlName="parentesco" placeholder="Parentesco">
-              <ion-select-option value="1">Esposo</ion-select-option>
-              <ion-select-option value="2">Esposa</ion-select-option>
-              <ion-select-option value="3">Padre/Madre</ion-select-option>
-              <ion-select-option value="4">Hijo</ion-select-option>
-              <ion-select-option value="5">Hermano/Hermana</ion-select-option>
+              <ion-select-option *ngFor="let item of listaParentesco" [value]="item.valor">{{ item.descripcion }}</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="errors" *ngIf="parentesco!.invalid && (parentesco!.dirty || parentesco!.touched)">

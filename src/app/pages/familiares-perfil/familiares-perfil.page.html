@@ -5,7 +5,7 @@
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Perfil</ion-title> 
+    <ion-title>Perfil del Familiar</ion-title> 
   </ion-toolbar>
 </ion-header>
 
@@ -62,10 +62,6 @@
         <ion-button (click)="fileInput.click()" expand="block" fill="outline" class="ion-button" [disabled]="isIos()">Subir Foto</ion-button>
         <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none;">
       </ion-item> 
-
-      <ion-button (click)="takeOrPickPicture()" expand="block" fill="clear" shape="round" *ngIf="isIos()">
-        Subir foto
-      </ion-button>
 
       <form (ngSubmit)="updatePerfil()" [formGroup]="profileForm">
         <ion-list>
@@ -133,7 +129,7 @@
             <ion-input placeholder="Fecha de nacimiento" type="text" clearOnEdit="false" 
                        clearInput formControlName="date" (keypress)="onlyDates($event)" maxlength="10" (ionChange)="calcularFechas()" >
             </ion-input>
-        </ion-item>        
+          </ion-item>        
           <div class="errors" *ngIf="date!.invalid && (date!.dirty || date!.touched)">
             <span *ngIf="date!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
@@ -153,6 +149,16 @@
             <span *ngIf="momento!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
+          </div>
+          <small>Fecha de Fallecimiento:</small>
+          <ion-item mode="md">
+            <ion-icon slot="start" name="calendar"></ion-icon>
+            <ion-input placeholder="Fecha de nacimiento" type="text" clearOnEdit="false" 
+                       clearInput formControlName="fechaFallecimiento" (keypress)="onlyDates($event)" maxlength="10" >
+            </ion-input>
+          </ion-item>        
+          <div class="errors" *ngIf="profileForm.get('fechaFallecimiento')?.errors?.['dateFormat']">
+            <ion-label class="error-container">Fecha no válida. El formato debe ser dd/mm/YYYY.</ion-label>
           </div>
 
           <small>Fecha Judía:*</small>
@@ -196,17 +202,17 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          <small>Celular:*</small>
+          <small>Celular:</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="phone-portrait"></ion-icon>
             <ion-input placeholder="Celular" type="name" clearOnEdit="false" clearInput formControlName="celular" (keypress)="onlyNumbers($event)" maxlength="8">
             </ion-input>
           </ion-item>
-          <div class="errors" *ngIf="celular!.invalid && (celular!.dirty || celular!.touched)">
+          <!-- <div class="errors" *ngIf="celular!.invalid && (celular!.dirty || celular!.touched)">
             <span *ngIf="celular!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
-          </div>
+          </div> -->
           <small>Parasha:</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="person-circle-outline"></ion-icon>
@@ -218,16 +224,16 @@
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
           </div>
-          <small>E-mail:*</small>
+          <small>E-mail:</small>
           <ion-item mode="md">
             <ion-icon slot="start" name="mail-open-outline"></ion-icon>
             <ion-input placeholder="Mail" type="name" clearOnEdit="false" clearInput formControlName="mail">
             </ion-input>
           </ion-item>
           <div class="errors" *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)">
-            <span *ngIf="mail!.errors!['required']">
+            <!-- <span *ngIf="mail!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
-            </span>
+            </span> -->
             <span *ngIf="(mail!.dirty || mail!.touched) && mail!.invalid && mail!.errors!['pattern']">
               <ion-label class="error-container">Enter an email valid</ion-label>
             </span>
@@ -327,7 +333,7 @@
             </span>
           </div>
 
-          <small>Estado Civil:*</small>
+          <small>Estado Civil:</small>
           <ion-item>
             <ion-select formControlName="estado" placeholder="Selecciona uno">
               <ion-select-option value="S">Soltero</ion-select-option>
@@ -336,11 +342,11 @@
               <ion-select-option value="D">Divorciado</ion-select-option>
             </ion-select>
           </ion-item>
-          <div class="errors" *ngIf="estado!.invalid && (estado!.dirty || estado!.touched)">
+          <!-- <div class="errors" *ngIf="estado!.invalid && (estado!.dirty || estado!.touched)">
             <span *ngIf="estado!.errors!['required']">
               <ion-label class="error-container">Este campo es requerido</ion-label>
             </span>
-          </div>
+          </div> -->
 
           <small>Nombre del Trabajo:</small>
           <ion-item mode="md">
@@ -430,7 +436,6 @@
           <ion-row>
             <ion-col>
               <ion-button expand="block" class="button-save" type="submit">Guardar
-              <!-- <ion-button expand="block" class="button-save" type="submit" [disabled]="!profileForm.valid">Guardar -->
                 <ion-icon slot="start" color="white" name="enter-outline"></ion-icon>
               </ion-button>
             </ion-col>

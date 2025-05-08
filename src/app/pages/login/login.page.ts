@@ -117,24 +117,24 @@ export class LoginPage implements OnInit {
       this.presentLoading();
       const id = await Device.getId();
       const valid = await this.userService.login(this.loginForm.value.nombre, this.loginForm.value.password);
-      const valido = await this.service.validarDispositivo(id.identifier);
-      if (valid && valido){
-        if (Capacitor.isPluginAvailable('PushNotifications')){
+      if (valid){
+        const valido = await this.service.validarDispositivo(id.identifier);
+        if (valido) {
+          
           await this.loadingController.dismiss();
           this.navCtrl.navigateRoot('/');
-          await this.initializeApp();
+        } else {
+          await this.loadingController.dismiss();
+          this.alertService.presentToast('Este dispositivo se encuentra bloquedo por el usuario.', 'danger', 3000);
+          this.loginForm.reset();
+          this.storage.clear();
         }
-        await this.loadingController.dismiss();
-        this.navCtrl.navigateRoot('/');
       }else{
         this.loadingController.dismiss();
         const message = 'Usuario y/o Contraseña son incorrectos';
         this.alertService.presentToast(message, 'dark', 3000);
         this.loginForm.reset();
         this.storage.clear();
-        if(!valido){
-          this.alertService.presentToast('Este dispositivo se encuentra bloquedo por el usuario.', 'danger', 3000);
-        }
       }
   }
 
@@ -163,37 +163,9 @@ export class LoginPage implements OnInit {
     this.inicio = true;
   }
 
-  async initializeApp() {
-    const permission = await PushNotifications.requestPermissions();
-    if (permission.receive === 'granted') {
-      PushNotifications.register();
-
-      const id = await Device.getId();
-
-      await PushNotifications.addListener('registration', async token => {
-        console.info('Registration token: ', token.value);
-        let device_type = '';
-        if (this.platform.is('android')) {
-          device_type = await 'android';
-        }else if (this.platform.is('ios')) {
-          device_type = await 'ios';
-        }
-        await (await this.service.registrarDispositivo(id.identifier, token.value, device_type)).subscribe(resp =>{
-          console.log(resp);
-        })
-      });
-
-      PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
-        console.log('Push received: ', notification);
-        this.navCtrl.navigateForward('folder/Notificaciones');
-      });
-
-      PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
-        console.log('Push received: ', action);
-        this.navCtrl.navigateForward('folder/Notificaciones');
-      });
-    }
-}
+  goGetPass(){
+    this.navCtrl.navigateRoot('/recuperar-pass');
+  }
 
 }
 

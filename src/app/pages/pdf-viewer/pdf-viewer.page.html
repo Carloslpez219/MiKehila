@@ -9,18 +9,28 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <div *ngIf="descripcion">
+    <div class="cont">
+      <div class="color1">
+        <h2 class="textTitulo">{{titulo}}</h2>
+        <div class="ion-text-center" [innerHTML]="descripcion"></div>
+        <br>
+      </div>
+    </div>
+  </div>
+
   <pdf-viewer [src]="pdfSrc"
-  [render-text]="true"
-  [original-size]="false"
-  [zoom]="zoom"
-  [show-borders]="true"
-  [rotation]="rotation"
-  style="width: 400px; height: 500px"
+              [render-text]="true"
+              [original-size]="false"
+              [zoom]="zoom"
+              [show-borders]="true"
+              [rotation]="rotation"
+              style="width: 400px; height: 500px"
   ></pdf-viewer>
   <ion-button (click)="download(pdfSrc)" expand="block" fill="outline">
     Descargar Documento
   </ion-button>
-
+  
   <span class="screen__background__shape screen__background__shape1"></span>
   <span class="screen__background__shape screen__background__shape2"></span>
   <span class="screen__background__shape screen__background__shape3"></span>

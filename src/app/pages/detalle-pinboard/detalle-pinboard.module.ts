@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DetallePinboardPageRoutingModule } from './detalle-pinboard-routing.module';
 
 import { DetallePinboardPage } from './detalle-pinboard.page';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DetallePinboardPage } from './detalle-pinboard.page';
     IonicModule,
     DetallePinboardPageRoutingModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [DetallePinboardPage]
 })
 export class DetallePinboardPageModule {}

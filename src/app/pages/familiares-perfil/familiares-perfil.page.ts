@@ -6,14 +6,14 @@ import { AlertService } from '../../services/alert.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { AsmsServiceService } from 'src/app/services/asms-service.service';
 import { Platform } from '@ionic/angular';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.page.html',
-  styleUrls: ['./perfil.page.scss'],
+  selector: 'app-familiares-perfil',
+  templateUrl: './familiares-perfil.page.html',
+  styleUrls: ['./familiares-perfil.page.scss'],
 })
-export class PerfilPage implements OnInit {
+export class FamiliaresPerfilPage implements OnInit {
 
   perfilData: any;
   mostrarData = false;
@@ -25,8 +25,9 @@ export class PerfilPage implements OnInit {
   // eslint-disable-next-line max-len
   pattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   selectedFile!: File;
+  codigo: any;
 
-  constructor(private userService: UserService, private storage: Storage, private alertService: AlertService,
+  constructor(private userService: UserService, private storage: Storage, private alertService: AlertService, private route: ActivatedRoute,
               private navCtrl: NavController, private loadingController: LoadingController, private asmsService: AsmsServiceService, private platform: Platform) {
     this.profileForm = this.createFormGroup();
   }
@@ -53,7 +54,7 @@ export class PerfilPage implements OnInit {
 
   async uploadImage() {
     if (this.selectedFile) {
-      (await this.userService.uploadProfilePicture(this.selectedFile)).subscribe((response: any) => {
+      (await this.userService.uploadProfilePicture(this.selectedFile, this.codigo)).subscribe((response: any) => {
           // console.log('Foto de perfil actualizada con éxito', response);
           if(response.status){
             this.alertService.presentToast(response.message, 'success', 3000);
@@ -88,6 +89,13 @@ export class PerfilPage implements OnInit {
     (await this.asmsService.getDepartamentos()).subscribe((resp: any) => {
       this.departamentos = resp.data;
     });
+    this.route.queryParams.subscribe(params => {
+      const codigo = params['codigo'];
+      console.log(codigo);
+      if (codigo != '') {
+        this.codigo = codigo;
+      }
+    });
   }
 
   async ionViewWillEnter() {
@@ -105,8 +113,8 @@ export class PerfilPage implements OnInit {
         momento: new FormControl('', [Validators.required]),
         // telefono: new FormControl('', [Validators.pattern(/^\d+$/)]),
         parasha: new FormControl('', []),
-        celular: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-        mail: new FormControl('', [Validators.required, Validators.pattern(this.pattern)]),
+        celular: new FormControl('', [Validators.pattern(/^\d+$/)]),
+        mail: new FormControl('', [Validators.pattern(this.pattern)]),
         direccion: new FormControl('', [Validators.required]),
         departamento: new FormControl('', [Validators.required]),
         municipio: new FormControl('', [Validators.required]),
@@ -114,12 +122,12 @@ export class PerfilPage implements OnInit {
         genero: new FormControl('', [Validators.required]),
         nacionalidad: new FormControl('', [Validators.required]),
         tipoSangre: new FormControl('', [Validators.required]),
-        estado: new FormControl('', [Validators.required]),
+        estado: new FormControl('', []),
 
         tipocui: new FormControl('', []),
         fechaJudia: new FormControl('', [Validators.required]),
         barMitzva: new FormControl('', []),
-        fechaFallecimiento: new FormControl('', [Validators.required]),
+        fechaFallecimiento: new FormControl('', [this.dateFormatValidator(/^\d{2}\/\d{2}\/\d{4}$/)]),
         telcasa: new FormControl('', [Validators.pattern(/^\d+$/)]),
         trabajo: new FormControl('', []),
         teltrabajo: new FormControl('', [Validators.pattern(/^\d+$/)]),
@@ -154,7 +162,7 @@ dateFormatValidator(format: RegExp): ValidatorFn {
 }
 
   defaultValue( perfilData: any ){
-    // console.log(perfilData)
+    console.log(perfilData)
     if(perfilData.momentoNacimiento == "dia"){
       this.profileForm.controls['momento'].setValue("antes");
     }else if(perfilData.momentoNacimiento == "noche"){
@@ -226,18 +234,22 @@ dateFormatValidator(format: RegExp): ValidatorFn {
   get emetel() { return this.profileForm.get('emetel'); }
 
   async getData() {
-    (await this.userService.getPerfil()).subscribe(async (resp: any) => {
+    (await this.userService.getPerfil(this.codigo, 3)).subscribe(async (resp: any) =>{
       if(resp.status){
         this.perfilData = resp.data[0];
         this.defaultValue( this.perfilData );
         (await this.asmsService.getMunicipios(resp.data[0].departamento)).subscribe((resp: any) => {
           this.municipios = resp.data;
         });
+        this.mostrarData = true;
       }else{
         this.alertService.presentToast(resp.message, 'danger', 3000);
       }
-    });
-    this.mostrarData = await true;
+    },
+    (error: any) => {
+      console.error('Error al obtener datos del familiar', error);
+    }
+    );
   }
 
   clean(){
@@ -271,7 +283,8 @@ dateFormatValidator(format: RegExp): ValidatorFn {
       momento = "noche";
     }
     console.log(this.profileForm.value.fechaJudia);
-    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.fechaJudia, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, encodeURIComponent(this.profileForm.value.tipoSangre), this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha)).subscribe(async resp =>{
+
+    (await this.userService.updateFamilyMemberProfile(this.profileForm.value.dpi, this.profileForm.value.tipocui, this.profileForm.value.nombre, this.profileForm.value.apellido, this.profileForm.value.nombrejudio, this.profileForm.value.date, this.profileForm.value.fechaJudia, momento, this.profileForm.value.barMitzva, this.profileForm.value.fechaFallecimiento, this.profileForm.value.estado, this.profileForm.value.nacionalidad, this.profileForm.value.telcasa,this.profileForm.value.celular, this.profileForm.value.mail, this.profileForm.value.direccion, this.profileForm.value.departamento, this.profileForm.value.municipio, this.profileForm.value.trabajo, this.profileForm.value.teltrabajo, this.profileForm.value.profesion, this.profileForm.value.genero, encodeURIComponent(this.profileForm.value.tipoSangre), this.profileForm.value.alergia, this.profileForm.value.emergencia, this.profileForm.value.emetel, this.profileForm.value.parasha, this.codigo)).subscribe(async resp =>{
       console.log(resp);
       this.mostrarData = false;
       setTimeout(async () => {
@@ -311,43 +324,5 @@ dateFormatValidator(format: RegExp): ValidatorFn {
       this.municipios = resp.data;
     });
   }
-
-  dataUrltoFile(dataurl: any, filename: any) {
-    let arr = dataurl.split(',');
-    let mime = arr[0].match(/:(.*?);/)[1];
-    let bstr = atob(arr[1]);
-    //console.log(bstr);
-    let n = bstr.length;
-    let u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  }
-
-  async takeOrPickPicture(){
-    try {
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.DataUrl,
-        source: CameraSource.Prompt
-      });
-  
-      var imageUrl = image.dataUrl;
-      this.selectedFile = this.dataUrltoFile(imageUrl, 'image');
-      this.perfilData.url_foto = imageUrl;
-
-      this.uploadImage();
-        this.mostrarData = false;
-        setTimeout(async () => {
-          await this.loadingController.dismiss();
-          this.getData();
-        }, 1000);
-      this.mostrarData = true;
-    } catch (error) {
-      console.error('Error taking or picking a picture:', error);
-    }
-  };
 
 }

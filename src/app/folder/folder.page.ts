@@ -8,6 +8,13 @@ import { DetalleMultimediaPage } from '../pages/detalle-multimedia/detalle-multi
 import { DetallePhotoalbumPage } from '../pages/detalle-photoalbum/detalle-photoalbum.page';
 import { ActividadPage } from '../pages/actividad/actividad.page';
 import { DetalleEncuestaPage } from '../pages/detalle-encuesta/detalle-encuesta.page';
+import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
+import { Device } from '@capacitor/device';
+import { Platform } from '@ionic/angular';
+import { AlertService } from '../services/alert.service';
+import { Capacitor } from '@capacitor/core';
+import { DetalleCircularPage } from '../pages/detalle-circular/detalle-circular.page';
+
 
 @Component({
   selector: 'app-folder',
@@ -20,11 +27,22 @@ export class FolderPage implements OnInit {
   circulares: any;
   notificaciones: any;
 
-  constructor(private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
+  constructor(private alertService: AlertService, private platform: Platform, private asmsService: AsmsServiceService, private navCtrl:NavController, private loadingController: LoadingController, private modalController: ModalController, private sanitizer: DomSanitizer) {}
 
-  ngOnInit() {
-    this.presentLoading();
+  async ngOnInit() {
+    // this.presentLoading();
     this.getData();
+    if (Capacitor.isPluginAvailable('PushNotifications')){
+      if (this.platform.is('ios')){
+        const id = await Device.getId();
+        (await this.asmsService.updateIos(id.identifier)).subscribe(resp => {
+            console.log(resp);
+        });
+      } else {
+        this.initializeApp();
+      }
+    }
+
   }
 
   async getData(){
@@ -101,12 +119,22 @@ export class FolderPage implements OnInit {
     ); 
   } 
 
-  async mostrarModalPDF(pdf: string) {
+  async mostrarCircularImg(img: string, type: string, titulo: string, descripcion: string ) {
+        let imgSrc = img; 
+        const modal = await this.modalController.create({
+          component: DetalleCircularPage,
+          backdropDismiss: false,
+          componentProps: { imgSrc, type, titulo, descripcion }
+        });
+        await modal.present();      
+  }
+
+  async mostrarModalPDF(pdf: string, titulo: string, descripcion: string) {
         let pdfSrc = pdf; 
         const modal = await this.modalController.create({
           component: PdfViewerPage,
           backdropDismiss: false,
-          componentProps: { pdfSrc }
+          componentProps: { pdfSrc, titulo, descripcion }
         });
         await modal.present();      
   } 
@@ -188,10 +216,17 @@ export class FolderPage implements OnInit {
     } else if (item.type === '5') {
       this.mostrarModalMultimedia(item.item_id);
     } else if (item.type === '6') {
-      this.mostrarModalPDF(item.link)
+      if(item.extension === 'pdf'){
+        this.mostrarModalPDF(item.link, item.titulo, item.descripcion)
+      }else{
+        console.log(item.link);
+        this.mostrarCircularImg(item.link, item.extension, item.titulo, item.descripcion)
+      }
     } else if (item.type === '11') {
       this.mostrarModalPhotoAlbum(item.item_id);
     } else if (item.type === '12') {
+      const dialog = item.item_id;
+      this.navCtrl.navigateForward(`/chats?dialog=${dialog}`);
        ("Chat");
     } else if (item.type === '100') {
        ("General");
@@ -215,5 +250,47 @@ export class FolderPage implements OnInit {
     });
     return await modal.present();
   }
+
+  async initializeApp() {
+    var isGranted = '';
+    const permissionCheck = await PushNotifications.checkPermissions();
+    if (permissionCheck.receive !== 'granted'){
+      const permission = await PushNotifications.requestPermissions();
+      isGranted = permission.receive;
+    }else{
+      isGranted = 'granted';
+    }
+    if (isGranted === 'granted') {
+      PushNotifications.register();
+
+      const id = await Device.getId();
+
+      await PushNotifications.addListener('registration', async token => {
+        console.info('Registration token: ', token.value);
+        let device_type = '';
+        if (this.platform.is('android')) {
+          device_type = await 'android';
+        }else if (this.platform.is('ios')) {
+          device_type = await 'ios';
+        }
+        await (await this.asmsService.registrarDispositivo(id.identifier, token.value, device_type)).subscribe(resp =>{
+          console.log(resp);
+        })
+      });
+
+      PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
+        console.log('Push received: ', notification);
+        this.alertService.presentToast('Nueva notificación', 'dark', 4000);
+        this.navCtrl.navigateRoot('folder/Notificaciones');
+        // this.navCtrl.navigateForward('folder/Notificaciones');
+      });
+
+      PushNotifications.addListener('pushNotificationActionPerformed', (action: ActionPerformed) => {
+        console.log('Push actionPerf: ', action);
+        this.navCtrl.navigateRoot('folder/Notificaciones');
+        // this.navCtrl.navigateForward('folder/Notificaciones');
+      });
+    }
+}
 
 }

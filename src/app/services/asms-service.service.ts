@@ -90,10 +90,19 @@ export class AsmsServiceService {
      (`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`)
     return this.http.get<T>(`${asmsURL}API_familia.php?request=nuevo_familiar&codigo=${this.datosUsuario.codigo}&dpi=${dpi}&nombres=${nombres}&apellidos=${apellidos}&parentesco=${parentesco}&tel=${tel}&mail=${mail}`);
   }
+
+  async getParentesco<T>(){
+    return this.http.get<T>(`${asmsURL}API_familia.php?request=parentescos`);
+  }
   
   async soporte<T>(json: any){
     return this.http.get<T>(`${asmsURL}API_contactanos.php?request=contactanos&data=${json}`);
   }
+
+  async getPass<T>(pass: any){
+    return this.http.get<T>(`${asmsURL}API_recupera_pass.php?request=pidepass&mail=${pass}`);
+  }
+
 
   async getDispositivos<T>(){
     this.datosUsuario = await this.storage.get('datos');
@@ -116,6 +125,16 @@ export class AsmsServiceService {
   async registrarDispositivo<T>(device_id: any, device_token: any, device_type: any){
     this.datosUsuario = await this.storage.get('datos');
     return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=register&user_id=${this.datosUsuario.codigo}&device_id=${device_id}&device_token=${device_token}&device_type=${device_type}&certificate_type=0`);
+  }
+
+  async updateIos<T>(device_id: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=update_ios&device_id=${device_id}&user_id=${this.datosUsuario.codigo}`);
+  }
+
+  async removerDispositivo<T>(device_id: any){
+    this.datosUsuario = await this.storage.get('datos');
+    return this.http.get<T>(`${asmsURL}API_pushup_notification.php?request=unregister&user_id=${this.datosUsuario.codigo}&device_id=${device_id}`);
   }
 
   async setReadNotification<T>( type: any, item: any){
@@ -176,27 +195,22 @@ export class AsmsServiceService {
   }
 
 
-  async uploadFile(file: File, object: any, dialogo: any,) {
+  async uploadFile<T>(file: File, object: any, dialogo: any, request: string) {
     this.datosUsuario = await this.storage.get('datos');
     const formData = new FormData();
   
     formData.append('archivo', file, file.name);
-    formData.append('request', 'mensaje_archivo');
+    formData.append('request', request);
     formData.append('sender_type', this.datosUsuario.tipo_usuario);
     formData.append('sender', this.datosUsuario.codigo);
     formData.append('receiver_type', object.tipo);
     formData.append('receiver', object.codigoComunity);
     formData.append('dialogo', dialogo);
   
-    const url = 'https://cjg.asms.gt/SISTEM/API/API_archivo_chat.php';
-    this.http.post(url, formData).subscribe(
-      (response: any) => {
-         (response);
-      },
-      (error) => {
-        console.error('Error al subir el archivo:', error);
-      }
-    );
+    const url = `${asmsURL}API_archivo_chat.php`;
+
+    console.log(url, formData);
+    return this.http.post<T>(url, formData);
   }
   
   async validarDispositivo<T>(device_id: any): Promise<boolean> {

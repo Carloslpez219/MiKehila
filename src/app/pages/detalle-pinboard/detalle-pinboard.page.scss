@@ -345,10 +345,10 @@ ion-menu-button {
   .biography {
     display: block;
     display: -webkit-box;
-    height: $font-size * $line-height * $lines;
+    // height: $font-size * $line-height * $lines;
     font-size: $font-size;
     line-height: $line-height;
-    -webkit-line-clamp: $lines;
+    // -webkit-line-clamp: $lines;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -359,10 +359,10 @@ ion-menu-button {
   .biography2 {
     display: block;
     display: -webkit-box;
-    height: $font-size * $line-height * $lines;
+    // height: $font-size * $line-height * $lines;
     font-size: $font-size;
     line-height: $line-height;
-    -webkit-line-clamp: $lines;
+    // -webkit-line-clamp: $lines;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -566,4 +566,3 @@ ion-menu-button {
     border-radius: 60px;
     z-index: -10;
   }
-  

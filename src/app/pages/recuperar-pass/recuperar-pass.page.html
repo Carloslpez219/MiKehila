@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">Atrás
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card class="body animate__animated animate__bounceInDown">
+
+    <ion-card-title>Recuperacion de contraseña</ion-card-title>
+
+    <ion-card-content style="text-align: justify;">
+      Estimado Usuario, para nosotros es un gusto servirle y prestarle apoyo en su trabajo diario dentro del sistema.
+      Por normativos de seguridad, se le preguntaran ciertos datos propios de su cuenta para comprobar que usted es el titular de la misma, si tiene algún problema con este formulario o alguna duda sobre el procedimiento, le sugerimos que contacte al administrador del sistema por medio del siguiente link: <a (click)="goSupport()">Contactar al Administrador.</a> 
+    </ion-card-content>
+    
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="passForm">
+      <ion-list>
+  
+        <!-- Campo Email -->
+        <ion-item mode="md">
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          <ion-input placeholder="Email" type="email" clearOnEdit="true" clearInput formControlName="mail"></ion-input>
+        </ion-item>
+        <div class="errors" *ngIf="mail!.invalid && (mail!.dirty || mail!.touched)">
+          <span *ngIf="mail!.errors!['required']">
+            <ion-label class="error-container">Este campo es requerido</ion-label>
+          </span>
+          <span *ngIf="(mail!.dirty || mail!.touched) && mail!.invalid && mail!.errors!['pattern']">
+            <ion-label class="error-container">Enter an email valid</ion-label>
+          </span>
+        </div>
+  
+      </ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" class="button-1" type="submit" [disabled]="!passForm.valid">Enviar
+              <ion-icon slot="start" color="white" name="enter-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-card>
+
+  <span class="screen__background__shape screen__background__shape1"></span>
+  <span class="screen__background__shape screen__background__shape2"></span>
+  <span class="screen__background__shape screen__background__shape3"></span>
+  <span class="screen__background__shape screen__background__shape4"></span>
+  
+</ion-content>
